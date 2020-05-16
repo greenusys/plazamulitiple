@@ -1,0 +1,76 @@
+body 
+{
+    font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+}
+.h-color
+{
+	background-color:#6777ef;
+}
+.menu-text
+{
+	font-size:16px !important;
+    color:white !important;
+    letter-spacing: 1px;
+}
+.text
+{
+	font-size: 18px;
+}
+.text1
+{
+	font-size: 15px;
+}
+.butn
+{
+	background-color:#6777ef;
+}
+.click
+{
+    border:0px solid;
+}
+
+.footer
+{
+	width:100%;
+	background-color: #434445;
+}
+.footer-text
+{
+	color: #ffffffc4!important;
+}
+.click:hover
+{
+    border:2px solid #6777ef !important;
+}
+.top
+{
+	margin-top:70px;
+}
+.butn1
+{
+	background-color:#6777ef;
+	width:95%;
+}
+.back-color
+{
+	background-color:#85a3e0;
+}
+.butn1:hover
+{
+	width:100%;
+}
+.butn2
+{
+	background-color:white;
+	color:#6777ef;
+	width:95%;
+	border:2px solid #6777ef;
+}
+.butn2:hover
+{
+	width:100%;
+}
+.line
+{
+	border-right:1px solid white;
+}

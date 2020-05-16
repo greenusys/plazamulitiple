@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+    <html>
+        <head><script
+			src="https://code.jquery.com/jquery-3.4.1.min.js"
+			integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+			crossorigin="anonymous"></script>
+            <script>
+                function startTime() {
+                var today = new Date();
+                var h = today.getHours();
+                var m = today.getMinutes();
+                var s = today.getSeconds();
+                m = checkTime(m);
+                s = checkTime(s);
+                document.getElementById('txt').innerHTML =
+                h + ":" + m + ":" + s;
+                var t = setTimeout(startTime, 500);
+                }
+                function checkTime(i) {
+                if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+                return i;
+                }
+            </script>
+        </head>
+
+    <body onload="startTime()">
+
+        <div id="txt"></div>
+        <div class="">
+			<button id="takeTime" onclick="printTime()"> Clock In</button>
+		</div>
+		<script type="text/javascript">
+		function printTime(){
+			$.ajax({
+				url:"aten.php",
+				success:function(response)
+						{
+							console.log(response);
+						}
+			});
+			// var old_time=new Date("11:27:45");
+			// var now_=new Date(document.getElementById('txt').innerHTML);
+			// console.log(" OLD : "+old_time);
+			// console.log(" Now : "+now_.getTime());
+			// var dif_=(now_.getTime())-old_time.getTime();
+			// console.log(" Difference : "+dif_);
+		}
+		</script>
+    </body>
+    </html>
