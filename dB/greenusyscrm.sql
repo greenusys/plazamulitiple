@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 03, 2020 at 11:47 AM
--- Server version: 10.3.15-MariaDB
--- PHP Version: 7.3.6
+-- Generation Time: May 16, 2020 at 07:34 AM
+-- Server version: 10.1.31-MariaDB
+-- PHP Version: 7.2.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -29,9 +29,19 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `installer` (
-  `id` int(1) NOT NULL,
-  `installer_flag` int(1) NOT NULL
+  `id` int(11) NOT NULL,
+  `timezone` varchar(100) NOT NULL,
+  `currency` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `logo` varchar(255) NOT NULL,
+  `language` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `installer`
+--
+
+INSERT INTO `installer` (`id`, `timezone`, `currency`, `logo`, `language`) VALUES
+(7, 'Asia/Kolkata', '₹', '203728befcad95753477b3226e332319.jpg', 'English');
 
 -- --------------------------------------------------------
 
@@ -43,9 +53,17 @@ CREATE TABLE `tbl_accounts` (
   `account_id` int(11) NOT NULL,
   `account_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `description` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-  `balance` decimal(18,2) NOT NULL DEFAULT 0.00,
-  `permission` text COLLATE utf8_unicode_ci DEFAULT NULL
+  `balance` decimal(18,2) NOT NULL DEFAULT '0.00',
+  `permission` text COLLATE utf8_unicode_ci,
+  `company_id` bigint(20) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `tbl_accounts`
+--
+
+INSERT INTO `tbl_accounts` (`account_id`, `account_name`, `description`, `balance`, `permission`, `company_id`) VALUES
+(0, 'test', 'sds', '2222.00', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -67,10 +85,10 @@ CREATE TABLE `tbl_account_details` (
   `mobile` varchar(32) COLLATE utf8_unicode_ci DEFAULT '',
   `skype` varchar(100) COLLATE utf8_unicode_ci DEFAULT '',
   `language` varchar(40) COLLATE utf8_unicode_ci DEFAULT 'english',
-  `designations_id` int(11) DEFAULT 0,
+  `designations_id` int(11) DEFAULT '0',
   `avatar` varchar(200) COLLATE utf8_unicode_ci DEFAULT 'uploads/default_avatar.jpg',
   `joining_date` date DEFAULT NULL,
-  `present_address` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `present_address` text COLLATE utf8_unicode_ci,
   `date_of_birth` date DEFAULT NULL,
   `gender` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `maratial_status` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -85,16 +103,30 @@ CREATE TABLE `tbl_account_details` (
 --
 
 INSERT INTO `tbl_account_details` (`account_details_id`, `user_id`, `fullname`, `employment_id`, `company`, `city`, `country`, `locale`, `address`, `phone`, `mobile`, `skype`, `language`, `designations_id`, `avatar`, `joining_date`, `present_address`, `date_of_birth`, `gender`, `maratial_status`, `father_name`, `mother_name`, `passport`, `direction`) VALUES
-(1, 1, 'Prakhar Abhishek', NULL, NULL, NULL, NULL, 'en_US', '-', '8923050580', '', '', 'english', 0, 'uploads/Prakahr_PassportPic.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(2, 2, 'IPSEN', '', '1', NULL, NULL, 'en_US', '-', '-', '', '', 'english', NULL, 'uploads/one.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ltr'),
-(3, 3, 'Jonathan Tornil Grasa', '', '0', NULL, NULL, 'fr_FR', '-', '', '', '', 'english', 1, 'uploads/sharepoint_bg.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ltr'),
-(4, 4, 'Ivan Corbero', '', '0', NULL, NULL, 'es_ES', '-', '', '', '', 'english', 2, 'uploads/article0_1064x.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ltr'),
-(5, 5, 'Bertrand Lagarde', '', '0', NULL, NULL, 'fr_FR', '-', '', '', '', 'english', 3, 'uploads/new.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ltr'),
-(6, 6, 'Christelle Saliou', '', '0', NULL, NULL, 'fr_FR', '-', '', '', '', 'english', 7, 'uploads/new.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ltr'),
-(7, 1, 'Prakhar Abhishek', NULL, NULL, NULL, NULL, 'en_US', '-', '8923050580', '', '', 'english', 0, 'uploads/Prakahr_PassportPic.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(8, 8, 'Adminko', NULL, NULL, NULL, NULL, 'en_US', '-', '-', '', '', 'english', 0, 'uploads/default_avatar.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(10, 10, 'ali', NULL, '14', NULL, NULL, 'en_US', '-', '-', '', '', 'english', 0, 'uploads/default_avatar.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ltr'),
-(11, 11, 'gree', NULL, '15', NULL, NULL, 'en_US', '-', '-', '', '', 'english', 0, 'uploads/default_avatar.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ltr');
+(2, 2, 'IPSEN', '', '1', NULL, NULL, 'en_US', '-', '-', '', '', 'english', NULL, 'uploads/avatar-1.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ltr'),
+(3, 3, 'Jonathan Tornil Grasa', '', '3', NULL, NULL, 'fr_FR', '-', '', '', '', 'english', 1, 'uploads/avatar-1.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ltr'),
+(4, 4, 'Ivan Corbero', '', '4', NULL, NULL, 'es_ES', '-', '', '', '', 'english', 2, 'uploads/avatar-1.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ltr'),
+(5, 5, 'Bertrand Lagarde', '', '0', NULL, NULL, 'fr_FR', '-', '', '', '', 'english', 3, 'uploads/avatar-1.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ltr'),
+(6, 6, 'Christelle Saliou', '', '0', NULL, NULL, 'fr_FR', '-', '', '', '', 'english', 7, 'uploads/avatar-1.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ltr'),
+(8, 8, 'Adminko', NULL, NULL, NULL, NULL, 'en_US', '-', '-', '', '', 'english', 1, 'uploads/avatar-1.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(13, 13, 'ravish beg', '1234', '5', NULL, NULL, 'en_US', '-', '', '', '', 'english', 1, 'uploads/avatar-1.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ltr'),
+(15, 15, 'shubham', '77777777777777', '0', NULL, NULL, 'fr_FR', '-', '6545', '+521+5296', 'tyxky62', 'english', 2, 'uploads/avatar-1.png', '2020-02-06', '', '2019-06-03', 'male', 'married', 'ravi', 'shree', '', 'ltr'),
+(16, 18, 'Piyush Mohan', 'TEMP2', '0', NULL, NULL, 'en_US', '-', '123345', '12345', 'NA', 'english', 7, 'uploads/avatar-1.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'LTR'),
+(17, 19, 'Md. Kaif', 'TEMP1', '0', NULL, NULL, 'en_US', '-', '12345', '1234', 'NA', 'english', 7, 'uploads/avatar-1.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'LTR'),
+(18, 20, 'Shubham Bhatt', 'TEMP3', '0', NULL, NULL, 'en_US', '-', '234234', '3423423', 'NA', 'english', 348, 'uploads/avatar-1.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'RTL'),
+(19, 21, 'Ravish', 'TEMP4', '0', NULL, NULL, 'en_US', '-', '123113', '343243', 'NA', 'english', 7, 'uploads/avatar-1.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'LTR'),
+(20, 22, 'Rahul Kumar', 'TEMP5', '0', NULL, NULL, 'en_US', '-', '234234', '234234', 'NA', 'english', 7, 'uploads/avatar-1.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'RTL'),
+(21, 23, 'Shivam Saini', 'TEMP6', '0', NULL, NULL, 'en_US', '-', '123123', '131231', 'NA', 'english', 7, 'uploads/avatar-1.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'LTR'),
+(22, 24, 'Deepak Nouliya', 'TEMP7', '0', NULL, NULL, 'en_US', '-', '342342', '3223', 'NA', 'english', 7, 'uploads/avatar-1.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'LTR'),
+(23, 25, 'Sonali', 'TEMP8', '0', NULL, NULL, 'en_US', '-', '1231', '234234', 'NA', 'english', 7, 'uploads/avatar-1.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'LTR'),
+(24, 26, 'Vaishali Sharma', 'TEMP9', '0', NULL, NULL, 'en_US', '-', '12312', '234234', 'NA', 'english', 7, 'uploads/avatar-1.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'LTR'),
+(25, 36, 'Demo User', 'TempDemo', '0', NULL, NULL, 'en_US', '-', '123456789', '132456789', 'NA', 'english', 342, 'uploads/avatar-1.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'LTR'),
+(28, 39, 'Parveen Dahiya', 'TempDemo', '0', NULL, NULL, 'en_US', '-', '09212593323', '09212593323', 'NA', 'english', 7, 'uploads/avatar-1.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'LTR'),
+(29, 40, 'gdgddbjc', '12345', '0', NULL, NULL, 'en_US', '-', '1234567890', '1234567890', 'dhsbhfdbhf', 'english', 342, 'uploads/27022020103714Jellyfish.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'LTR'),
+(30, 41, 'Rekha', '123', '0', NULL, NULL, 'en_US', '-', '123456789', '123456789', 'shalu@gmail.com', 'english', 7, 'uploads/03032020110800Penguins.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'LTR'),
+(31, 42, 'Vishali', '123456', '0', NULL, NULL, 'en_US', '-', '7897465456', '46546464', 'dfdsfdf', 'english', 7, 'uploads/05032020010525avatar.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'RTL'),
+(32, 43, 'Vishali', '123456', '0', NULL, NULL, 'en_US', '-', '7897465456', '46546464', 'dfdsfdf', 'english', 7, 'uploads/05032020010645avatar1.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'RTL'),
+(33, 44, 'deepika', '1234', '0', NULL, NULL, 'en_US', '-', '7897864654', '4565465465', 'deepi_ika', 'english', 1, 'uploads/12032020114047index-1.jpeg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'LTR');
 
 -- --------------------------------------------------------
 
@@ -108,12 +140,12 @@ CREATE TABLE `tbl_activities` (
   `module` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
   `module_field_id` int(11) DEFAULT NULL,
   `activity` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `activity_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `activity_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `icon` varchar(32) COLLATE utf8_unicode_ci DEFAULT 'fa-coffee',
   `link` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `value1` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `value2` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `deleted` int(11) NOT NULL DEFAULT 0
+  `value1` text COLLATE utf8_unicode_ci,
+  `value2` text COLLATE utf8_unicode_ci,
+  `deleted` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -121,6 +153,7 @@ CREATE TABLE `tbl_activities` (
 --
 
 INSERT INTO `tbl_activities` (`activities_id`, `user`, `module`, `module_field_id`, `activity`, `activity_date`, `icon`, `link`, `value1`, `value2`, `deleted`) VALUES
+(0, 24, 'performance', NULL, 'activity_appraisal_saved', '2020-02-18 12:53:39', 'fa-coffee', NULL, 'Deepak Nouliya', 'forFeb 2020', 0),
 (353, 1, 'settings', 1, 'activity_update_profile', '2019-11-06 12:51:26', 'fa-coffee', NULL, 'Prakhar Abhishek', NULL, 0),
 (354, 1, 'settings', 1, 'activity_save_general_settings', '2019-11-18 06:34:50', 'fa-coffee', NULL, 'Tester', NULL, 0),
 (355, 8, 'tasks', 2, 'activity_update_task', '2019-12-24 06:24:03', 'fa-tasks', 'admin/tasks/view_task_details/2', '100', NULL, 0),
@@ -205,13 +238,21 @@ INSERT INTO `tbl_activities` (`activities_id`, `user`, `module`, `module_field_i
 CREATE TABLE `tbl_advance_salary` (
   `advance_salary_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
+  `company_id` bigint(20) UNSIGNED DEFAULT NULL,
   `advance_amount` varchar(200) NOT NULL,
   `deduct_month` varchar(30) DEFAULT NULL,
-  `reason` text DEFAULT NULL,
-  `request_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `status` tinyint(2) NOT NULL DEFAULT 0 COMMENT '0 =pending,1=accpect , 2 = reject and 3 = paid',
+  `reason` text,
+  `request_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0 =pending,1=accpect , 2 = reject and 3 = paid',
   `approve_by` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_advance_salary`
+--
+
+INSERT INTO `tbl_advance_salary` (`advance_salary_id`, `user_id`, `company_id`, `advance_amount`, `deduct_month`, `reason`, `request_date`, `status`, `approve_by`) VALUES
+(0, 3, 2, '4', '2020-03', 'sdfsdfsdf', '2020-03-30 12:22:36', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -225,6 +266,16 @@ CREATE TABLE `tbl_allowed_ip` (
   `status` enum('active','reject','pending') DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `tbl_allowed_ip`
+--
+
+INSERT INTO `tbl_allowed_ip` (`allowed_ip_id`, `allowed_ip`, `status`) VALUES
+(2, '103.99.15.6', 'active'),
+(3, '103.99.15.12', 'active'),
+(4, '103.99.125.12', 'reject'),
+(5, '103.99.15.182', 'active');
+
 -- --------------------------------------------------------
 
 --
@@ -233,24 +284,28 @@ CREATE TABLE `tbl_allowed_ip` (
 
 CREATE TABLE `tbl_announcements` (
   `announcements_id` int(11) NOT NULL,
+  `company_id` bigint(20) UNSIGNED DEFAULT NULL,
   `title` text NOT NULL,
   `description` text NOT NULL,
   `user_id` int(11) NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status` enum('published','unpublished') NOT NULL DEFAULT 'unpublished' COMMENT '0 = unpublished, 1 = published',
-  `view_status` tinyint(1) NOT NULL DEFAULT 2 COMMENT '1=Read 2=Unread',
+  `view_status` tinyint(1) NOT NULL DEFAULT '2' COMMENT '1=Read 2=Unread',
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
   `all_client` varchar(20) DEFAULT NULL,
-  `attachment` text DEFAULT NULL
+  `attachment` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tbl_announcements`
 --
 
-INSERT INTO `tbl_announcements` (`announcements_id`, `title`, `description`, `user_id`, `created_date`, `status`, `view_status`, `start_date`, `end_date`, `all_client`, `attachment`) VALUES
-(2, 'Create an external account for vendors ( Best Practise ) ', '<a href=\"https://web-nostromo.com/BIA/admin/knowledgebase/details/articles/3\">https://web-nostromo.com/BIA/admin/knowledgebase/details/articles/3</a>', 1, '2019-07-31 05:49:31', 'published', 1, '2019-08-31', '2019-08-31', NULL, NULL);
+INSERT INTO `tbl_announcements` (`announcements_id`, `company_id`, `title`, `description`, `user_id`, `created_date`, `status`, `view_status`, `start_date`, `end_date`, `all_client`, `attachment`) VALUES
+(1, 2, 'hgvhgcvxhg', '<p>hbdh b</p>\r\n', 24, '2020-02-27 11:24:07', '', 2, '0000-00-00', '0000-00-00', '0', 'null'),
+(2, NULL, 'Create an external account for vendors ( Best Practise ) ', '<a href=\"https://web-nostromo.com/BIA/admin/knowledgebase/details/articles/3\">https://web-nostromo.com/BIA/admin/knowledgebase/details/articles/3</a>', 1, '2019-07-31 05:49:31', 'published', 1, '2019-08-31', '2019-08-31', NULL, NULL),
+(8, 2, 'Test Announcement', '<p>sdfsdf</p>\r\n', 8, '2020-03-03 11:16:07', 'published', 2, '2020-03-10', '2020-03-10', '0', 'null'),
+(9, NULL, ' Door to Door', '<p>Testing</p>\r\n', 8, '2020-03-11 18:57:58', '', 2, '0000-00-00', '0000-00-00', '0', 'null');
 
 -- --------------------------------------------------------
 
@@ -275,10 +330,10 @@ CREATE TABLE `tbl_assign_item` (
 CREATE TABLE `tbl_attendance` (
   `attendance_id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `leave_application_id` int(11) DEFAULT 0,
+  `leave_application_id` int(11) DEFAULT '0',
   `date_in` date DEFAULT NULL,
   `date_out` date DEFAULT NULL,
-  `attendance_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'status 0=absent 1=present 3 = onleave',
+  `attendance_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'status 0=absent 1=present 3 = onleave',
   `clocking_status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -287,13 +342,23 @@ CREATE TABLE `tbl_attendance` (
 --
 
 INSERT INTO `tbl_attendance` (`attendance_id`, `user_id`, `leave_application_id`, `date_in`, `date_out`, `attendance_status`, `clocking_status`) VALUES
-(1, 1, 0, '2019-07-26', '2019-07-26', 1, 0),
-(2, 1, 0, '2019-07-28', '2019-07-29', 1, 0),
-(3, 1, 0, '2019-08-02', '2019-08-02', 1, 0),
-(4, 1, 0, '2019-08-23', '2019-08-23', 1, 0),
-(5, 8, 0, '2019-12-18', '2019-12-18', 1, 0),
-(6, 1, 0, '2019-12-23', '2019-12-23', 1, 0),
-(7, 8, 0, '2019-12-23', '2019-12-29', 1, 0);
+(1, 24, 0, '2020-03-18', '2020-03-18', 1, 0),
+(2, 20, 0, '2020-03-19', NULL, 1, 0),
+(3, 23, 0, '2020-03-19', '2020-03-19', 1, 0),
+(4, 8, 0, '2020-03-19', NULL, 1, 0),
+(5, 19, 0, '2020-03-20', NULL, 1, 0),
+(6, 8, 0, '2020-03-20', NULL, 1, 0),
+(7, 19, 0, '2020-03-21', NULL, 1, 0),
+(8, 20, 0, '2020-03-21', NULL, 1, 0),
+(9, 22, 0, '2020-03-21', '2020-03-21', 1, 0),
+(10, 23, 0, '2020-03-21', '2020-03-21', 1, 0),
+(11, 24, 0, '2020-03-21', NULL, 1, 0),
+(12, 8, 0, '2020-03-21', '2020-03-21', 1, 0),
+(13, NULL, 0, '2020-03-21', '2020-03-21', 1, 0),
+(14, 19, 0, '2020-03-23', NULL, 1, 0),
+(15, 8, 0, '2020-03-30', '2020-03-30', 1, 0),
+(16, 8, 0, '2020-04-06', '2020-04-06', 1, 0),
+(17, 24, 0, '2020-04-06', '2020-04-06', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -306,36 +371,30 @@ CREATE TABLE `tbl_bug` (
   `issue_no` varchar(50) DEFAULT NULL,
   `project_id` int(11) DEFAULT NULL,
   `opportunities_id` int(11) DEFAULT NULL,
-  `task_id` int(11) NOT NULL DEFAULT 0,
+  `task_id` int(11) NOT NULL DEFAULT '0',
   `bug_title` varchar(200) NOT NULL,
   `bug_description` text NOT NULL,
   `bug_status` varchar(30) DEFAULT NULL,
   `notes` text NOT NULL,
   `priority` varchar(20) NOT NULL,
   `severity` varchar(20) DEFAULT NULL,
-  `reproducibility` text DEFAULT NULL,
+  `reproducibility` text,
   `reporter` int(11) DEFAULT NULL,
   `created_time` timestamp NULL DEFAULT NULL,
-  `update_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `permission` text DEFAULT NULL,
-  `client_visible` varchar(8) DEFAULT NULL
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `permission` text,
+  `client_visible` varchar(8) DEFAULT NULL,
+  `assign_to` text,
+  `company_id` bigint(20) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tbl_bug`
 --
 
-INSERT INTO `tbl_bug` (`bug_id`, `issue_no`, `project_id`, `opportunities_id`, `task_id`, `bug_title`, `bug_description`, `bug_status`, `notes`, `priority`, `severity`, `reproducibility`, `reporter`, `created_time`, `update_time`, `permission`, `client_visible`) VALUES
-(1, 'R&D1', 31, NULL, 0, 'New button not displayed on Internet Explorer ( Meetings / Navigation Lists )', '<p>Not on every env. This is an exeption.</p>\n', 'resolved', '', 'ok', 'minor', '<p><br></p>', 1, '2019-07-30 21:30:27', '2019-08-01 07:26:16', '{\"1\":[\"view\"]}', NULL),
-(2, 'R&D2', 31, NULL, 0, 'External users cant access with externals email', '', 'in_progress', '', 'ok', 'minor', '<p><br></p>', 1, '2019-07-30 21:31:27', '2019-08-12 21:56:50', '{\"1\":[\"view\"],\"3\":[\"view\"],\"5\":[\"view\"]}', NULL),
-(3, 'R&D3', 31, NULL, 0, 'Visual bug on google chrome ( Julie Hutchison site )', '<p>https://ipsengroup.sharepoint.com/sites/IPN10360rBoNTE/Commercial WS/Forms/AllItems.aspx</p>\n\n<p> </p>\n\n<p>Hi Marco</p>\n\n<p> </p>\n\n<p>We uninstalled and reinstalled Google Chrome (I didn’t, IT did it for me) and it had no effect.  The problem is still visible.</p>\n\n<p> </p>\n\n<p>Kind regards</p>\n\n<p> </p>\n\n<p>Julie</p>\n\n<p> </p>\n\n<p><strong>From:</strong> Marco DELPIANO<br>\n<strong>Sent:</strong> 01 August 2019 11:30<br>\n<strong>To:</strong> Julie HUTCHISON &lt;<a href=\"mailto:julie.hutchison@ipsen.com\">julie.hutchison@ipsen.com</a>>; Moez BOUATTOUR &lt;<a href=\"mailto:moez.bouattour@ineat-conseil.fr\">moez.bouattour@ineat-conseil.fr</a>>; Zied FEHRI &lt;<a href=\"mailto:zied.fehri@ineat-conseil.fr\">zied.fehri@ineat-conseil.fr</a>><br>\n<strong>Cc:</strong> Floriane MOTTET &lt;<a href=\"mailto:floriane.mottet@ipsen.com\">floriane.mottet@ipsen.com</a>><br>\n<strong>Subject:</strong> RE: IPN10360 share point</p>\n\n<p> </p>\n\n<p>Dear Julie,</p>\n\n<p> </p>\n\n<p>We analyzed your issue with <a href=\"mailto:zied.fehri@ineat-conseil.fr\">@Zied FEHRI</a> and we could not succeed into reproducing the bug on our end.</p>\n\n<p> </p>\n\n<p><a href=\"mailto:zied.fehri@ineat-conseil.fr\">@Zied FEHRI</a> suggested an uninstall / re install of the Google Chrome Browser.</p>\n\n<p> </p>\n\n<p>Could you please try that ?</p>\n\n<p> </p>\n\n<p>If you need any help. Please contact me or Service Desk.</p>\n\n<p> </p>\n\n<p>Kind regards,</p>\n\n<p><a href=\"https://eur01.safelinks.protection.outlook.com/?url=https://htmlsig.com/t/000001BZZNJV&data=02|01|marco.delpiano@ipsen.com|6acfeddb5eef44b3370608d716928613|9e776b6aa6cc4fafa054a502153beb01|0|0|637002690882039301&sdata=y0ZZUTYJ/p4qXEoPlev4qGzfkK130HBmMBy7IDEHO4U=&reserved=0\"><img alt=\"Ipsen Limited ltd\" src=\"https://htmlsigs.s3.amazonaws.com/logos/files/000/654/990/landscape/logo-ipsen.gif\"></a></p>\n\n<p><strong>Marco DELPIANO</strong> | Project Manager – Application Expert (O365 – SharePoint)<br>\n<a href=\"mailto:Marco.delpiano@ipsen.com\">Marco.delpiano@ipsen.com</a> /  +33 6 99 60 77 76</p>\n\n<p><strong>Boulogne Billancourt, 92100</strong></p>\n\n<p> </p>\n\n<p><strong>De :</strong> Julie HUTCHISON &lt;<a href=\"mailto:julie.hutchison@ipsen.com\">julie.hutchison@ipsen.com</a>><br>\n<strong>Envoyé :</strong> Wednesday, July 31, 2019 9:05 AM<br>\n<strong>À :</strong> Marco DELPIANO &lt;<a href=\"mailto:marco.delpiano@ipsen.com\">marco.delpiano@ipsen.com</a>>; Virginie BARI &lt;<a href=\"mailto:virginie.bari@ipsen.com\">virginie.bari@ipsen.com</a>>; Moez BOUATTOUR &lt;<a href=\"mailto:moez.bouattour@ineat-conseil.fr\">moez.bouattour@ineat-conseil.fr</a>><br>\n<strong>Cc :</strong> Floriane MOTTET &lt;<a href=\"mailto:floriane.mottet@ipsen.com\">floriane.mottet@ipsen.com</a>><br>\n<strong>Objet :</strong> RE: IPN10360 share point</p>\n\n<p> </p>\n\n<p>Hi Marco</p>\n\n<p> </p>\n\n<p>The problem below is still occurring with Sharepoint.  Do I need to send the request through the new IT portal to be resolved?</p>\n\n<p> </p>\n\n<p>Many thanks</p>\n\n<p> </p>\n\n<p>Julie</p>\n\n<p> </p>\n\n<p><strong>From:</strong> Marco DELPIANO<br>\n<strong>Sent:</strong> 01 July 2019 13:42<br>\n<strong>To:</strong> Julie HUTCHISON &lt;<a href=\"mailto:julie.hutchison@ipsen.com\">julie.hutchison@ipsen.com</a>>; Virginie BARI &lt;<a href=\"mailto:virginie.bari@ipsen.com\">virginie.bari@ipsen.com</a>>; Moez BOUATTOUR &lt;<a href=\"mailto:moez.bouattour@ineat-conseil.fr\">moez.bouattour@ineat-conseil.fr</a>><br>\n<strong>Cc:</strong> Floriane MOTTET &lt;<a href=\"mailto:floriane.mottet@ipsen.com\">floriane.mottet@ipsen.com</a>><br>\n<strong>Subject:</strong> RE: IPN10360 share point</p>\n\n<p> </p>\n\n<p>Dear Julie,</p>\n\n<p> </p>\n\n<p>I agree.</p>\n\n<p> </p>\n\n<p><a href=\"mailto:moez.bouattour@ineat-conseil.fr\">@Moez</a> will investigate this issue as soon as possible.</p>\n\n<p> </p>\n\n<p>Kr</p>\n\n<p><a href=\"https://eur01.safelinks.protection.outlook.com/?url=https://htmlsig.com/t/000001BZZNJV&data=02|01|marco.delpiano@ipsen.com|6acfeddb5eef44b3370608d716928613|9e776b6aa6cc4fafa054a502153beb01|0|0|637002690882039301&sdata=y0ZZUTYJ/p4qXEoPlev4qGzfkK130HBmMBy7IDEHO4U=&reserved=0\"><img alt=\"Ipsen Limited ltd\" src=\"https://htmlsigs.s3.amazonaws.com/logos/files/000/654/990/landscape/logo-ipsen.gif\"></a></p>\n\n<p><strong>Marco DELPIANO</strong> | Project Manager – Application Expert (O365 – SharePoint)<br>\n<a href=\"mailto:Marco.delpiano@ipsen.com\">Marco.delpiano@ipsen.com</a> /  +33 6 99 60 77 76</p>\n\n<p><strong>Boulogne Billancourt, 92100</strong></p>\n\n<p> </p>\n\n<p><strong>De :</strong> Julie HUTCHISON &lt;<a href=\"mailto:julie.hutchison@ipsen.com\">julie.hutchison@ipsen.com</a>><br>\n<strong>Envoyé :</strong> Monday, July 1, 2019 2:40 PM<br>\n<strong>À :</strong> Marco DELPIANO &lt;<a href=\"mailto:marco.delpiano@ipsen.com\">marco.delpiano@ipsen.com</a>>; Virginie BARI &lt;<a href=\"mailto:virginie.bari@ipsen.com\">virginie.bari@ipsen.com</a>><br>\n<strong>Cc :</strong> Floriane MOTTET &lt;<a href=\"mailto:floriane.mottet@ipsen.com\">floriane.mottet@ipsen.com</a>>; Moez BOUATTOUR &lt;<a href=\"mailto:moez.bouattour@ineat-conseil.fr\">moez.bouattour@ineat-conseil.fr</a>><br>\n<strong>Objet :</strong> RE: IPN10360 share point</p>\n\n<p> </p>\n\n<p>Hi</p>\n\n<p> </p>\n\n<p>Yes, I can see the whole page using Internet Explorer.  However, this glitch should be sorted – has it occurred with any other new Sharepoint sites being rolled out?   How should I get this escalated for investigation? I don’t want to have to open both  Explorer and Chrome all the time for this one site.</p>\n\n<p> </p>\n\n<p>Many thanks</p>\n\n<p> </p>\n\n<p>Julie</p>\n\n<p> </p>\n\n<p><strong>From:</strong> Marco DELPIANO<br>\n<strong>Sent:</strong> 01 July 2019 13:30<br>\n<strong>To:</strong> Julie HUTCHISON &lt;<a href=\"mailto:julie.hutchison@ipsen.com\">julie.hutchison@ipsen.com</a>>; Virginie BARI &lt;<a href=\"mailto:virginie.bari@ipsen.com\">virginie.bari@ipsen.com</a>><br>\n<strong>Cc:</strong> Floriane MOTTET &lt;<a href=\"mailto:floriane.mottet@ipsen.com\">floriane.mottet@ipsen.com</a>>; Moez BOUATTOUR &lt;<a href=\"mailto:moez.bouattour@ineat-conseil.fr\">moez.bouattour@ineat-conseil.fr</a>><br>\n<strong>Subject:</strong> RE: IPN10360 share point</p>\n\n<p> </p>\n\n<p>Virginie had the same problem… but as I cant replicate on my end I have no idea why this is happening.</p>\n\n<p> </p>\n\n<p>Using internet explorer should solve the problem but I will have a look again to see what is going wrong.</p>\n\n<p> </p>\n\n<p><strong>De :</strong> Julie HUTCHISON &lt;<a href=\"mailto:julie.hutchison@ipsen.com\">julie.hutchison@ipsen.com</a>><br>\n<strong>Envoyé :</strong> Monday, July 1, 2019 2:26 PM<br>\n<strong>À :</strong> Virginie BARI &lt;<a href=\"mailto:virginie.bari@ipsen.com\">virginie.bari@ipsen.com</a>>; Marco DELPIANO &lt;<a href=\"mailto:marco.delpiano@ipsen.com\">marco.delpiano@ipsen.com</a>><br>\n<strong>Cc :</strong> Floriane MOTTET &lt;<a href=\"mailto:floriane.mottet@ipsen.com\">floriane.mottet@ipsen.com</a>><br>\n<strong>Objet :</strong> RE: IPN10360 share point</p>\n\n<p> </p>\n\n<p>Hi</p>\n\n<p> </p>\n\n<p>I have one further issue with the new Sharepoint for rBoNT-E – when I open it, it appears off-centre and I cant see or scroll across to the left (see screen shot).  Can you please help.  I don’t think it is my settings, all other Sharepoints are fine.</p>\n\n<p> </p>\n\n<p><img alt=\"cid:image001.jpg@01D54861.9B12DD30\" src=\"file:///C:/Users/Master/AppData/Local/Temp/msohtmlclip1/01/clip_image001.jpg\"></p>\n\n<p>Many thanks</p>\n\n<p> </p>\n\n<p>Julie</p>\n\n<p> </p>\n\n<p><strong>From:</strong> Julie HUTCHISON<br>\n<strong>Sent:</strong> 01 July 2019 13:03<br>\n<strong>To:</strong> Virginie BARI &lt;<a href=\"mailto:virginie.bari@ipsen.com\">virginie.bari@ipsen.com</a>>; Marco DELPIANO &lt;<a href=\"mailto:marco.delpiano@ipsen.com\">marco.delpiano@ipsen.com</a>><br>\n<strong>Cc:</strong> Floriane MOTTET &lt;<a href=\"mailto:floriane.mottet@ipsen.com\">floriane.mottet@ipsen.com</a>><br>\n<strong>Subject:</strong> RE: IPN10360 share point</p>\n\n<p> </p>\n\n<p>Yes, thanks Marco</p>\n\n<p> </p>\n\n<p>Kind regards</p>\n\n<p> </p>\n\n<p>Julie</p>\n\n<p> </p>\n\n<p><strong>From:</strong> Virginie BARI<br>\n<strong>Sent:</strong> 01 July 2019 12:14<br>\n<strong>To:</strong> Marco DELPIANO &lt;<a href=\"mailto:marco.delpiano@ipsen.com\">marco.delpiano@ipsen.com</a>><br>\n<strong>Cc:</strong> Julie HUTCHISON &lt;<a href=\"mailto:julie.hutchison@ipsen.com\">julie.hutchison@ipsen.com</a>>; Floriane MOTTET &lt;<a href=\"mailto:floriane.mottet@ipsen.com\">floriane.mottet@ipsen.com</a>><br>\n<strong>Subject:</strong> RE: IPN10360 share point</p>\n\n<p> </p>\n\n<p>You’re a star, thank you Marco !!</p>\n\n<p> </p>\n\n<p><strong>From:</strong> Marco DELPIANO<br>\n<strong>Sent:</strong> Monday, July 01, 2019 1:08 PM<br>\n<strong>To:</strong> Virginie BARI &lt;<a href=\"mailto:virginie.bari@ipsen.com\">virginie.bari@ipsen.com</a>><br>\n<strong>Cc:</strong> Julie HUTCHISON &lt;<a href=\"mailto:julie.hutchison@ipsen.com\">julie.hutchison@ipsen.com</a>>; Floriane MOTTET &lt;<a href=\"mailto:floriane.mottet@ipsen.com\">floriane.mottet@ipsen.com</a>><br>\n<strong>Subject:</strong> RE: IPN10360 share point</p>\n\n<p> </p>\n\n<p>Dear Julie,</p>\n\n<p> </p>\n\n<p>Those modifications has been  completed like specified in Virginie email.</p>\n\n<p> </p>\n\n<p>Kr,</p>\n\n<p><a href=\"https://eur01.safelinks.protection.outlook.com/?url=https://htmlsig.com/t/000001BZZNJV&data=02|01|marco.delpiano@ipsen.com|6acfeddb5eef44b3370608d716928613|9e776b6aa6cc4fafa054a502153beb01|0|0|637002690882049295&sdata=fmOoSD7D6gGzjYJk2fYEsBx+UZZI/eJzoUTl64tLfdk=&reserved=0\"><img alt=\"Ipsen Limited ltd\" src=\"https://htmlsigs.s3.amazonaws.com/logos/files/000/654/990/landscape/logo-ipsen.gif\"></a></p>\n\n<p><strong>Marco DELPIANO</strong> | Project Manager – Application Expert (O365 – SharePoint)<br>\n<a href=\"mailto:Marco.delpiano@ipsen.com\">Marco.delpiano@ipsen.com</a> /  +33 6 99 60 77 76</p>\n\n<p><strong>Boulogne Billancourt, 92100</strong></p>\n\n<p><strong>De :</strong> Virginie BARI &lt;<a href=\"mailto:virginie.bari@ipsen.com\">virginie.bari@ipsen.com</a>><br>\n<strong>Envoyé :</strong> Friday, June 28, 2019 3:27 PM<br>\n<strong>À :</strong> Marco DELPIANO &lt;<a href=\"mailto:marco.delpiano@ipsen.com\">marco.delpiano@ipsen.com</a>><br>\n<strong>Cc :</strong> Julie HUTCHISON &lt;<a href=\"mailto:julie.hutchison@ipsen.com\">julie.hutchison@ipsen.com</a>><br>\n<strong>Objet :</strong> IPN10360 share point</p>\n\n<p> </p>\n\n<p>HI Marco,</p>\n\n<p> </p>\n\n<p>I can see you’re OOO today and I won’t be working on Monday anymore.</p>\n\n<p>In my IPN10360 share point website, could you please :</p>\n\n<ul>\n <li>Why, when I click on “scenario” , the page cannot be found ? (I created It correctly I think) and then, cannot see the folder when I click on the “glabellar lines” link</li>\n</ul>\n\n<p><img src=\"file:///C:/Users/Master/AppData/Local/Temp/msohtmlclip1/01/clip_image003.gif\"><img alt=\"cid:image006.jpg@01D53010.653EC480\" src=\"file:///C:/Users/Master/AppData/Local/Temp/msohtmlclip1/01/clip_image004.jpg\"></p>\n\n<p> </p>\n\n<p>If you manage to correct this, would you mind moving the 2 folders that are called “UFL” and “ultra fast plan GL” into this folder “scenario” , please</p>\n\n<p> </p>\n\n<p><img alt=\"cid:image007.jpg@01D53010.653EC480\" src=\"file:///C:/Users/Master/AppData/Local/Temp/msohtmlclip1/01/clip_image005.jpg\"></p>\n\n<p>Please inform Julie when done</p>\n\n<p> </p>\n\n<p>Thanks a lot,</p>\n\n<p>Virginie</p>\n\n<p> </p>\n\n<p> </p>\n\n<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n <tbody>\n  <tr>\n   <td>\n   <p> </p>\n   </td>\n  </tr>\n  <tr>\n   <td>\n   <p><strong>Virginie BARI</strong></p>\n   </td>\n  </tr>\n  <tr>\n   <td>\n   <p> </p>\n   </td>\n  </tr>\n  <tr>\n   <td>\n   <p>Global R&D Project Manager</p>\n   </td>\n  </tr>\n  <tr>\n   <td> </td>\n  </tr>\n  <tr>\n   <td>\n   <p>GRDO</p>\n   </td>\n  </tr>\n  <tr>\n   <td> </td>\n  </tr>\n  <tr>\n   <td>\n   <hr></td>\n  </tr>\n  <tr>\n   <td> </td>\n  </tr>\n  <tr>\n   <td>\n   <p>+33 6 44 17 52 70  (cell phone)</p>\n   </td>\n  </tr>\n  <tr>\n   <td>\n   <p>+33 1 60 92 70 37 (fixed phone)</p>\n   </td>\n  </tr>\n  <tr>\n   <td>\n   <p><a href=\"mailto:virginie.bari@ipsen.com\">virginie.bari@ipsen.com</a></p>\n   </td>\n  </tr>\n  <tr>\n   <td> </td>\n  </tr>\n  <tr>\n   <td>\n   <p>Ipsen Innovation</p>\n   </td>\n  </tr>\n  <tr>\n   <td> </td>\n  </tr>\n  <tr>\n   <td>\n   <p>5 avenue du Canada</p>\n\n   <p>91940 LES ULIS</p>\n\n   <p>FRANCE</p>\n   </td>\n  </tr>\n  <tr>\n   <td>\n   <p> </p>\n   </td>\n  </tr>\n  <tr>\n   <td>\n   <p><a href=\"https://eur01.safelinks.protection.outlook.com/?url=http://www.ipsen.com/&data=02|01|marco.delpiano@ipsen.com|6acfeddb5eef44b3370608d716928613|9e776b6aa6cc4fafa054a502153beb01|0|0|637002690882049295&sdata=ieFAzUHvGRr4S+OtsfY7aThkLAdvv7RL9pynNOIgDCE=&reserved=0\" target=\"_blank\">www.ipsen.com</a></p>\n   </td>\n  </tr>\n  <tr>\n   <td> </td>\n  </tr>\n  <tr>\n   <td>\n   <p><img alt=\"Logo Ipsen\" src=\"file:///C:/Users/Master/AppData/Local/Temp/msohtmlclip1/01/clip_image007.gif\"></p>\n   </td>\n  </tr>\n  <tr>\n   <td>\n   <p> </p>\n   </td>\n  </tr>\n </tbody>\n</table>\n\n<p> </p>\n\n<p> </p>\n\n<p> </p>\n\n<p> </p>\n', 'in_progress', '', 'ok', 'minor', '<p>Cant reproduce...</p>', 1, '2019-07-30 21:34:08', '2019-08-13 00:41:20', 'all', NULL),
-(4, 'R&D4', 31, NULL, 0, 'Upcoming Events widget not always displaying all the events of the day', '', 'resolved', '', 'ok', 'minor', '<p><br></p>', 1, '2019-07-30 21:40:17', '2019-08-13 00:40:00', 'all', NULL),
-(5, 'R&D4', 31, NULL, 0, 'Visitors group not providing access to website', '', 'resolved', '', 'ok', 'minor', '<p><br></p>', 1, '2019-08-01 05:37:14', '2019-08-13 01:42:00', 'all', NULL),
-(6, 'R&D5', 31, NULL, 0, 'Edit mode not displaying all the item', '', 'resolved', '', 'ok', 'minor', '<p><br></p>', 1, '2019-08-01 07:13:15', '2019-08-13 00:39:16', '{\"1\":[\"view\"]}', NULL),
-(7, 'R&D6', 31, NULL, 0, 'When nothing is specified in the URL field of an a Upcoming event item, then there should be no link <a></a>', '', 'resolved', '', 'ok', 'minor', '<p><br></p>', 1, '2019-08-01 07:25:09', '2019-08-12 19:03:53', 'all', NULL),
-(8, 'R&D7', 31, NULL, 0, 'Problem reported by Anne concerning the Team Member Access Group', '<p>Seem to be solved</p>\n', 'unconfirmed', '', 'ok', 'minor', '<p><br></p>', 1, '2019-08-01 07:29:03', '2019-08-13 00:37:28', 'all', NULL),
-(9, 'R&D8', 31, NULL, 0, 'Visual Bug on document libraries & list ( White frame )', '', 'resolved', '', 'ok', 'minor', '<p><br></p>', 1, '2019-08-01 07:30:45', '2019-08-13 00:38:34', 'all', NULL),
-(10, 'R&D10', 31, NULL, 0, 'Upcoming event not all showing on floriane site ( to take actions to correct on all sites & model)', '<p>Hello Zied,</p>\n\n<p> </p>\n\n<p>Encore un petit soucis avec le upcoming event.</p>\n\n<p> </p>\n\n<p>Je t’ai donné le droits sur le site ci-dessous.</p>\n\n<p> </p>\n\n<p><a href=\"https://ipsengroup.sharepoint.com/sites/OnivydeRDGPT\">https://ipsengroup.sharepoint.com/sites/OnivydeRDGPT</a></p>\n\n<p> </p>\n\n<p>Il y a deux événement pour Aout qui ne s’affiche ( Total 6 normalement ) alors que pour septembre tout s’affiche par exemple ( 8 évènements au total )</p>\n\n<p> </p>\n\n<p>Bien à toi,</p>\n', 'confirmed', '', 'ok', 'major', '<p><br></p>', 1, '2019-08-12 21:50:15', '2019-08-12 21:51:25', '{\"1\":[\"view\"]}', NULL);
+INSERT INTO `tbl_bug` (`bug_id`, `issue_no`, `project_id`, `opportunities_id`, `task_id`, `bug_title`, `bug_description`, `bug_status`, `notes`, `priority`, `severity`, `reproducibility`, `reporter`, `created_time`, `update_time`, `permission`, `client_visible`, `assign_to`, `company_id`) VALUES
+(1, 'testing the world', 4, NULL, 0, 'testing the BUgs extranet home mns', '<p>Let put the description</p>\n', 'conform', '', 'medium', 'show', '<p>lets put the reproducibility</p>\n', 8, '2020-03-26 13:36:59', '2020-03-30 05:27:41', '{\"8\":[\"View\",\"Edit\",\"Delete\"],\"13\":[\"View\",\"Edit\",\"Delete\"]}', NULL, 'custom', 2),
+(2, 'Another bug in the module', 4, NULL, 0, 'I am testing another bug', '<p>i am just adding new bug into db</p>\r\n', 'conform', '', 'medium', 'show', '', 8, '2020-03-26 13:36:59', '2020-03-30 05:43:25', '{\"8\":[\"View\",\"Edit\",\"Delete\"],\"13\":[\"View\",\"Edit\",\"Delete\"]}', NULL, 'custom', 1);
 
 -- --------------------------------------------------------
 
@@ -363,8 +422,8 @@ CREATE TABLE `tbl_checklists` (
   `checklist_id` int(11) NOT NULL,
   `module` varchar(32) DEFAULT NULL,
   `module_id` int(11) DEFAULT NULL,
-  `description` text DEFAULT NULL,
-  `finished` int(11) DEFAULT 0,
+  `description` text,
+  `finished` int(11) DEFAULT '0',
   `create_datetime` datetime DEFAULT NULL,
   `added_from` int(11) DEFAULT NULL,
   `finished_from` int(11) DEFAULT NULL,
@@ -382,7 +441,7 @@ CREATE TABLE `tbl_client` (
   `primary_contact` int(11) DEFAULT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `email` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `short_note` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `short_note` text COLLATE utf8_unicode_ci,
   `website` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `phone` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
   `mobile` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -401,14 +460,14 @@ CREATE TABLE `tbl_client` (
   `hosting_company` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `hostname` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `port` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `password` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `password` text COLLATE utf8_unicode_ci,
   `username` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `client_status` tinyint(1) NOT NULL COMMENT '1 = person and 2 = company',
-  `profile_photo` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `date_added` timestamp NOT NULL DEFAULT current_timestamp(),
+  `profile_photo` text COLLATE utf8_unicode_ci,
+  `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `leads_id` int(11) NOT NULL,
-  `latitude` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `longitude` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `latitude` text COLLATE utf8_unicode_ci,
+  `longitude` text COLLATE utf8_unicode_ci,
   `customer_group_id` int(11) DEFAULT NULL,
   `active` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `sms_notification` tinyint(1) DEFAULT NULL
@@ -440,7 +499,7 @@ CREATE TABLE `tbl_client_menu` (
   `link` varchar(200) DEFAULT NULL,
   `icon` varchar(50) NOT NULL,
   `parent` int(11) NOT NULL,
-  `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `sort` int(11) NOT NULL,
   `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -533,8 +592,8 @@ CREATE TABLE `tbl_clock` (
   `attendance_id` int(11) NOT NULL,
   `clockin_time` time DEFAULT NULL,
   `clockout_time` time DEFAULT NULL,
-  `comments` text DEFAULT NULL,
-  `clocking_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '1= clockin_time',
+  `comments` text,
+  `clocking_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1= clockin_time',
   `ip_address` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -543,18 +602,31 @@ CREATE TABLE `tbl_clock` (
 --
 
 INSERT INTO `tbl_clock` (`clock_id`, `attendance_id`, `clockin_time`, `clockout_time`, `comments`, `clocking_status`, `ip_address`) VALUES
-(1, 1, '01:00:51', '01:01:01', NULL, 0, '176.175.132.33'),
-(2, 2, '10:45:06', '01:40:51', NULL, 0, '194.98.14.73'),
-(3, 3, '10:51:02', '12:06:36', NULL, 0, '176.175.132.33'),
-(4, 4, '12:48:54', '12:49:23', NULL, 0, '176.175.132.33'),
-(5, 5, '12:14:51', '12:14:56', NULL, 0, '103.99.15.182'),
-(6, 5, '08:24:43', '08:24:47', NULL, 0, '103.99.15.182'),
-(7, 5, '08:24:52', '08:25:10', NULL, 0, '103.99.15.182'),
-(8, 6, '10:44:14', '10:44:21', NULL, 0, '103.99.15.182'),
-(9, 6, '10:44:25', '10:59:26', NULL, 0, '103.99.15.182'),
-(10, 7, '10:47:54', '10:55:28', NULL, 0, '103.99.15.182'),
-(11, 7, '10:55:32', '06:17:14', NULL, 0, '103.99.15.182'),
-(12, 6, '10:59:37', '10:59:40', NULL, 0, '103.99.15.182');
+(1, 1, '06:27:26', '06:27:26', NULL, 1, '103.99.15.182'),
+(2, 1, '18:27:32', '18:28:49', NULL, 0, '103.99.15.182'),
+(3, 1, '18:29:36', '18:30:25', NULL, 0, '103.99.15.182'),
+(4, 2, '10:05:21', NULL, NULL, 0, '103.99.15.182'),
+(5, 3, '10:12:17', '10:12:35', NULL, 0, '103.99.15.182'),
+(6, 4, '10:46:13', NULL, NULL, 0, '103.99.15.182'),
+(7, 3, '18:29:04', '18:29:08', NULL, 0, '103.99.15.182'),
+(8, 3, '18:29:12', '18:29:33', NULL, 0, '103.99.15.182'),
+(9, 5, '09:54:52', NULL, NULL, 0, '103.99.15.182'),
+(10, 6, '10:31:17', NULL, NULL, 0, '103.99.15.182'),
+(11, 7, '09:39:21', NULL, NULL, 0, '103.99.15.182'),
+(12, 8, '10:10:15', NULL, NULL, 0, '103.99.15.182'),
+(13, 9, '10:14:08', '10:16:02', NULL, 0, '103.99.15.182'),
+(14, 10, '10:14:52', '10:15:00', NULL, 0, '103.99.15.182'),
+(15, 10, '10:15:37', NULL, NULL, 0, '103.99.15.182'),
+(16, 9, '10:16:34', '10:24:47', NULL, 0, '103.99.15.182'),
+(17, 9, '10:25:17', '10:26:20', NULL, 0, '103.99.15.182'),
+(18, 9, '10:26:47', '17:25:04', NULL, 0, '103.99.15.182'),
+(19, 11, '10:29:08', NULL, NULL, 0, '103.99.15.182'),
+(20, 12, '12:20:41', '12:20:41', NULL, 1, '103.99.15.182'),
+(21, 13, '12:21:38', '12:21:38', NULL, 1, '103.99.15.182'),
+(22, 14, '11:48:44', NULL, NULL, 0, '103.99.15.182'),
+(23, 15, '11:10:20', '11:10:20', NULL, 1, '::1'),
+(24, 16, '12:45:30', '12:45:30', NULL, 1, '::1'),
+(25, 17, '12:46:58', '12:46:58', NULL, 1, '::1');
 
 -- --------------------------------------------------------
 
@@ -569,11 +641,25 @@ CREATE TABLE `tbl_clock_history` (
   `clockin_edit` time NOT NULL,
   `clockout_edit` time DEFAULT NULL,
   `reason` varchar(300) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1=pending and 2 = accept  3= reject',
-  `notify_me` tinyint(4) NOT NULL DEFAULT 1,
-  `view_status` tinyint(4) NOT NULL DEFAULT 2,
-  `request_date` timestamp NOT NULL DEFAULT current_timestamp()
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1=pending and 2 = accept  3= reject',
+  `notify_me` tinyint(4) NOT NULL DEFAULT '1',
+  `view_status` tinyint(4) NOT NULL DEFAULT '2',
+  `request_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_companies`
+--
+
+CREATE TABLE `tbl_companies` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `company_name` varchar(255) NOT NULL,
+  `reg_by` varchar(150) NOT NULL,
+  `company_email` varchar(255) NOT NULL,
+  `company_address` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -583,7 +669,7 @@ CREATE TABLE `tbl_clock_history` (
 
 CREATE TABLE `tbl_config` (
   `config_key` varchar(255) NOT NULL,
-  `value` text DEFAULT NULL
+  `value` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1242,7 +1328,7 @@ CREATE TABLE `tbl_custom_field` (
   `custom_field_id` int(11) NOT NULL,
   `form_id` int(11) DEFAULT NULL,
   `field_label` varchar(100) NOT NULL,
-  `default_value` text DEFAULT NULL,
+  `default_value` text,
   `help_text` varchar(200) NOT NULL,
   `field_type` enum('text','textarea','dropdown','date','checkbox','numeric','url','email') NOT NULL,
   `required` varchar(5) NOT NULL DEFAULT 'false',
@@ -1263,9 +1349,9 @@ CREATE TABLE `tbl_dashboard` (
   `name` varchar(50) CHARACTER SET latin1 NOT NULL,
   `col` varchar(200) CHARACTER SET latin1 DEFAULT NULL,
   `order_no` int(2) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 0,
-  `report` tinyint(1) NOT NULL DEFAULT 0,
-  `for_staff` tinyint(1) DEFAULT 1
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `report` tinyint(1) NOT NULL DEFAULT '0',
+  `for_staff` tinyint(1) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1329,6 +1415,32 @@ INSERT INTO `tbl_days` (`day_id`, `day`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_db_backup`
+--
+
+CREATE TABLE `tbl_db_backup` (
+  `backup_id` int(11) NOT NULL,
+  `company_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `path` varchar(255) NOT NULL,
+  `backup_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_db_backup`
+--
+
+INSERT INTO `tbl_db_backup` (`backup_id`, `company_id`, `path`, `backup_time`) VALUES
+(1, NULL, 'backup-on-2020-02-28-13-57-50.zip', '2020-02-28 12:58:07'),
+(6, NULL, 'backup-on-2020-03-02-12-43-32.zip', '2020-03-02 07:13:32'),
+(7, NULL, 'backup-on-2020-03-02-12-43-57.zip', '2020-03-02 07:13:57'),
+(9, 2, 'backup-on-2020-03-02-17-09-25.zip', '2020-03-30 08:48:24'),
+(10, NULL, 'backup-on-2020-03-03-15-47-15.zip', '2020-03-03 10:17:15'),
+(11, 2, 'backup-on-2020-03-30-14-16-13.zip', '2020-03-30 08:48:27'),
+(12, 2, 'backup-on-2020-03-30-14-20-50.zip', '2020-03-30 08:50:50');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_departments`
 --
 
@@ -1342,8 +1454,8 @@ CREATE TABLE `tbl_departments` (
   `username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `password` text COLLATE utf8_unicode_ci NOT NULL,
   `mailbox` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `unread_email` tinyint(1) NOT NULL DEFAULT 0,
-  `delete_mail_after_import` tinyint(1) NOT NULL DEFAULT 0,
+  `unread_email` tinyint(1) NOT NULL DEFAULT '0',
+  `delete_mail_after_import` tinyint(1) NOT NULL DEFAULT '0',
   `last_postmaster_run` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -1352,7 +1464,11 @@ CREATE TABLE `tbl_departments` (
 --
 
 INSERT INTO `tbl_departments` (`departments_id`, `deptname`, `department_head_id`, `email`, `encryption`, `host`, `username`, `password`, `mailbox`, `unread_email`, `delete_mail_after_import`, `last_postmaster_run`) VALUES
-(1, 'IT / Collaborative', 3, NULL, '', '', '', '', '', 0, 0, NULL);
+(1, 'IT / Collaborative', 3, NULL, '', '', '', '', '', 0, 0, NULL),
+(14, 'Dummy Departments ', 22, NULL, '', '', '', '', '', 0, 0, NULL),
+(17, 'Testing', NULL, NULL, '', '', '', '', '', 0, 0, NULL),
+(18, 'xzxzxzxz', NULL, NULL, '', '', '', '', '', 0, 0, NULL),
+(19, '', 8, NULL, '', '', '', '', '', 0, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -1362,20 +1478,31 @@ INSERT INTO `tbl_departments` (`departments_id`, `deptname`, `department_head_id
 
 CREATE TABLE `tbl_designations` (
   `designations_id` int(5) NOT NULL,
+  `company_id` bigint(20) UNSIGNED DEFAULT NULL,
   `departments_id` int(11) NOT NULL,
   `designations` varchar(100) NOT NULL,
-  `permission` text DEFAULT NULL
+  `permission` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tbl_designations`
 --
 
-INSERT INTO `tbl_designations` (`designations_id`, `departments_id`, `designations`, `permission`) VALUES
-(1, 1, 'Head Of Collaborative', NULL),
-(2, 1, 'Administrator', NULL),
-(3, 1, 'VIE', NULL),
-(7, 1, 'Coordinator', NULL);
+INSERT INTO `tbl_designations` (`designations_id`, `company_id`, `departments_id`, `designations`, `permission`) VALUES
+(1, NULL, 1, 'Head Of Collaborative', '[\"View\",\"Delete\",\"Edit\"]'),
+(2, NULL, 1, 'Administrator', '[\"View\",\"Delete\",\"Edit\"]'),
+(3, NULL, 2, 'VIE', NULL),
+(7, NULL, 1, 'Coordinator', '[\"View\",\"Delete\"]'),
+(336, NULL, 13, 'My Desig', ''),
+(337, NULL, 2, 'Onenene', NULL),
+(338, NULL, 2, 'sdfsf', NULL),
+(340, NULL, 15, 'Demo #3', ''),
+(341, NULL, 16, 'New Dse', ''),
+(342, NULL, 14, 'New Dummy Designation', '[\"View\",\"Delete\"]'),
+(343, NULL, 19, 'dddd', NULL),
+(346, NULL, 17, 'Testing', '[\"View\"]'),
+(347, NULL, 18, 'xzxzxzxzxz', ''),
+(348, 2, 1, 'deepak', NULL);
 
 -- --------------------------------------------------------
 
@@ -1406,9 +1533,9 @@ CREATE TABLE `tbl_draft` (
   `to` text NOT NULL,
   `subject` varchar(300) NOT NULL,
   `message_body` text NOT NULL,
-  `attach_file` text DEFAULT NULL,
-  `attach_file_path` text DEFAULT NULL,
-  `attach_filename` text DEFAULT NULL,
+  `attach_file` text,
+  `attach_file_path` text,
+  `attach_filename` text,
   `message_time` datetime NOT NULL,
   `deleted` enum('Yes','No') NOT NULL DEFAULT 'No'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1512,7 +1639,7 @@ CREATE TABLE `tbl_employee_award` (
   `gift_item` varchar(300) NOT NULL,
   `award_amount` int(5) NOT NULL,
   `award_date` varchar(10) NOT NULL,
-  `view_status` tinyint(1) NOT NULL DEFAULT 2 COMMENT '1=Read 2=Unread',
+  `view_status` tinyint(1) NOT NULL DEFAULT '2' COMMENT '1=Read 2=Unread',
   `given_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1542,22 +1669,22 @@ CREATE TABLE `tbl_employee_bank` (
 CREATE TABLE `tbl_employee_document` (
   `document_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `resume` text DEFAULT NULL,
-  `resume_path` text DEFAULT NULL,
-  `resume_filename` text DEFAULT NULL,
-  `offer_letter` text DEFAULT NULL,
-  `offer_letter_filename` text DEFAULT NULL,
-  `offer_letter_path` text DEFAULT NULL,
-  `joining_letter` text DEFAULT NULL,
-  `joining_letter_filename` text DEFAULT NULL,
-  `joining_letter_path` text DEFAULT NULL,
-  `contract_paper` text DEFAULT NULL,
-  `contract_paper_filename` text DEFAULT NULL,
-  `contract_paper_path` text DEFAULT NULL,
-  `id_proff` text DEFAULT NULL,
-  `id_proff_filename` text DEFAULT NULL,
-  `id_proff_path` text DEFAULT NULL,
-  `other_document` text DEFAULT NULL
+  `resume` text,
+  `resume_path` text,
+  `resume_filename` text,
+  `offer_letter` text,
+  `offer_letter_filename` text,
+  `offer_letter_path` text,
+  `joining_letter` text,
+  `joining_letter_filename` text,
+  `joining_letter_path` text,
+  `contract_paper` text,
+  `contract_paper_filename` text,
+  `contract_paper_path` text,
+  `id_proff` text,
+  `id_proff_filename` text,
+  `id_proff_path` text,
+  `other_document` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1573,6 +1700,13 @@ CREATE TABLE `tbl_employee_payroll` (
   `hourly_rate_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `tbl_employee_payroll`
+--
+
+INSERT INTO `tbl_employee_payroll` (`payroll_id`, `user_id`, `salary_template_id`, `hourly_rate_id`) VALUES
+(0, 21, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -1583,31 +1717,31 @@ CREATE TABLE `tbl_estimates` (
   `estimates_id` int(11) NOT NULL,
   `reference_no` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
   `client_id` int(11) DEFAULT NULL,
-  `project_id` int(11) DEFAULT 0,
+  `project_id` int(11) DEFAULT '0',
   `estimate_date` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `estimate_month` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `estimate_year` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   `due_date` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `alert_overdue` tinyint(1) NOT NULL DEFAULT 0,
+  `alert_overdue` tinyint(1) NOT NULL DEFAULT '0',
   `currency` varchar(32) COLLATE utf8_unicode_ci DEFAULT 'USD',
   `discount_percent` int(2) DEFAULT NULL,
-  `notes` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tax` int(11) NOT NULL DEFAULT 0,
-  `total_tax` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `notes` text COLLATE utf8_unicode_ci,
+  `tax` int(11) NOT NULL DEFAULT '0',
+  `total_tax` text COLLATE utf8_unicode_ci,
   `status` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Pending',
   `date_sent` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
   `est_deleted` enum('Yes','No') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'No',
-  `date_saved` timestamp NOT NULL DEFAULT current_timestamp(),
+  `date_saved` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `emailed` enum('Yes','No') COLLATE utf8_unicode_ci DEFAULT 'No',
   `show_client` enum('Yes','No') COLLATE utf8_unicode_ci DEFAULT 'No',
   `invoiced` enum('Yes','No') COLLATE utf8_unicode_ci DEFAULT 'No',
-  `invoices_id` int(11) NOT NULL DEFAULT 0,
-  `permission` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `invoices_id` int(11) NOT NULL DEFAULT '0',
+  `permission` text COLLATE utf8_unicode_ci,
   `client_visible` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'No',
   `discount_type` enum('before_tax','after_tax') COLLATE utf8_unicode_ci NOT NULL,
-  `user_id` int(11) NOT NULL DEFAULT 0 COMMENT 'sales agent',
-  `adjustment` decimal(18,2) NOT NULL DEFAULT 0.00,
-  `discount_total` decimal(18,2) NOT NULL DEFAULT 0.00,
+  `user_id` int(11) NOT NULL DEFAULT '0' COMMENT 'sales agent',
+  `adjustment` decimal(18,2) NOT NULL DEFAULT '0.00',
+  `discount_total` decimal(18,2) NOT NULL DEFAULT '0.00',
   `show_quantity_as` varchar(20) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -1620,19 +1754,19 @@ CREATE TABLE `tbl_estimates` (
 CREATE TABLE `tbl_estimate_items` (
   `estimate_items_id` int(11) NOT NULL,
   `estimates_id` int(11) NOT NULL,
-  `saved_items_id` int(11) DEFAULT 0,
-  `item_tax_rate` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `item_tax_name` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `saved_items_id` int(11) DEFAULT '0',
+  `item_tax_rate` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `item_tax_name` text COLLATE utf8_unicode_ci,
   `item_name` varchar(150) COLLATE utf8_unicode_ci DEFAULT 'Item Name',
-  `item_desc` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
-  `unit_cost` decimal(10,2) DEFAULT 0.00,
-  `quantity` decimal(10,2) DEFAULT 0.00,
-  `item_tax_total` decimal(10,2) DEFAULT 0.00,
-  `total_cost` decimal(10,2) DEFAULT 0.00,
-  `date_saved` timestamp NOT NULL DEFAULT current_timestamp(),
+  `item_desc` longtext COLLATE utf8_unicode_ci,
+  `unit_cost` decimal(10,2) DEFAULT '0.00',
+  `quantity` decimal(10,2) DEFAULT '0.00',
+  `item_tax_total` decimal(10,2) DEFAULT '0.00',
+  `total_cost` decimal(10,2) DEFAULT '0.00',
+  `date_saved` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `unit` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `hsn_code` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `order` int(11) DEFAULT 0
+  `hsn_code` text COLLATE utf8_unicode_ci,
+  `order` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1647,6 +1781,13 @@ CREATE TABLE `tbl_expense_category` (
   `description` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `tbl_expense_category`
+--
+
+INSERT INTO `tbl_expense_category` (`expense_category_id`, `expense_category`, `description`) VALUES
+(0, 'sfsdfds', 'sfdsd');
+
 -- --------------------------------------------------------
 
 --
@@ -1657,9 +1798,9 @@ CREATE TABLE `tbl_files` (
   `files_id` int(11) NOT NULL,
   `project_id` int(11) NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8_unicode_ci,
   `uploaded_by` int(11) NOT NULL,
-  `date_posted` timestamp NOT NULL DEFAULT current_timestamp()
+  `date_posted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1710,11 +1851,11 @@ CREATE TABLE `tbl_goal_tracking` (
   `achievement` int(10) NOT NULL,
   `start_date` varchar(20) NOT NULL,
   `end_date` varchar(20) NOT NULL,
-  `account_id` int(11) DEFAULT 0,
+  `account_id` int(11) DEFAULT '0',
   `description` mediumtext NOT NULL,
   `notify_goal_achive` varchar(5) DEFAULT NULL,
   `notify_goal_not_achive` varchar(5) DEFAULT NULL,
-  `permission` mediumtext DEFAULT NULL,
+  `permission` mediumtext,
   `email_send` varchar(5) NOT NULL DEFAULT 'no'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1758,6 +1899,7 @@ INSERT INTO `tbl_goal_type` (`goal_type_id`, `type_name`, `description`, `tbl_na
 
 CREATE TABLE `tbl_holiday` (
   `holiday_id` int(11) NOT NULL,
+  `company_id` bigint(20) UNSIGNED DEFAULT NULL,
   `event_name` varchar(200) NOT NULL,
   `description` text NOT NULL,
   `start_date` date NOT NULL,
@@ -1765,6 +1907,15 @@ CREATE TABLE `tbl_holiday` (
   `location` varchar(200) DEFAULT NULL,
   `color` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_holiday`
+--
+
+INSERT INTO `tbl_holiday` (`holiday_id`, `company_id`, `event_name`, `description`, `start_date`, `end_date`, `location`, `color`) VALUES
+(2, 1, 'Holi Leave', 'Holi Leave', '2020-03-07', '2020-03-11', 'Dehradun', '#e74c3c'),
+(3, 2, 'yuyiu', 'juoiujoiu', '2020-03-15', '2020-03-15', '', '#29c2c2'),
+(4, 2, 'raksha bandhan', 'leave on raksha bandhan', '2020-03-03', '2020-03-04', NULL, '#f1c40f');
 
 -- --------------------------------------------------------
 
@@ -1774,9 +1925,18 @@ CREATE TABLE `tbl_holiday` (
 
 CREATE TABLE `tbl_hourly_rate` (
   `hourly_rate_id` int(11) NOT NULL,
+  `company_id` bigint(20) UNSIGNED DEFAULT NULL,
   `hourly_grade` varchar(200) NOT NULL,
   `hourly_rate` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_hourly_rate`
+--
+
+INSERT INTO `tbl_hourly_rate` (`hourly_rate_id`, `company_id`, `hourly_grade`, `hourly_rate`) VALUES
+(1, NULL, 'b', '5'),
+(2, 2, 'Grade A+', '500');
 
 -- --------------------------------------------------------
 
@@ -1791,13 +1951,13 @@ CREATE TABLE `tbl_inbox` (
   `from` varchar(100) NOT NULL,
   `subject` varchar(300) NOT NULL,
   `message_body` text NOT NULL,
-  `attach_file` text DEFAULT NULL,
-  `attach_file_path` text DEFAULT NULL,
-  `attach_filename` text DEFAULT NULL,
+  `attach_file` text,
+  `attach_file_path` text,
+  `attach_filename` text,
   `message_time` datetime NOT NULL,
-  `view_status` tinyint(1) NOT NULL DEFAULT 2 COMMENT '1=Read 2=Unread',
-  `favourites` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0= no 1=yes',
-  `notify_me` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1=on 0=off',
+  `view_status` tinyint(1) NOT NULL DEFAULT '2' COMMENT '1=Read 2=Unread',
+  `favourites` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0= no 1=yes',
+  `notify_me` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1=on 0=off',
   `deleted` enum('Yes','No') NOT NULL DEFAULT 'No'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1830,21 +1990,21 @@ CREATE TABLE `tbl_invoices` (
   `invoice_month` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `invoice_year` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   `due_date` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `alert_overdue` tinyint(1) NOT NULL DEFAULT 0,
+  `alert_overdue` tinyint(1) NOT NULL DEFAULT '0',
   `notes` text COLLATE utf8_unicode_ci NOT NULL,
-  `tax` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `total_tax` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `tax` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `total_tax` text COLLATE utf8_unicode_ci,
   `discount_percent` int(2) DEFAULT NULL,
   `recurring` enum('Yes','No') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'No',
-  `recuring_frequency` int(11) NOT NULL DEFAULT 31,
+  `recuring_frequency` int(11) NOT NULL DEFAULT '31',
   `recur_frequency` varchar(12) COLLATE utf8_unicode_ci DEFAULT NULL,
   `recur_next_date` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
   `currency` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'USD',
   `status` enum('Cancelled','Unpaid','Paid','draft','partially_paid') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Unpaid',
-  `archived` int(11) DEFAULT 0,
+  `archived` int(11) DEFAULT '0',
   `date_sent` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
   `inv_deleted` enum('Yes','No') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'No',
-  `date_saved` timestamp NOT NULL DEFAULT current_timestamp(),
+  `date_saved` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `emailed` enum('Yes','No') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'No',
   `show_client` enum('Yes','No') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Yes',
   `viewed` enum('Yes','No') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'No',
@@ -1858,14 +2018,37 @@ CREATE TABLE `tbl_invoices` (
   `allow_payumoney` enum('Yes','No') COLLATE utf8_unicode_ci DEFAULT 'No',
   `allow_tapPayment` enum('Yes','No') COLLATE utf8_unicode_ci DEFAULT 'Yes',
   `allow_razorpay` enum('Yes','No') COLLATE utf8_unicode_ci DEFAULT 'No',
-  `permission` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `permission` text COLLATE utf8_unicode_ci,
   `client_visible` enum('Yes','No') COLLATE utf8_unicode_ci DEFAULT 'No',
   `discount_type` enum('before_tax','after_tax') COLLATE utf8_unicode_ci NOT NULL,
-  `user_id` int(11) NOT NULL DEFAULT 0 COMMENT 'sales agent',
-  `adjustment` decimal(18,2) NOT NULL DEFAULT 0.00,
-  `discount_total` decimal(18,2) NOT NULL DEFAULT 0.00,
+  `user_id` int(11) NOT NULL DEFAULT '0' COMMENT 'sales agent',
+  `adjustment` decimal(18,2) NOT NULL DEFAULT '0.00',
+  `discount_total` decimal(18,2) NOT NULL DEFAULT '0.00',
   `show_quantity_as` varchar(20) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `tbl_invoices`
+--
+
+INSERT INTO `tbl_invoices` (`invoices_id`, `recur_start_date`, `recur_end_date`, `reference_no`, `client_id`, `project_id`, `invoice_date`, `invoice_month`, `invoice_year`, `due_date`, `alert_overdue`, `notes`, `tax`, `total_tax`, `discount_percent`, `recurring`, `recuring_frequency`, `recur_frequency`, `recur_next_date`, `currency`, `status`, `archived`, `date_sent`, `inv_deleted`, `date_saved`, `emailed`, `show_client`, `viewed`, `allow_paypal`, `allow_stripe`, `allow_2checkout`, `allow_authorize`, `allow_ccavenue`, `allow_braintree`, `allow_mollie`, `allow_payumoney`, `allow_tapPayment`, `allow_razorpay`, `permission`, `client_visible`, `discount_type`, `user_id`, `adjustment`, `discount_total`, `show_quantity_as`) VALUES
+(1, '', '', '123456', 15, NULL, '2020-03-03', '2020-03', '2020', '2020-03-11', 0, '<p>Testing</p>\n', '0.00', '{\"tax_name\":null,\"total_tax\":null}', 0, 'No', 31, NULL, NULL, 'INR', 'Unpaid', 0, NULL, 'No', '2020-03-03 18:26:47', 'No', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 'No', 'No', 'No', 'No', 'No', 'Yes', 'No', '{\"8\":[\"View\"],\"15\":[\"View\"],\"18\":[\"View\"]}', 'No', 'before_tax', 0, '0.00', '0.00', 'qty'),
+(2, '', '', '112233', 2, 6, '2020-03-20', '2020-03', '2020', '2020-03-28', 0, '<p>notessssssssss</p>\n', '0.00', '{\"tax_name\":null,\"total_tax\":null}', 0, 'No', 31, NULL, NULL, 'INR', 'Unpaid', 0, NULL, 'No', '2020-03-12 00:39:20', 'No', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 'No', 'No', 'No', 'No', 'No', 'Yes', 'No', 'all', 'No', '', 0, '0.00', '0.00', 'qty'),
+(3, '', '', '4547987', 2, 4, '2020-03-12', '2020-03', '2020', '2020-03-18', 0, '<p>jhjkkjhkhkjh</p>\n', '0.00', '{\"tax_name\":null,\"total_tax\":null}', 0, 'No', 31, NULL, NULL, 'INR', 'Unpaid', 0, NULL, 'No', '2020-03-12 00:40:39', 'No', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 'No', 'No', 'No', 'No', 'No', 'Yes', 'No', 'all', 'No', '', 0, '0.00', '0.00', 'qty'),
+(5, '', '', '8900809', 2, 4, '2020-03-12', '2020-03', '2020', '2020-03-18', 0, '<p>jhjkkjhkhkjh</p>\n', '0.00', '{\"tax_name\":null,\"total_tax\":null}', 0, 'No', 31, NULL, NULL, 'INR', 'Unpaid', 0, NULL, 'No', '2020-03-12 00:42:11', 'No', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 'No', 'No', 'No', 'No', 'No', 'Yes', 'No', 'all', 'No', '', 0, '0.00', '0.00', 'qty'),
+(6, '', '', '7657575', 4, 68, '2020-03-14', '2020-03', '2020', '2020-03-23', 0, '<p>5654654</p>\n', '0.00', '{\"tax_name\":null,\"total_tax\":null}', 0, 'No', 31, NULL, NULL, 'INR', 'Unpaid', 0, NULL, 'No', '2020-03-12 00:48:21', 'No', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 'No', 'No', 'No', 'No', 'No', 'Yes', 'No', 'all', 'No', '', 0, '0.00', '0.00', 'qty'),
+(7, '', '', '565656', 4, 68, '2020-03-14', '2020-03', '2020', '2020-03-23', 0, '<p>5654654</p>\n', '0.00', '{\"tax_name\":null,\"total_tax\":null}', 0, 'No', 31, NULL, NULL, 'INR', 'Unpaid', 0, NULL, 'No', '2020-03-12 00:48:59', 'No', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 'No', 'No', 'No', 'No', 'No', 'Yes', 'No', 'all', 'No', '', 0, '0.00', '0.00', 'qty');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_ip_restriction`
+--
+
+CREATE TABLE `tbl_ip_restriction` (
+  `id` int(11) NOT NULL,
+  `ip_address` varchar(200) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1876,20 +2059,27 @@ CREATE TABLE `tbl_invoices` (
 CREATE TABLE `tbl_items` (
   `items_id` int(11) NOT NULL,
   `invoices_id` int(11) NOT NULL,
-  `item_tax_rate` decimal(18,2) NOT NULL DEFAULT 0.00,
-  `item_tax_name` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `item_tax_total` decimal(18,2) NOT NULL DEFAULT 0.00,
-  `quantity` decimal(18,2) DEFAULT 0.00,
-  `total_cost` decimal(18,2) DEFAULT 0.00,
+  `item_tax_rate` decimal(18,2) NOT NULL DEFAULT '0.00',
+  `item_tax_name` text COLLATE utf8_unicode_ci,
+  `item_tax_total` decimal(18,2) NOT NULL DEFAULT '0.00',
+  `quantity` decimal(18,2) DEFAULT '0.00',
+  `total_cost` decimal(18,2) DEFAULT '0.00',
   `item_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT 'Item Name',
-  `item_desc` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
-  `unit_cost` decimal(18,2) DEFAULT 0.00,
-  `order` int(11) DEFAULT 0,
-  `date_saved` timestamp NOT NULL DEFAULT current_timestamp(),
+  `item_desc` longtext COLLATE utf8_unicode_ci,
+  `unit_cost` decimal(18,2) DEFAULT '0.00',
+  `order` int(11) DEFAULT '0',
+  `date_saved` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `unit` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `hsn_code` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `saved_items_id` int(11) DEFAULT 0
+  `hsn_code` text COLLATE utf8_unicode_ci,
+  `saved_items_id` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `tbl_items`
+--
+
+INSERT INTO `tbl_items` (`items_id`, `invoices_id`, `item_tax_rate`, `item_tax_name`, `item_tax_total`, `quantity`, `total_cost`, `item_name`, `item_desc`, `unit_cost`, `order`, `date_saved`, `unit`, `hsn_code`, `saved_items_id`) VALUES
+(0, 2, '0.00', NULL, '0.00', '48.00', '4266624.00', 'item name', 'description', '88888.00', 0, '2020-03-11 12:09:20', '', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -1918,8 +2108,8 @@ CREATE TABLE `tbl_job_appliactions` (
   `mobile` varchar(15) NOT NULL,
   `cover_letter` text NOT NULL,
   `resume` text NOT NULL,
-  `application_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0=pending 1=accept 2 = reject',
-  `apply_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `application_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0=pending 1=accept 2 = reject',
+  `apply_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `send_email` varchar(20) DEFAULT NULL,
   `interview_date` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1943,9 +2133,16 @@ CREATE TABLE `tbl_job_circular` (
   `last_date` date NOT NULL,
   `description` text NOT NULL,
   `status` enum('published','unpublished') NOT NULL DEFAULT 'unpublished' COMMENT '1=publish 2=unpublish',
-  `created_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `permission` text DEFAULT NULL
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `permission` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_job_circular`
+--
+
+INSERT INTO `tbl_job_circular` (`job_circular_id`, `job_title`, `designations_id`, `vacancy_no`, `posted_date`, `employment_type`, `experience`, `age`, `salary_range`, `last_date`, `description`, `status`, `created_date`, `permission`) VALUES
+(0, 'php devloper', 1, '6456456456546546', '0000-00-00', 'full_time', '3628736236827', '4234234', '10000', '0000-00-00', '<html>\n<head>\n	<title></title>\n</head>\n<body>\n<p>6456546546</p>\n</body>\n</html>\n', 'published', '2020-03-03 12:11:24', 'all');
 
 -- --------------------------------------------------------
 
@@ -1956,10 +2153,10 @@ CREATE TABLE `tbl_job_circular` (
 CREATE TABLE `tbl_kb_category` (
   `kb_category_id` int(11) NOT NULL,
   `category` varchar(200) NOT NULL,
-  `description` longtext DEFAULT NULL,
+  `description` longtext,
   `type` varchar(50) NOT NULL,
   `sort` int(2) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1
+  `status` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1981,16 +2178,16 @@ INSERT INTO `tbl_kb_category` (`kb_category_id`, `category`, `description`, `typ
 CREATE TABLE `tbl_knowledgebase` (
   `kb_id` int(11) NOT NULL,
   `kb_category_id` int(11) NOT NULL,
-  `title` text DEFAULT NULL,
-  `slug` text DEFAULT NULL,
-  `description` text DEFAULT NULL,
-  `attachments` text DEFAULT NULL,
+  `title` text,
+  `slug` text,
+  `description` text,
+  `attachments` text,
   `for_all` enum('Yes','No') DEFAULT 'No',
-  `status` tinyint(1) NOT NULL DEFAULT 1,
-  `total_view` int(11) NOT NULL DEFAULT 0,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `total_view` int(11) NOT NULL DEFAULT '0',
   `created_by` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `sort` int(11) NOT NULL DEFAULT 0
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `sort` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -2013,7 +2210,7 @@ CREATE TABLE `tbl_languages` (
   `code` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   `icon` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `active` int(2) DEFAULT 0
+  `active` int(2) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -2057,7 +2254,7 @@ CREATE TABLE `tbl_leads` (
   `organization` varchar(50) NOT NULL,
   `lead_status_id` int(11) DEFAULT NULL,
   `lead_source_id` int(11) DEFAULT NULL,
-  `imported_from_email` tinyint(1) DEFAULT 0,
+  `imported_from_email` tinyint(1) DEFAULT '0',
   `email_integration_uid` varchar(30) DEFAULT NULL,
   `company_name` varchar(255) NOT NULL,
   `address` text NOT NULL,
@@ -2071,12 +2268,12 @@ CREATE TABLE `tbl_leads` (
   `mobile` varchar(32) NOT NULL,
   `facebook` varchar(32) NOT NULL,
   `notes` text NOT NULL,
-  `created_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `skype` varchar(200) NOT NULL,
   `twitter` varchar(100) NOT NULL,
-  `permission` text DEFAULT NULL,
-  `converted_client_id` int(11) NOT NULL DEFAULT 0,
-  `index_no` int(11) DEFAULT 0
+  `permission` text,
+  `converted_client_id` int(11) NOT NULL DEFAULT '0',
+  `index_no` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2112,17 +2309,19 @@ CREATE TABLE `tbl_lead_status` (
 CREATE TABLE `tbl_leave_application` (
   `leave_application_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
+  `designation_id` int(10) NOT NULL,
   `leave_category_id` int(2) NOT NULL,
   `reason` text NOT NULL,
+  `leave_duration` int(11) NOT NULL DEFAULT '0',
   `leave_type` enum('single_day','multiple_days','hours') NOT NULL DEFAULT 'single_day',
   `hours` varchar(20) DEFAULT NULL,
   `leave_start_date` date NOT NULL,
   `leave_end_date` date DEFAULT NULL,
-  `application_status` int(2) NOT NULL DEFAULT 1 COMMENT '1=pending,2=accepted 3=rejected',
-  `view_status` tinyint(1) NOT NULL DEFAULT 2,
-  `application_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `attachment` text DEFAULT NULL,
-  `comments` text DEFAULT NULL,
+  `application_status` int(2) NOT NULL DEFAULT '1' COMMENT '1=pending,2=accepted 3=rejected',
+  `view_status` tinyint(1) NOT NULL DEFAULT '1',
+  `application_date` varchar(255) NOT NULL,
+  `attachment` text,
+  `comments` text,
   `approve_by` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -2130,9 +2329,10 @@ CREATE TABLE `tbl_leave_application` (
 -- Dumping data for table `tbl_leave_application`
 --
 
-INSERT INTO `tbl_leave_application` (`leave_application_id`, `user_id`, `leave_category_id`, `reason`, `leave_type`, `hours`, `leave_start_date`, `leave_end_date`, `application_status`, `view_status`, `application_date`, `attachment`, `comments`, `approve_by`) VALUES
-(2, 1, 1, 'dsfsa', 'multiple_days', NULL, '2019-12-01', '2019-12-02', 1, 2, '2019-12-24 09:29:49', NULL, NULL, NULL),
-(3, 8, 1, 'sdfa', 'single_day', NULL, '2019-12-02', NULL, 1, 2, '2019-12-24 09:30:12', NULL, NULL, NULL);
+INSERT INTO `tbl_leave_application` (`leave_application_id`, `user_id`, `designation_id`, `leave_category_id`, `reason`, `leave_duration`, `leave_type`, `hours`, `leave_start_date`, `leave_end_date`, `application_status`, `view_status`, `application_date`, `attachment`, `comments`, `approve_by`) VALUES
+(9, 20, 7, 4, '<p>Testttt</p>\r\n', 2, 'multiple_days', NULL, '2020-03-06', '2020-03-07', 2, 0, '06-03-2020 16:51:46', 'leave-image2020-03-06-16-51-460.png', NULL, NULL),
+(10, 8, 1, 0, '<p>rtrret</p>\r\n', 0, 'single_day', NULL, '2020-03-21', '0000-00-00', 1, 0, '11-03-2020 16:59:50', 'leave-image2020-03-11-16-59-500.gif', NULL, NULL),
+(11, 24, 7, 1, '<p>hgjhg</p>\r\n', 1, 'single_day', NULL, '2020-03-21', '0000-00-00', 2, 0, '11-03-2020 17:03:04', 'leave-image2020-03-11-17-03-040.jpg', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2143,6 +2343,7 @@ INSERT INTO `tbl_leave_application` (`leave_application_id`, `user_id`, `leave_c
 CREATE TABLE `tbl_leave_category` (
   `leave_category_id` int(2) NOT NULL,
   `leave_category` varchar(100) NOT NULL,
+  `leave_cat_desig_id` int(10) DEFAULT NULL,
   `leave_quota` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -2150,9 +2351,73 @@ CREATE TABLE `tbl_leave_category` (
 -- Dumping data for table `tbl_leave_category`
 --
 
-INSERT INTO `tbl_leave_category` (`leave_category_id`, `leave_category`, `leave_quota`) VALUES
-(1, 'Sick', 2),
-(2, 'Marriage', 3);
+INSERT INTO `tbl_leave_category` (`leave_category_id`, `leave_category`, `leave_cat_desig_id`, `leave_quota`) VALUES
+(1, 'sick', 7, 7),
+(2, 'sick', 2, 6),
+(3, 'marraige', 7, 6),
+(4, 'emergency', 7, 5),
+(5, 'casual', 7, 6),
+(6, 'marriage', 2, 7),
+(7, 'emergency', 2, 8),
+(8, 'casual', 2, 10),
+(9, 'test', 7, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_leave_policy`
+--
+
+CREATE TABLE `tbl_leave_policy` (
+  `leave_policy_id` int(10) NOT NULL,
+  `lpolicy_department_id` int(50) DEFAULT NULL,
+  `lpolicy_designation_id` int(50) DEFAULT NULL,
+  `lpolicy_category_id` int(50) DEFAULT NULL,
+  `lpolicy_days` int(50) DEFAULT NULL,
+  `lpolicy_gender` enum('all','male','female','') DEFAULT NULL,
+  `lpolicy_effective_date` varchar(255) DEFAULT NULL,
+  `lpolicy_activate` enum('active','deact') DEFAULT NULL,
+  `lpolicy_addedon` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_leave_policy`
+--
+
+INSERT INTO `tbl_leave_policy` (`leave_policy_id`, `lpolicy_department_id`, `lpolicy_designation_id`, `lpolicy_category_id`, `lpolicy_days`, `lpolicy_gender`, `lpolicy_effective_date`, `lpolicy_activate`, `lpolicy_addedon`) VALUES
+(1, 1, 1, 1, 6, 'all', '2020-02-21', 'active', '2020-02-20 11:40:26'),
+(2, 1, 1, 3, 8, 'all', '2020-02-22', 'active', '2020-02-20 11:42:29'),
+(3, 1, 1, 4, 10, 'all', '2020-02-24', 'active', '2020-02-20 11:43:19'),
+(4, 1, 1, 5, 7, 'all', '2020-02-26', 'active', '2020-02-20 11:44:01'),
+(5, 1, 1, 9, 3, 'all', '2020-02-26', 'active', '2020-02-20 12:09:44'),
+(7, 1, 2, 1, 4, 'all', '2020-02-21', 'active', '2020-02-20 12:25:40'),
+(9, 14, 344, 9, 5, 'male', '2020-01-31', 'active', '2020-02-27 10:50:42'),
+(10, 17, 346, 0, 1, 'all', '2020-03-20', NULL, '2020-03-14 05:48:29'),
+(11, 14, 342, 0, 4, 'all', '2020-03-24', NULL, '2020-03-14 05:49:33');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_leave_yearly`
+--
+
+CREATE TABLE `tbl_leave_yearly` (
+  `year_leaveid` int(10) NOT NULL,
+  `designation_id` int(50) DEFAULT NULL,
+  `total_Yearlyleave` int(50) DEFAULT NULL,
+  `added_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_leave_yearly`
+--
+
+INSERT INTO `tbl_leave_yearly` (`year_leaveid`, `designation_id`, `total_Yearlyleave`, `added_on`) VALUES
+(1, 2, 28, '2020-02-20 10:13:31'),
+(2, 2, 28, '2020-02-20 10:16:29'),
+(3, 3, 26, '2020-02-20 10:16:44'),
+(4, 7, 25, '2020-02-20 10:17:03'),
+(6, 8, 20, '2020-02-21 05:28:20');
 
 -- --------------------------------------------------------
 
@@ -2467,10 +2732,10 @@ CREATE TABLE `tbl_menu` (
   `label` varchar(100) NOT NULL,
   `link` varchar(100) NOT NULL,
   `icon` varchar(100) NOT NULL,
-  `parent` int(11) NOT NULL DEFAULT 0,
-  `sort` int(11) NOT NULL DEFAULT 0,
-  `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `status` tinyint(1) DEFAULT 1 COMMENT '1= active 0=inactive'
+  `parent` int(11) NOT NULL DEFAULT '0',
+  `sort` int(11) NOT NULL DEFAULT '0',
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `status` tinyint(1) DEFAULT '1' COMMENT '1= active 0=inactive'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -2664,7 +2929,7 @@ CREATE TABLE `tbl_milestones` (
   `description` varchar(200) NOT NULL,
   `start_date` varchar(20) NOT NULL,
   `end_date` varchar(20) NOT NULL,
-  `client_visible` text DEFAULT NULL
+  `client_visible` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2677,9 +2942,9 @@ CREATE TABLE `tbl_notes` (
   `notes_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `is_client` enum('Yes','No') NOT NULL DEFAULT 'No',
-  `notes` mediumtext DEFAULT NULL,
+  `notes` mediumtext,
   `added_by` int(11) NOT NULL,
-  `added_date` timestamp NOT NULL DEFAULT current_timestamp()
+  `added_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2690,16 +2955,16 @@ CREATE TABLE `tbl_notes` (
 
 CREATE TABLE `tbl_notifications` (
   `notifications_id` int(11) NOT NULL,
-  `read` int(11) NOT NULL DEFAULT 0,
-  `read_inline` tinyint(1) NOT NULL DEFAULT 0,
+  `read` int(11) NOT NULL DEFAULT '0',
+  `read_inline` tinyint(1) NOT NULL DEFAULT '0',
   `date` datetime NOT NULL,
   `description` text NOT NULL,
-  `from_user_id` int(11) NOT NULL DEFAULT 0,
-  `to_user_id` int(11) NOT NULL DEFAULT 0,
+  `from_user_id` int(11) NOT NULL DEFAULT '0',
+  `to_user_id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(200) DEFAULT NULL,
-  `link` text DEFAULT NULL,
+  `link` text,
   `icon` varchar(200) DEFAULT NULL,
-  `value` text DEFAULT NULL
+  `value` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -2707,7 +2972,7 @@ CREATE TABLE `tbl_notifications` (
 --
 
 INSERT INTO `tbl_notifications` (`notifications_id`, `read`, `read_inline`, `date`, `description`, `from_user_id`, `to_user_id`, `name`, `link`, `icon`, `value`) VALUES
-(1, 0, 0, '2019-07-28 22:59:35', 'assign_to_you_the_project', 1, 3, 'Marco Delpiano', 'admin/projects/project_details/58', NULL, 'Formulation Sharepoint'),
+(1, 1, 1, '2019-07-28 22:59:35', 'assign_to_you_the_project', 1, 8, 'Marco Delpiano', 'admin/projects/project_details/58', NULL, 'Formulation Sharepoint'),
 (2, 0, 0, '2019-07-30 15:41:46', 'assign_to_you_the_project', 1, 3, 'Marco Delpiano', 'admin/projects/project_details/24', NULL, 'Self Service V2'),
 (3, 0, 0, '2019-07-30 15:41:46', 'assign_to_you_the_project', 1, 4, 'Marco Delpiano', 'admin/projects/project_details/24', NULL, 'Self Service V2'),
 (4, 0, 0, '2019-07-30 16:19:12', 'assign_to_you_the_project', 1, 3, 'Marco Delpiano', 'admin/projects/project_details/6', NULL, 'Visual Management HR RECRU'),
@@ -2948,7 +3213,80 @@ INSERT INTO `tbl_notifications` (`notifications_id`, `read`, `read_inline`, `dat
 (239, 0, 0, '2019-12-17 20:21:24', 'not_changed_status', 8, 1, 'Adminko', 'admin/projects/project_details/74', NULL, 'Status : In Progress to In Progress'),
 (240, 0, 0, '2019-12-23 19:32:09', 'not_changed_status', 8, 1, 'Adminko', 'admin/tasks/view_task_details/1', NULL, 'Status : completed to in_progress'),
 (241, 0, 0, '2019-12-24 00:30:07', 'not_timer_start', 8, 1, 'Adminko', 'admin/tasks/view_task_details/1/5', NULL, 'Task Hire a consultant to assist me into the scoping of the KIQ - PMR - Com / Prod'),
-(242, 0, 0, '2019-12-24 00:30:15', 'not_timer_stop', 8, 1, 'Adminko', 'admin/tasks/view_task_details/1/5', NULL, 'Task Hire a consultant to assist me into the scoping of the KIQ - PMR - Com / Prod');
+(242, 0, 0, '2019-12-24 00:30:15', 'not_timer_stop', 8, 1, 'Adminko', 'admin/tasks/view_task_details/1/5', NULL, 'Task Hire a consultant to assist me into the scoping of the KIQ - PMR - Com / Prod'),
+(243, 0, 0, '2020-03-03 16:16:07', 'announcement', 8, 13, NULL, 'Announcement', NULL, 'Test Announcement'),
+(244, 0, 0, '2020-03-03 16:16:07', 'announcement', 8, 18, NULL, 'Announcement', NULL, 'Test Announcement'),
+(245, 0, 0, '2020-03-03 16:16:07', 'announcement', 8, 19, NULL, 'Announcement', NULL, 'Test Announcement'),
+(246, 0, 0, '2020-03-03 16:16:07', 'announcement', 8, 20, NULL, 'Announcement', NULL, 'Test Announcement'),
+(247, 0, 0, '2020-03-03 16:16:07', 'announcement', 8, 21, NULL, 'Announcement', NULL, 'Test Announcement'),
+(248, 0, 0, '2020-03-03 16:16:07', 'announcement', 8, 22, NULL, 'Announcement', NULL, 'Test Announcement'),
+(249, 0, 0, '2020-03-03 16:16:07', 'announcement', 8, 23, NULL, 'Announcement', NULL, 'Test Announcement'),
+(250, 1, 1, '2020-03-03 16:16:07', 'announcement', 8, 24, NULL, 'Announcement', NULL, 'Test Announcement'),
+(251, 0, 0, '2020-03-03 16:16:07', 'announcement', 8, 25, NULL, 'Announcement', NULL, 'Test Announcement'),
+(252, 0, 0, '2020-03-03 16:16:07', 'announcement', 8, 26, NULL, 'Announcement', NULL, 'Test Announcement'),
+(253, 0, 0, '2020-03-03 16:16:07', 'announcement', 8, 23, NULL, 'Announcement', NULL, 'Test Announcement'),
+(254, 0, 0, '2020-03-30 12:34:36', 'announcement', 8, 13, NULL, 'Announcement', NULL, NULL),
+(255, 0, 0, '2020-03-30 12:34:36', 'announcement', 8, 18, NULL, 'Announcement', NULL, NULL),
+(256, 0, 0, '2020-03-30 12:34:36', 'announcement', 8, 19, NULL, 'Announcement', NULL, NULL),
+(257, 0, 0, '2020-03-30 12:34:36', 'announcement', 8, 20, NULL, 'Announcement', NULL, NULL),
+(258, 0, 0, '2020-03-30 12:34:36', 'announcement', 8, 21, NULL, 'Announcement', NULL, NULL),
+(259, 0, 0, '2020-03-30 12:34:36', 'announcement', 8, 22, NULL, 'Announcement', NULL, NULL),
+(260, 0, 0, '2020-03-30 12:34:36', 'announcement', 8, 23, NULL, 'Announcement', NULL, NULL),
+(261, 1, 1, '2020-03-30 12:34:36', 'announcement', 8, 24, NULL, 'Announcement', NULL, NULL),
+(262, 0, 0, '2020-03-30 12:34:36', 'announcement', 8, 25, NULL, 'Announcement', NULL, NULL),
+(263, 0, 0, '2020-03-30 12:34:36', 'announcement', 8, 26, NULL, 'Announcement', NULL, NULL),
+(264, 0, 0, '2020-03-30 12:34:36', 'announcement', 8, 39, NULL, 'Announcement', NULL, NULL),
+(265, 0, 0, '2020-03-30 12:36:57', 'announcement', 8, 13, NULL, 'Announcement', NULL, 'sdfsf'),
+(266, 0, 0, '2020-03-30 12:36:57', 'announcement', 8, 18, NULL, 'Announcement', NULL, 'sdfsf'),
+(267, 0, 0, '2020-03-30 12:36:57', 'announcement', 8, 19, NULL, 'Announcement', NULL, 'sdfsf'),
+(268, 0, 0, '2020-03-30 12:36:57', 'announcement', 8, 20, NULL, 'Announcement', NULL, 'sdfsf'),
+(269, 0, 0, '2020-03-30 12:36:57', 'announcement', 8, 21, NULL, 'Announcement', NULL, 'sdfsf'),
+(270, 0, 0, '2020-03-30 12:36:57', 'announcement', 8, 22, NULL, 'Announcement', NULL, 'sdfsf'),
+(271, 0, 0, '2020-03-30 12:36:57', 'announcement', 8, 23, NULL, 'Announcement', NULL, 'sdfsf'),
+(272, 1, 1, '2020-03-30 12:36:57', 'announcement', 8, 24, NULL, 'Announcement', NULL, 'sdfsf'),
+(273, 0, 0, '2020-03-30 12:36:57', 'announcement', 8, 25, NULL, 'Announcement', NULL, 'sdfsf'),
+(274, 0, 0, '2020-03-30 12:36:57', 'announcement', 8, 26, NULL, 'Announcement', NULL, 'sdfsf'),
+(275, 0, 0, '2020-03-30 12:36:57', 'announcement', 8, 39, NULL, 'Announcement', NULL, 'sdfsf'),
+(276, 0, 0, '2020-03-30 13:23:58', 'Project', 8, 8, NULL, 'Projects', NULL, 'klsdfsnf 1232edmksdfk.'),
+(277, 0, 0, '2020-03-30 13:23:58', 'Project', 8, 13, NULL, 'Projects', NULL, 'klsdfsnf 1232edmksdfk.'),
+(278, 0, 0, '2020-03-30 13:23:58', 'Project', 8, 15, NULL, 'Projects', NULL, 'klsdfsnf 1232edmksdfk.'),
+(279, 0, 0, '2020-03-30 13:23:58', 'Project', 8, 18, NULL, 'Projects', NULL, 'klsdfsnf 1232edmksdfk.'),
+(280, 0, 0, '2020-03-30 13:23:58', 'Project', 8, 19, NULL, 'Projects', NULL, 'klsdfsnf 1232edmksdfk.'),
+(281, 0, 0, '2020-03-30 13:23:58', 'Project', 8, 20, NULL, 'Projects', NULL, 'klsdfsnf 1232edmksdfk.'),
+(282, 0, 0, '2020-03-30 13:23:58', 'Project', 8, 21, NULL, 'Projects', NULL, 'klsdfsnf 1232edmksdfk.'),
+(283, 0, 0, '2020-03-30 13:23:58', 'Project', 8, 22, NULL, 'Projects', NULL, 'klsdfsnf 1232edmksdfk.'),
+(284, 0, 0, '2020-03-30 13:23:58', 'Project', 8, 23, NULL, 'Projects', NULL, 'klsdfsnf 1232edmksdfk.'),
+(285, 1, 1, '2020-03-30 13:23:58', 'Project', 8, 24, NULL, 'Projects', NULL, 'klsdfsnf 1232edmksdfk.'),
+(286, 0, 0, '2020-03-30 13:23:58', 'Project', 8, 25, NULL, 'Projects', NULL, 'klsdfsnf 1232edmksdfk.'),
+(287, 0, 0, '2020-03-30 13:23:58', 'Project', 8, 26, NULL, 'Projects', NULL, 'klsdfsnf 1232edmksdfk.'),
+(288, 0, 0, '2020-03-30 13:23:58', 'Project', 8, 39, NULL, 'Projects', NULL, 'klsdfsnf 1232edmksdfk.'),
+(289, 0, 0, '2020-03-30 13:27:34', 'Project', 8, 8, NULL, 'Projects', NULL, 'klsdfsnf 1232edmksdfk.'),
+(290, 0, 0, '2020-03-30 13:27:34', 'Project', 8, 13, NULL, 'Projects', NULL, 'klsdfsnf 1232edmksdfk.'),
+(291, 0, 0, '2020-03-30 13:27:34', 'Project', 8, 15, NULL, 'Projects', NULL, 'klsdfsnf 1232edmksdfk.'),
+(292, 0, 0, '2020-03-30 13:27:34', 'Project', 8, 18, NULL, 'Projects', NULL, 'klsdfsnf 1232edmksdfk.'),
+(293, 0, 0, '2020-03-30 13:27:34', 'Project', 8, 19, NULL, 'Projects', NULL, 'klsdfsnf 1232edmksdfk.'),
+(294, 0, 0, '2020-03-30 13:27:34', 'Project', 8, 20, NULL, 'Projects', NULL, 'klsdfsnf 1232edmksdfk.'),
+(295, 0, 0, '2020-03-30 13:27:34', 'Project', 8, 21, NULL, 'Projects', NULL, 'klsdfsnf 1232edmksdfk.'),
+(296, 0, 0, '2020-03-30 13:27:34', 'Project', 8, 22, NULL, 'Projects', NULL, 'klsdfsnf 1232edmksdfk.'),
+(297, 0, 0, '2020-03-30 13:27:34', 'Project', 8, 23, NULL, 'Projects', NULL, 'klsdfsnf 1232edmksdfk.'),
+(298, 1, 1, '2020-03-30 13:27:34', 'Project', 8, 24, NULL, 'Projects', NULL, 'klsdfsnf 1232edmksdfk.'),
+(299, 0, 0, '2020-03-30 13:27:34', 'Project', 8, 25, NULL, 'Projects', NULL, 'klsdfsnf 1232edmksdfk.'),
+(300, 0, 0, '2020-03-30 13:27:34', 'Project', 8, 26, NULL, 'Projects', NULL, 'klsdfsnf 1232edmksdfk.'),
+(301, 0, 0, '2020-03-30 13:27:34', 'Project', 8, 39, NULL, 'Projects', NULL, 'klsdfsnf 1232edmksdfk.'),
+(302, 0, 0, '2020-03-30 14:13:05', 'Task', 8, 8, NULL, 'Task', NULL, 'deepaktask'),
+(303, 0, 0, '2020-03-30 14:13:05', 'Task', 8, 13, NULL, 'Task', NULL, 'deepaktask'),
+(304, 0, 0, '2020-03-30 14:13:05', 'Task', 8, 15, NULL, 'Task', NULL, 'deepaktask'),
+(305, 0, 0, '2020-03-30 14:13:05', 'Task', 8, 18, NULL, 'Task', NULL, 'deepaktask');
+INSERT INTO `tbl_notifications` (`notifications_id`, `read`, `read_inline`, `date`, `description`, `from_user_id`, `to_user_id`, `name`, `link`, `icon`, `value`) VALUES
+(306, 0, 0, '2020-03-30 14:13:05', 'Task', 8, 19, NULL, 'Task', NULL, 'deepaktask'),
+(307, 0, 0, '2020-03-30 14:13:05', 'Task', 8, 20, NULL, 'Task', NULL, 'deepaktask'),
+(308, 0, 0, '2020-03-30 14:13:05', 'Task', 8, 21, NULL, 'Task', NULL, 'deepaktask'),
+(309, 0, 0, '2020-03-30 14:13:05', 'Task', 8, 22, NULL, 'Task', NULL, 'deepaktask'),
+(310, 0, 0, '2020-03-30 14:13:05', 'Task', 8, 23, NULL, 'Task', NULL, 'deepaktask'),
+(311, 1, 1, '2020-03-30 14:13:05', 'Task', 8, 24, NULL, 'Task', NULL, 'deepaktask'),
+(312, 0, 0, '2020-03-30 14:13:05', 'Task', 8, 25, NULL, 'Task', NULL, 'deepaktask'),
+(313, 0, 0, '2020-03-30 14:13:05', 'Task', 8, 26, NULL, 'Task', NULL, 'deepaktask'),
+(314, 0, 0, '2020-03-30 14:13:05', 'Task', 8, 39, NULL, 'Task', NULL, 'deepaktask');
 
 -- --------------------------------------------------------
 
@@ -3006,8 +3344,8 @@ CREATE TABLE `tbl_opportunities` (
   `new_link` varchar(20) NOT NULL,
   `next_action` varchar(100) NOT NULL,
   `next_action_date` varchar(20) NOT NULL,
-  `notes` text DEFAULT NULL,
-  `permission` text DEFAULT NULL
+  `notes` text,
+  `permission` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -3032,10 +3370,10 @@ CREATE TABLE `tbl_outgoing_emails` (
   `id` int(11) UNSIGNED NOT NULL,
   `sent_to` varchar(64) DEFAULT NULL,
   `sent_from` varchar(64) DEFAULT NULL,
-  `subject` text DEFAULT NULL,
-  `message` longtext DEFAULT NULL,
-  `date_sent` timestamp NULL DEFAULT current_timestamp(),
-  `delivered` int(11) DEFAULT 0
+  `subject` text,
+  `message` longtext,
+  `date_sent` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `delivered` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -3091,7 +3429,7 @@ CREATE TABLE `tbl_overtime` (
   `user_id` int(11) NOT NULL,
   `overtime_date` date NOT NULL,
   `overtime_hours` varchar(20) NOT NULL,
-  `notes` text DEFAULT NULL,
+  `notes` text,
   `status` enum('pending','approved','rejected') NOT NULL DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -3107,15 +3445,15 @@ CREATE TABLE `tbl_payments` (
   `trans_id` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
   `payer_email` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `payment_method` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `amount` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `amount` longtext COLLATE utf8_unicode_ci,
   `currency` varchar(64) COLLATE utf8_unicode_ci DEFAULT 'USD',
   `notes` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `payment_date` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
   `month_paid` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
   `year_paid` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
   `paid_by` int(11) NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `account_id` int(11) NOT NULL DEFAULT 0 COMMENT 'account_id means tracking deposit from which account'
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `account_id` int(11) NOT NULL DEFAULT '0' COMMENT 'account_id means tracking deposit from which account'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -3189,6 +3527,13 @@ CREATE TABLE `tbl_performance_apprisal` (
   `ability_to_meed_deadline` tinyint(1) DEFAULT NULL COMMENT 'Behavioural - 1 (S) = Satisfactory, 2 (U) = Unsatisfactory, 3 (N) = Needs Improvement'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `tbl_performance_apprisal`
+--
+
+INSERT INTO `tbl_performance_apprisal` (`performance_appraisal_id`, `user_id`, `general_remarks`, `appraisal_month`, `customer_experiece_management`, `marketing`, `management`, `administration`, `presentation_skill`, `quality_of_work`, `efficiency`, `integrity`, `professionalism`, `team_work`, `critical_thinking`, `conflict_management`, `attendance`, `ability_to_meed_deadline`) VALUES
+(0, 24, '<p>,l</p>\r\n', '2020-02', 3, 2, NULL, NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -3213,6 +3558,15 @@ CREATE TABLE `tbl_performance_indicator` (
   `attendance` tinyint(1) DEFAULT NULL COMMENT 'Behavioural - 1 = Beginner, 2 = Intermediate, 3 = Advanced',
   `ability_to_meed_deadline` tinyint(1) DEFAULT NULL COMMENT 'Behavioural - 1 = Beginner, 2 = Intermediate, 3 = Advanced'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_performance_indicator`
+--
+
+INSERT INTO `tbl_performance_indicator` (`performance_indicator_id`, `designations_id`, `customer_experiece_management`, `marketing`, `management`, `administration`, `presentation_skill`, `quality_of_work`, `efficiency`, `integrity`, `professionalism`, `team_work`, `critical_thinking`, `conflict_management`, `attendance`, `ability_to_meed_deadline`) VALUES
+(1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0),
+(2, 7, 1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0),
+(3, 342, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -3277,7 +3631,7 @@ CREATE TABLE `tbl_private_chat` (
   `private_chat_id` int(11) NOT NULL,
   `chat_title` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `user_id` int(11) NOT NULL,
-  `time` timestamp NOT NULL DEFAULT current_timestamp()
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -3298,8 +3652,8 @@ CREATE TABLE `tbl_private_chat_messages` (
   `private_chat_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `message` text COLLATE utf8_unicode_ci NOT NULL,
-  `message_time` timestamp NOT NULL DEFAULT current_timestamp(),
-  `msg_category` int(10) NOT NULL DEFAULT 0 COMMENT '0=message;1=attatchment'
+  `message_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `msg_category` int(10) NOT NULL DEFAULT '0' COMMENT '0=message;1=attatchment'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -3317,7 +3671,7 @@ INSERT INTO `tbl_private_chat_messages` (`private_chat_messages_id`, `private_ch
 (14, 1, 1, 'http://plazacrm.com/assets/uploads/file2019-11-06-22-59-37.exe', '2019-11-07 09:59:37', 0),
 (15, 1, 8, 'http://plazacrm.com/assets/uploads/file2019-11-06-23-19-02.php', '2019-11-07 10:19:02', 0),
 (16, 1, 1, 'http://plazacrm.com/assets/uploads/file2019-11-06-23-27-39.jpg', '2019-11-07 10:27:39', 0),
-(17, 1, 8, 'http://plazacrm.com/assets/uploads/file2019-11-07-00-59-36.jpg', '2019-11-07 11:59:36', 0);
+(17, 1, 23, 'http://plazacrm.com/assets/uploads/file2019-11-07-00-59-36.jpg', '2019-11-07 11:59:36', 0);
 
 -- --------------------------------------------------------
 
@@ -3333,7 +3687,7 @@ CREATE TABLE `tbl_private_chat_users` (
   `active` int(11) NOT NULL COMMENT '0 == minimize chat,1 == open chat and  2 == close chat ',
   `unread` int(11) NOT NULL,
   `title` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-  `deleted` int(11) NOT NULL DEFAULT 0 COMMENT 'keep last message id'
+  `deleted` int(11) NOT NULL DEFAULT '0' COMMENT 'keep last message id'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -3341,8 +3695,8 @@ CREATE TABLE `tbl_private_chat_users` (
 --
 
 INSERT INTO `tbl_private_chat_users` (`private_chat_users_id`, `private_chat_id`, `user_id`, `to_user_id`, `active`, `unread`, `title`, `deleted`) VALUES
-(1, 1, 1, 8, 2, 0, ' <strong>Adminko</strong>', 0),
-(2, 1, 8, 1, 2, 0, ' <strong>Raz0rke</strong>', 16);
+(1, 1, 23, 20, 2, 0, ' <strong>Adminko</strong>', 0),
+(2, 1, 24, 20, 2, 0, ' <strong>Raz0rke</strong>', 16);
 
 -- --------------------------------------------------------
 
@@ -3352,80 +3706,89 @@ INSERT INTO `tbl_private_chat_users` (`private_chat_users_id`, `private_chat_id`
 
 CREATE TABLE `tbl_project` (
   `project_id` int(11) NOT NULL,
+  `company_id` bigint(20) UNSIGNED DEFAULT NULL,
   `project_name` varchar(100) NOT NULL,
-  `client_id` text DEFAULT NULL,
+  `client_id` text,
   `progress` varchar(50) NOT NULL,
   `calculate_progress` varchar(50) DEFAULT NULL,
   `start_date` varchar(20) NOT NULL,
   `end_date` varchar(20) NOT NULL,
-  `alert_overdue` tinyint(1) NOT NULL DEFAULT 0,
-  `project_cost` decimal(18,2) NOT NULL DEFAULT 0.00,
+  `alert_overdue` tinyint(1) NOT NULL DEFAULT '0',
+  `project_cost` decimal(18,2) NOT NULL DEFAULT '0.00',
   `demo_url` varchar(100) NOT NULL,
   `project_status` varchar(20) NOT NULL,
-  `description` text DEFAULT NULL,
+  `description` text,
+  `token_amount` varchar(255) DEFAULT NULL,
+  `remaining_amt` varchar(255) DEFAULT NULL,
   `notify_client` enum('Yes','No') NOT NULL,
   `timer_status` enum('on','off') DEFAULT NULL,
   `timer_started_by` int(11) DEFAULT NULL,
   `start_time` int(11) DEFAULT NULL,
   `logged_time` int(11) DEFAULT NULL,
-  `permission` text DEFAULT NULL,
-  `notes` text DEFAULT NULL,
-  `created_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `permission` text,
+  `notes` text,
+  `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `hourly_rate` varchar(200) DEFAULT NULL,
   `fixed_rate` varchar(200) DEFAULT NULL,
-  `project_settings` text DEFAULT NULL,
+  `project_settings` text,
   `with_tasks` enum('yes','no') NOT NULL DEFAULT 'no',
   `estimate_hours` varchar(50) DEFAULT NULL,
-  `billing_type` varchar(50) DEFAULT NULL
+  `billing_type` varchar(50) DEFAULT NULL,
+  `uploads` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tbl_project`
 --
 
-INSERT INTO `tbl_project` (`project_id`, `project_name`, `client_id`, `progress`, `calculate_progress`, `start_date`, `end_date`, `alert_overdue`, `project_cost`, `demo_url`, `project_status`, `description`, `notify_client`, `timer_status`, `timer_started_by`, `start_time`, `logged_time`, `permission`, `notes`, `created_time`, `hourly_rate`, `fixed_rate`, `project_settings`, `with_tasks`, `estimate_hours`, `billing_type`) VALUES
-(2, 'Visual Management Model', '10', '100', NULL, '2018-03-01', '2018-09-30', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', 'Yes', 'off', NULL, 0, 1576864923, '{\"1\":[\"view\"]}', NULL, '2019-12-20 18:02:03', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(4, 'Visual Management Techops HR UK', '2', '0', NULL, '2018-11-01', '2019-06-01', 0, '0.00', 'http:// text.com', 'in_progress', '<a href=\"https://ent.box.com/s/l2f70q9aastmazzr1hpta7j91o25x10y\" target=\"_blank\" xss=\"removed\">https://ent.box.com/s/l2f70q9aastmazzr1hpta7j91o25x10y</a>', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-01 19:30:25', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(6, 'Visual Management HR RECRU', '2', '100', NULL, '2018-04-01', '2018-11-15', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"],\"3\":[\"view\"]}', NULL, '2019-08-27 22:50:54', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(9, 'Validation Website', '6', '0', NULL, '2019-01-01', '2020-01-01', 0, '0.00', 'http:// text.com', 'started', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-01 05:32:35', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(11, 'Somatuline Real World Evidence', '1', '100', NULL, '2018-12-01', '2019-02-28', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-27 11:25:37', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(14, 'SharePoint R&D Information', '6', '0', NULL, '2019-06-01', '2019-10-01', 0, '0.00', 'http:// text.com', 'started', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-07-31 07:46:54', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(16, 'SharePoint Projects Supported By C2S ( Sarah / Melissa ) - Not a Project', '3', '0', NULL, '2019-01-01', '2019-12-31', 0, '0.00', 'http:// text.com', 'in_progress', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-07-31 07:31:18', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(18, 'SharePoint PMO', '3', '100', NULL, '1969-12-31', '2019-12-31', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-07-31 06:38:39', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(20, 'Sharepoint PED ENDO', '5', '100', NULL, '2018-07-31', '2018-08-31', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-27 22:45:18', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(21, 'SharePoint Australia', '1', '100', NULL, '2018-01-01', '2018-05-09', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-27 22:58:26', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(22, 'SharePoint Algeria', '1', '100', NULL, '1969-12-31', '2019-03-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"5\":[\"view\"]}', NULL, '2019-08-27 23:01:53', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(24, 'Self Service V2', '3', '65', NULL, '2018-11-30', '2020-01-02', 0, '0.00', 'http:// text.com', 'on_hold', '<span xss=removed>Self service custom system for support and application sharepoint team </span><br xss=removed><br xss=removed><a href=\"https://ent.box.com/s/llq3knl5dkhb5st7ybcla7a6dnko8o45\" target=\"_blank\" xss=removed>https://ent.box.com/s/llq3knl5dkhb5st7ybcla7a6dnko8o45</a><br>', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"],\"3\":[\"view\"],\"4\":[\"edit\",\"view\"],\"5\":[\"edit\",\"view\"],\"6\":[\"edit\",\"view\"]}', NULL, '2019-08-01 07:04:21', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(28, 'Refonte Intranet 2020', '7', '5', NULL, '2020-01-01', '2020-12-31', 0, '0.00', 'http:// text.com', 'in_progress', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"],\"3\":[\"view\"],\"4\":[\"edit\",\"view\"]}', NULL, '2019-07-31 07:30:45', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(29, 'RA community', '12', '100', NULL, '2018-05-01', '2018-08-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-27 23:01:16', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(30, 'RA Team Site', '1', '0', NULL, '1969-12-31', '2019-09-30', 0, '0.00', 'http:// text.com', 'in_progress', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-07-31 07:44:33', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(31, 'R&D PMO', '6', '0', NULL, '2019-01-01', '2019-06-01', 0, '0.00', 'https://ipsengroup.sharepoint.com/_layouts/15/sharepoint.aspx', 'in_progress', '<a href=\"https://ent.box.com/s/441xokn168rv6yxgr68gjwi3dk9qgo9u\" target=\"_blank\" xss=\"removed\">https://ent.box.com/s/441xokn168rv6yxgr68gjwi3dk9qgo9u</a>', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"],\"3\":[\"view\"],\"5\":[\"view\"]}', NULL, '2019-08-28 03:18:27', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(33, 'R&D COM\'unity Seminar', '1', '100', NULL, '2018-08-01', '2018-09-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-27 22:20:27', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(35, 'Purchasing Project Tool', '13', '100', NULL, '2017-12-01', '2018-03-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-27 23:10:21', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(36, 'Purchasing Planet', '1', '100', NULL, '2018-05-01', '2018-07-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-27 23:04:52', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(37, 'Publication HUB 2.0', '1', '100', NULL, '2019-03-01', '2019-06-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-27 22:18:41', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(39, 'Patient Centricity', '1', '100', NULL, '2018-05-01', '2018-08-20', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-27 22:21:46', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(40, 'OnePage SharePoint VIP Self Service', '1', '100', NULL, '2019-01-01', '2019-03-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-27 22:59:10', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(42, 'LEAP - Ipsen Launch Excellence', '1', '100', NULL, '2019-01-01', '2019-05-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-27 22:52:51', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(43, 'IT Portal', '3', '95', NULL, '2018-01-01', '2019-09-30', 0, '0.00', 'http:// text.com', 'in_progress', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-28 01:14:05', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(46, 'Ipsen Planet', '8', '0', NULL, '2014-01-01', '2021-01-01', 0, '0.00', 'http:// text.com', 'in_progress', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"],\"3\":[\"view\"],\"4\":[\"view\"]}', NULL, '2019-08-01 08:58:06', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(49, 'GMI Updates', '1', '100', NULL, '2018-09-01', '2018-09-30', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-27 22:16:44', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(50, 'GMA Tools & Services Evolutions', '1', '100', NULL, '1969-12-31', '2019-03-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-27 22:04:09', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(51, 'GMA Rare Diseases', '1', '100', NULL, '2018-02-01', '2018-05-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-27 22:00:58', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(52, 'GMA Neurology', '1', '100', NULL, '2018-04-01', '2018-10-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-27 21:58:28', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(54, 'Global Public Affairs', '1', '100', NULL, '2019-02-01', '2019-08-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-07-28 21:43:47', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(56, 'Global Medical Affairs V2', '1', '100', NULL, '2019-01-01', '2019-06-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-27 21:55:16', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(58, 'Formulation Sharepoint - Canceled', '1', '100', NULL, '1969-12-31', '2018-08-31', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-27 21:52:46', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(59, 'Engineering Toolbox', '1', '100', NULL, '2018-05-01', '2018-07-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-27 21:50:46', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(60, 'DVP Cabometyx', '1', '100', NULL, '1969-12-31', '2019-04-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-18 06:26:26', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(65, 'Decapeptyl Prime', '5', '10', NULL, '2018-08-27', '2019-10-31', 0, '0.00', 'http:// text.com', 'in_progress', '<p>https://ent.box.com/s/6x16qwuvgqmduipq1whutnaqxdj70ogs</p><p><br></p>', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-28 01:14:18', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(66, 'Decapeptyl Price & Access PaTH', '11', '100', NULL, '2018-05-01', '2018-09-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-27 22:55:59', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(68, 'CI Plateform PH1 - PH2', '4', '0', NULL, '2019-01-01', '2020-01-01', 0, '0.00', 'https://ipsengroup.sharepoint.com/sites/Custom/CabometyxRCCLandscape', 'in_progress', '<a href=\"https://ent.box.com/s/n95wr2s9hpd6db9er92hc5m76k06ud8i\" target=\"_blank\" xss=\"removed\">https://ent.box.com/s/n95wr2s9hpd6db9er92hc5m76k06ud8i</a><br>', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-28 03:14:51', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(70, 'Cabommunity', '5', '100', NULL, '2018-05-01', '2018-09-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-27 22:54:33', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(72, 'Cabometyx GVP V2', '1', '5', NULL, '2019-01-01', '2020-01-01', 0, '0.00', 'http:// text.com', 'started', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-14 01:14:24', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(73, 'BDP Group Process and Delivery', '6', '100', NULL, '2019-01-01', '2019-03-01', 0, '15.00', 'http:// text.com', 'completed', 'This is Description', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-27 22:54:15', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate'),
-(74, 'Patient Centricity Update', '9', '80', NULL, '2019-08-01', '2019-09-01', 0, '0.00', 'https://ipsengroup.sharepoint.com/sites/root20/PatientCentricity/SitePages/HomePage.aspx', 'in_progress', '', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"],\"5\":[\"view\"]}', NULL, '2019-08-28 01:14:26', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",\"show_staff_finance_overview\"]', 'no', '5:00', 'fixed_rate'),
-(75, 'TECHOPS TRANSFO OFFICE ( Powered by PMO Widget )', '3', '85', NULL, '2019-07-01', '2019-09-30', 0, '0.00', 'https://ipsengroup.sharepoint.com/sites/Custom/TechopsPMO/', 'in_progress', '<p class=\"MsoNormal\"><span lang=\"FR\" xss=\"removed\">Bonjour Marco,</span><span lang=\"FR\"><o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=\"removed\"> </span><span lang=\"FR\"><o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=\"removed\">Comme convenu , voici les modifications à apporter au\nsite TechOps PMO :</span><span lang=\"FR\"><o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=\"removed\"> </span><span lang=\"FR\"><o></o></span></p>\n\n<ul xss=\"removed\" type=\"disc\">\n <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Changer son nom TechOps PMO par\n     TechOps Transfo Office</span><span lang=\"FR\"><o></o></span></li>\n <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Mettre à gauche : </span><span lang=\"FR\"><o></o></span></li>\n <ul xss=\"removed\" type=\"circle\">\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Capacity to Deliver</span><span lang=\"FR\"><o></o></span></li>\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Factory of the Future</span><span lang=\"FR\"><o></o></span></li>\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Fucture Manufacturing Footprint</span><span lang=\"FR\"><o></o></span></li>\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Fuel the Future</span><span lang=\"FR\"><o></o></span></li>\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Service powerHouse</span><span lang=\"FR\"><o></o></span></li>\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">One Ipsen</span><span lang=\"FR\"><o></o></span></li>\n </ul>\n <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Définir comme domaines :</span><span lang=\"FR\"><o></o></span></li>\n <ul xss=\"removed\" type=\"circle\">\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Capex management</span><span lang=\"FR\"><o></o></span></li>\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Supply Chain distribution &\n      network</span><span lang=\"FR\"><o></o></span></li>\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Factory of the Future</span><span lang=\"FR\"><o></o></span></li>\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Footprint</span><span lang=\"FR\"><o></o></span></li>\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Manufacturing optimisation</span><span lang=\"FR\"><o></o></span></li>\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Quality of Operations</span><span lang=\"FR\"><o></o></span></li>\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Procurement</span><span lang=\"FR\"><o></o></span></li>\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Information Technology</span><span lang=\"FR\"><o></o></span></li>\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">TecOps organisation</span><span lang=\"FR\"><o></o></span></li>\n </ul>\n <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Avoir la possibilité de créer des\n     sous-domaines sous chaque domaine </span><span lang=\"FR\"><o></o></span></li>\n</ul>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=\"removed\"> </span><span lang=\"FR\"><o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=\"removed\">D’avance, merci !!</span><span lang=\"FR\"><o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=\"removed\">Corinne</span><span lang=\"FR\"><o></o></span></p>', 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"]}', NULL, '2019-08-28 03:30:34', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",\"show_staff_finance_overview\"]', 'no', '0:00', 'fixed_rate');
+INSERT INTO `tbl_project` (`project_id`, `company_id`, `project_name`, `client_id`, `progress`, `calculate_progress`, `start_date`, `end_date`, `alert_overdue`, `project_cost`, `demo_url`, `project_status`, `description`, `token_amount`, `remaining_amt`, `notify_client`, `timer_status`, `timer_started_by`, `start_time`, `logged_time`, `permission`, `notes`, `created_time`, `hourly_rate`, `fixed_rate`, `project_settings`, `with_tasks`, `estimate_hours`, `billing_type`, `uploads`) VALUES
+(2, NULL, 'Visual Management Model', '10', '0', NULL, '2018-03-01', '2018-09-30', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', NULL, NULL, 'Yes', 'off', NULL, 0, 1576864923, '{\"12\":[\"view\"]}', NULL, '2020-02-25 09:13:15', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', 'stremio_4.4.52-1_amd64.deb,stremio_4.4.52-1_amd641.deb,stremio_4.4.52-1_amd642.deb,user_fav_section14.sql'),
+(4, NULL, 'Visual Management Techops HR UK', '2', '0', NULL, '2018-11-01', '2019-06-01', 0, '0.00', 'http:// text.com', 'in_progress', '<a href=\"https://ent.box.com/s/l2f70q9aastmazzr1hpta7j91o25x10y\" target=\"_blank\" xss=\"removed\">https://ent.box.com/s/l2f70q9aastmazzr1hpta7j91o25x10y</a>', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"23\":[\"view\"],\"24\":[\"view\"],\"25\":[\"view\"]}', NULL, '2020-02-24 07:12:26', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', 'Plaza_-_CRM_Admin_Panel_(2)6.csv,Plaza_-_CRM_Admin_Panel_(2)7.csv,user_fav_section17.sql'),
+(6, NULL, 'Visual Management HR RECRU', '2', '100', NULL, '2018-04-01', '2018-11-15', 0, '0.00', 'http:// text.com', 'started', '<p>This is Description</p>\n', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"15\":[\"view\"],\"23\":[\"view\"]}', NULL, '2020-03-11 06:18:51', '0', '', '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '', 'fixed_rate', NULL),
+(9, NULL, 'Validation Website', '6', '0', NULL, '2019-01-01', '2020-01-01', 0, '0.00', 'http:// text.com', 'started', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"8\":[\"view\"]}', NULL, '2020-02-25 09:13:23', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(11, NULL, 'Somatuline Real World Evidence', '1', '100', NULL, '2018-12-01', '2019-02-28', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"15\":[\"view\"]}', NULL, '2020-02-25 09:13:27', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(14, NULL, 'SharePoint R&D Information', '6', '0', NULL, '2019-06-01', '2019-10-01', 0, '0.00', 'http:// text.com', 'started', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"18\":[\"view\"]}', NULL, '2020-02-25 09:13:31', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(16, NULL, 'SharePoint Projects Supported By C2S ( Sarah / Melissa ) - Not a Project', '3', '0', NULL, '2019-01-01', '2020-07-29', 0, '0.00', 'http:// text.com', 'started', '<p>This is Description</p>\n', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"8\":[\"view\"],\"21\":[\"view\"],\"25\":[\"view\"]}', NULL, '2020-03-06 12:45:59', '0', '', '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '', 'fixed_rate', NULL),
+(18, NULL, 'SharePoint PMO', '3', '100', NULL, '1969-12-31', '2019-12-31', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"21\":[\"view\"]}', NULL, '2020-02-25 09:13:37', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(20, NULL, 'Sharepoint PED ENDO', '5', '100', NULL, '2018-07-31', '2018-08-31', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"23\":[\"view\"]}', NULL, '2020-02-25 09:13:42', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(21, NULL, 'SharePoint Australia', '1', '100', NULL, '2018-01-01', '2018-05-09', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"24\":[\"view\"]}', NULL, '2020-02-25 09:13:47', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(22, NULL, 'SharePoint Algeria', '1', '100', NULL, '1969-12-31', '2019-03-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"25\":[\"view\"]}', NULL, '2020-02-25 09:14:00', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(24, NULL, 'Self Service V2', '3', '65', NULL, '2018-11-30', '2020-01-02', 0, '0.00', 'http:// text.com', 'on_hold', '<span xss=removed>Self service custom system for support and application sharepoint team </span><br xss=removed><br xss=removed><a href=\"https://ent.box.com/s/llq3knl5dkhb5st7ybcla7a6dnko8o45\" target=\"_blank\" xss=removed>https://ent.box.com/s/llq3knl5dkhb5st7ybcla7a6dnko8o45</a><br>', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"15\":[\"view\"],\"23\":[\"view\"],\"24\":[\"edit\",\"view\"],\"25\":[\"edit\",\"view\"],\"26\":[\"edit\",\"view\"]}', NULL, '2020-02-25 09:18:48', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(28, NULL, 'Refonte Intranet 2020', '7', '5', NULL, '2020-01-01', '2020-12-31', 0, '0.00', 'http:// text.com', 'in_progress', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"1\":[\"view\"],\"3\":[\"view\"],\"4\":[\"edit\",\"view\"]}', NULL, '2019-07-31 07:30:45', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(29, NULL, 'RA community', '12', '100', NULL, '2018-05-01', '2018-08-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"8\":[\"view\"]}', NULL, '2020-02-25 09:16:41', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(30, NULL, 'RA Team Site', '1', '0', NULL, '1969-12-31', '2019-09-30', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"8\":[\"view\"]}', NULL, '2020-03-05 05:54:41', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(31, NULL, 'R&D PMO', '6', '0', NULL, '2019-01-01', '2019-06-01', 0, '0.00', 'https://ipsengroup.sharepoint.com/_layouts/15/sharepoint.aspx', 'in_progress', '<a href=\"https://ent.box.com/s/441xokn168rv6yxgr68gjwi3dk9qgo9u\" target=\"_blank\" xss=\"removed\">https://ent.box.com/s/441xokn168rv6yxgr68gjwi3dk9qgo9u</a>', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"15\":[\"view\"],\"23\":[\"view\"],\"25\":[\"view\"]}', NULL, '2020-02-25 09:19:00', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(33, NULL, 'R&D COM\'unity Seminar', '1', '100', NULL, '2018-08-01', '2018-09-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"8\":[\"view\"]}', NULL, '2020-02-25 09:16:41', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(35, NULL, 'Purchasing Project Tool', '13', '100', NULL, '2017-12-01', '2018-03-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"8\":[\"view\"]}', NULL, '2020-02-25 09:16:41', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(36, NULL, 'Purchasing Planet', '1', '100', NULL, '2018-05-01', '2018-07-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"8\":[\"view\"]}', NULL, '2020-02-25 09:16:41', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(37, NULL, 'Publication HUB 2.0', '1', '100', NULL, '2019-03-01', '2019-06-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"8\":[\"view\"]}', NULL, '2020-02-25 09:16:41', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(39, NULL, 'Patient Centricity', '1', '100', NULL, '2018-05-01', '2018-08-20', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"8\":[\"view\"]}', NULL, '2020-02-25 09:16:41', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(40, NULL, 'OnePage SharePoint VIP Self Service', '1', '100', NULL, '2019-01-01', '2019-03-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"8\":[\"view\"]}', NULL, '2020-02-25 09:16:41', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(42, NULL, 'LEAP - Ipsen Launch Excellence', '1', '100', NULL, '2019-01-01', '2019-05-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"8\":[\"view\"]}', NULL, '2020-02-25 09:16:41', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(43, NULL, 'IT Portal', '3', '95', NULL, '2018-01-01', '2019-09-30', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"15\":[\"view\"]}', NULL, '2020-02-29 11:03:04', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(46, NULL, 'Ipsen Planet', '8', '0', NULL, '2014-01-01', '2021-01-01', 0, '0.00', 'http:// text.com', 'in_progress', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"13\":[\"view\"],\"23\":[\"view\"],\"24\":[\"view\"]}', NULL, '2020-02-25 09:14:33', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(49, NULL, 'GMI Updates', '1', '100', NULL, '2018-09-01', '2018-09-30', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"8\":[\"view\"]}', NULL, '2020-02-25 09:16:41', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(50, NULL, 'GMA Tools & Services Evolutions', '1', '100', NULL, '1969-12-31', '2019-03-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"8\":[\"view\"]}', NULL, '2020-02-25 09:16:41', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(51, NULL, 'GMA Rare Diseases', '1', '100', NULL, '2018-02-01', '2018-05-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"8\":[\"view\"]}', NULL, '2020-03-02 11:50:46', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(52, NULL, 'GMA Neurology', '1', '100', NULL, '2018-04-01', '2018-10-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"8\":[\"view\"]}', NULL, '2020-02-25 09:16:41', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(54, NULL, 'Global Public Affairs', '1', '100', NULL, '2019-02-01', '2019-08-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"8\":[\"view\"]}', NULL, '2020-02-25 09:16:41', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(56, NULL, 'Global Medical Affairs V2', '1', '100', NULL, '2019-01-01', '2019-06-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"8\":[\"view\"]}', NULL, '2020-02-25 09:16:41', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(58, NULL, 'Formulation Sharepoint - Canceled', '1', '100', NULL, '1969-12-31', '2018-08-31', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"8\":[\"view\"]}', NULL, '2020-02-25 09:16:41', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(59, NULL, 'Engineering Toolbox', '1', '100', NULL, '2018-05-01', '2018-07-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"8\":[\"view\"]}', NULL, '2020-03-11 05:26:51', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(60, 2, 'DVP Cabometyx', '1', '100', NULL, '1969-12-31', '2019-04-01', 0, '0.00', 'http:// text.com', 'in_progress', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"8\":[\"view\"]}', NULL, '2020-03-30 07:14:26', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(65, NULL, 'Decapeptyl Prime', '5', '10', NULL, '2018-08-27', '2019-10-31', 0, '0.00', 'http:// text.com', 'in_progress', '<p>https://ent.box.com/s/6x16qwuvgqmduipq1whutnaqxdj70ogs</p><p><br></p>', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"8\":[\"view\"]}', NULL, '2020-02-25 09:16:41', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(66, NULL, 'Decapeptyl Price & Access PaTH', '11', '100', NULL, '2018-05-01', '2018-09-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"8\":[\"view\"]}', NULL, '2020-02-25 09:16:41', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(68, 2, 'CI Plateform PH1 - PH2', '4', '0', NULL, '2019-01-01', '2020-01-01', 0, '0.00', 'https://ipsengroup.sharepoint.com/sites/Custom/CabometyxRCCLandscape', 'in_progress', '<a href=\"https://ent.box.com/s/n95wr2s9hpd6db9er92hc5m76k06ud8i\" target=\"_blank\" xss=\"removed\">https://ent.box.com/s/n95wr2s9hpd6db9er92hc5m76k06ud8i</a><br>', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"8\":[\"view\"]}', NULL, '2020-03-30 07:14:15', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(70, NULL, 'Cabommunity', '5', '100', NULL, '2018-05-01', '2018-09-01', 0, '0.00', 'http:// text.com', 'completed', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"8\":[\"view\"]}', NULL, '2020-02-25 09:16:41', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', NULL),
+(73, NULL, 'BDP Group Process and Delivery', '6', '100', NULL, '2019-01-01', '2019-03-01', 0, '15.00', 'http:// text.com', 'completed', 'This is Description', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"8\":[\"view\"]}', NULL, '2020-02-25 09:16:41', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",null]', 'no', '0:00', 'fixed_rate', 'user_fav_section14_(2).sql,user_fav_section14_(2)1.sql,user_fav_section14_(2)2.sql,user_fav_section14_(2)3.sql,user_fav_section14_(2)4.sql,user_fav_section14_(2)5.sql'),
+(74, NULL, 'Patient Centricity Update', '9', '80', NULL, '2019-08-01', '2019-09-01', 0, '0.00', 'https://ipsengroup.sharepoint.com/sites/root20/PatientCentricity/SitePages/HomePage.aspx', 'in_progress', '', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"13\":[\"view\"],\"25\":[\"view\"]}', NULL, '2020-02-25 09:19:52', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",\"show_staff_finance_overview\"]', 'no', '5:00', 'fixed_rate', NULL),
+(75, NULL, 'TECHOPS TRANSFO OFFICE ( Powered by PMO Widget )', '3', '85', NULL, '2019-07-01', '2019-09-30', 0, '0.00', 'https://ipsengroup.sharepoint.com/sites/Custom/TechopsPMO/', 'in_progress', '<p class=\"MsoNormal\"><span lang=\"FR\" xss=\"removed\">Bonjour Marco,</span><span lang=\"FR\"><o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=\"removed\"> </span><span lang=\"FR\"><o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=\"removed\">Comme convenu , voici les modifications à apporter au\nsite TechOps PMO :</span><span lang=\"FR\"><o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=\"removed\"> </span><span lang=\"FR\"><o></o></span></p>\n\n<ul xss=\"removed\" type=\"disc\">\n <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Changer son nom TechOps PMO par\n     TechOps Transfo Office</span><span lang=\"FR\"><o></o></span></li>\n <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Mettre à gauche : </span><span lang=\"FR\"><o></o></span></li>\n <ul xss=\"removed\" type=\"circle\">\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Capacity to Deliver</span><span lang=\"FR\"><o></o></span></li>\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Factory of the Future</span><span lang=\"FR\"><o></o></span></li>\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Fucture Manufacturing Footprint</span><span lang=\"FR\"><o></o></span></li>\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Fuel the Future</span><span lang=\"FR\"><o></o></span></li>\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Service powerHouse</span><span lang=\"FR\"><o></o></span></li>\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">One Ipsen</span><span lang=\"FR\"><o></o></span></li>\n </ul>\n <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Définir comme domaines :</span><span lang=\"FR\"><o></o></span></li>\n <ul xss=\"removed\" type=\"circle\">\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Capex management</span><span lang=\"FR\"><o></o></span></li>\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Supply Chain distribution &\n      network</span><span lang=\"FR\"><o></o></span></li>\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Factory of the Future</span><span lang=\"FR\"><o></o></span></li>\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Footprint</span><span lang=\"FR\"><o></o></span></li>\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Manufacturing optimisation</span><span lang=\"FR\"><o></o></span></li>\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Quality of Operations</span><span lang=\"FR\"><o></o></span></li>\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Procurement</span><span lang=\"FR\"><o></o></span></li>\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Information Technology</span><span lang=\"FR\"><o></o></span></li>\n  <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">TecOps organisation</span><span lang=\"FR\"><o></o></span></li>\n </ul>\n <li class=\"MsoListParagraph\" xss=\"removed\"><span lang=\"FR\" xss=\"removed\">Avoir la possibilité de créer des\n     sous-domaines sous chaque domaine </span><span lang=\"FR\"><o></o></span></li>\n</ul>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=\"removed\"> </span><span lang=\"FR\"><o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=\"removed\">D’avance, merci !!</span><span lang=\"FR\"><o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=\"removed\">Corinne</span><span lang=\"FR\"><o></o></span></p>', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"8\":[\"view\"]}', NULL, '2020-02-25 09:16:41', '0', NULL, '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",\"show_staff_finance_overview\"]', 'no', '0:00', 'fixed_rate', NULL),
+(78, NULL, 'rahil', '10', '37', NULL, '2020-01-25', '2020-01-31', 0, '0.00', '', 'in_progress', '<p>uiu</p>\n', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, 'all', NULL, '2020-02-17 07:45:57', NULL, '', '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",\"show_staff_finance_overview\"]', 'no', '55', '1', NULL),
+(79, NULL, 'rahilgg', '10', '37', NULL, '2020-01-25', '2020-01-31', 0, '0.00', '', 'in_progress', '<p>uiu</p>\n', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, 'all', NULL, '2020-02-17 07:46:43', NULL, '', '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",\"show_staff_finance_overview\"]', 'no', '55', '1', NULL),
+(80, NULL, 'rahilg', '10', '37', NULL, '2020-01-25', '2020-01-31', 0, '0.00', '', 'in_progress', '<p>uiu</p>\n', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, 'all', NULL, '2020-02-17 07:47:18', NULL, '', '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",\"show_staff_finance_overview\"]', 'no', '55', '1', NULL),
+(81, NULL, 'rah', '10', '37', NULL, '2020-01-25', '2020-01-31', 0, '0.00', '', 'in_progress', '<p>uiu</p>\n', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, '{\"24\":[\"View\",\"Edit\",\"Delete\"]}', NULL, '2020-02-25 09:19:59', NULL, '', '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",\"show_staff_finance_overview\"]', 'no', '55', '1', NULL),
+(82, NULL, 'ghghrah', '10', '37', NULL, '2020-01-25', '2020-01-31', 0, '0.00', '', 'in_progress', '<p>uiu</p>\n', NULL, NULL, 'Yes', NULL, NULL, NULL, NULL, 'all', NULL, '2020-02-17 07:53:23', NULL, '', '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",\"show_staff_finance_overview\"]', 'no', '55', '1', NULL),
+(84, 2, 'klsdfsnf 1232edmksdfk.', '17', '54%', NULL, '2020-10-03', '2020-25-03', 0, '0.00', '', 'started', '<p>aslmsdkfmks</p>\n\n<p>sdkjnsdkvbxcnvbxv</p>\n\n<p>sdmnbxcbvnxcv</p>\n\n<p>kmxncvjknxvclkjv</p>\n', '0', '0', 'Yes', NULL, NULL, NULL, NULL, 'all', NULL, '2020-03-30 07:57:34', NULL, '', '[\"show_team_members\",\"show_milestones\",\"show_project_tasks\",\"show_project_attachments\",\"show_timesheets\",\"show_project_bugs\",\"show_project_history\",\"show_project_calendar\",\"show_project_comments\",\"show_gantt_chart\",\"show_project_hours\",\"comment_on_project_tasks\",\"show_project_tasks_attachments\",\"show_tasks_hours\",\"show_finance_overview\",\"show_staff_finance_overview\"]', 'no', '', '1', NULL);
 
 -- --------------------------------------------------------
 
@@ -3472,15 +3835,15 @@ CREATE TABLE `tbl_proposals` (
   `reference_no` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
   `subject` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `module` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `module_id` int(11) DEFAULT 0,
+  `module_id` int(11) DEFAULT '0',
   `proposal_date` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `proposal_month` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `proposal_year` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `due_date` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `alert_overdue` tinyint(1) DEFAULT 0,
+  `alert_overdue` tinyint(1) DEFAULT '0',
   `currency` varchar(32) COLLATE utf8_unicode_ci DEFAULT 'USD',
   `notes` text COLLATE utf8_unicode_ci NOT NULL,
-  `tax` int(11) NOT NULL DEFAULT 0,
+  `tax` int(11) NOT NULL DEFAULT '0',
   `total_tax` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `status` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'draft',
   `date_sent` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -3489,14 +3852,14 @@ CREATE TABLE `tbl_proposals` (
   `show_client` enum('Yes','No') COLLATE utf8_unicode_ci DEFAULT 'No',
   `convert` enum('Yes','No') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'No',
   `convert_module` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `convert_module_id` int(11) DEFAULT 0,
-  `converted_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `permission` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `convert_module_id` int(11) DEFAULT '0',
+  `converted_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `permission` text COLLATE utf8_unicode_ci,
   `discount_type` enum('before_tax','after_tax') COLLATE utf8_unicode_ci DEFAULT NULL,
-  `discount_percent` int(2) NOT NULL DEFAULT 0,
-  `discount_total` decimal(18,2) NOT NULL DEFAULT 0.00,
-  `user_id` int(11) NOT NULL DEFAULT 0,
-  `adjustment` decimal(18,2) NOT NULL DEFAULT 0.00,
+  `discount_percent` int(2) NOT NULL DEFAULT '0',
+  `discount_total` decimal(18,2) NOT NULL DEFAULT '0.00',
+  `user_id` int(11) NOT NULL DEFAULT '0',
+  `adjustment` decimal(18,2) NOT NULL DEFAULT '0.00',
   `show_quantity_as` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `allowed_cmments` enum('Yes','No') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Yes'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -3510,19 +3873,19 @@ CREATE TABLE `tbl_proposals` (
 CREATE TABLE `tbl_proposals_items` (
   `proposals_items_id` int(11) NOT NULL,
   `proposals_id` int(11) NOT NULL,
-  `saved_items_id` int(11) DEFAULT 0,
+  `saved_items_id` int(11) DEFAULT '0',
   `item_name` varchar(150) COLLATE utf8_unicode_ci DEFAULT 'Item Name',
-  `item_desc` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
-  `quantity` decimal(10,2) DEFAULT 0.00,
-  `unit_cost` decimal(10,2) DEFAULT 0.00,
-  `item_tax_rate` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `item_tax_name` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `item_tax_total` decimal(10,2) DEFAULT 0.00,
-  `total_cost` decimal(10,2) DEFAULT 0.00,
-  `date_saved` timestamp NOT NULL DEFAULT current_timestamp(),
-  `order` int(11) DEFAULT 0,
+  `item_desc` longtext COLLATE utf8_unicode_ci,
+  `quantity` decimal(10,2) DEFAULT '0.00',
+  `unit_cost` decimal(10,2) DEFAULT '0.00',
+  `item_tax_rate` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `item_tax_name` text COLLATE utf8_unicode_ci,
+  `item_tax_total` decimal(10,2) DEFAULT '0.00',
+  `total_cost` decimal(10,2) DEFAULT '0.00',
+  `date_saved` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `order` int(11) DEFAULT '0',
   `unit` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-  `hsn_code` text COLLATE utf8_unicode_ci DEFAULT NULL
+  `hsn_code` text COLLATE utf8_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -3549,11 +3912,11 @@ CREATE TABLE `tbl_purchases` (
   `adjustment` decimal(18,2) DEFAULT NULL,
   `discount_total` decimal(18,2) DEFAULT NULL,
   `show_quantity_as` varchar(10) DEFAULT NULL,
-  `permission` text DEFAULT NULL,
-  `created` timestamp NOT NULL DEFAULT current_timestamp(),
-  `total_tax` text DEFAULT NULL,
+  `permission` text,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `total_tax` text,
   `tax` decimal(20,2) DEFAULT NULL,
-  `notes` text DEFAULT NULL
+  `notes` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -3565,19 +3928,19 @@ CREATE TABLE `tbl_purchases` (
 CREATE TABLE `tbl_purchase_items` (
   `items_id` int(11) NOT NULL,
   `purchase_id` int(11) NOT NULL,
-  `item_tax_rate` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `item_tax_name` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `item_tax_total` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `quantity` decimal(10,2) DEFAULT 0.00,
-  `total_cost` decimal(10,2) DEFAULT 0.00,
+  `item_tax_rate` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `item_tax_name` text COLLATE utf8_unicode_ci,
+  `item_tax_total` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `quantity` decimal(10,2) DEFAULT '0.00',
+  `total_cost` decimal(10,2) DEFAULT '0.00',
   `item_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT 'Item Name',
-  `item_desc` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
-  `unit_cost` decimal(10,2) DEFAULT 0.00,
-  `order` int(11) DEFAULT 0,
-  `date_saved` timestamp NOT NULL DEFAULT current_timestamp(),
+  `item_desc` longtext COLLATE utf8_unicode_ci,
+  `unit_cost` decimal(10,2) DEFAULT '0.00',
+  `order` int(11) DEFAULT '0',
+  `date_saved` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `unit` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `hsn_code` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `saved_items_id` int(11) DEFAULT 0
+  `hsn_code` text COLLATE utf8_unicode_ci,
+  `saved_items_id` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -3591,7 +3954,7 @@ CREATE TABLE `tbl_purchase_payments` (
   `purchase_id` int(11) DEFAULT NULL,
   `trans_id` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
   `payment_method` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `amount` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `amount` longtext COLLATE utf8_unicode_ci,
   `currency` varchar(64) COLLATE utf8_unicode_ci DEFAULT 'USD',
   `notes` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `payment_date` date DEFAULT NULL,
@@ -3599,8 +3962,8 @@ CREATE TABLE `tbl_purchase_payments` (
   `year_paid` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
   `paid_to` int(11) NOT NULL,
   `paid_by` int(11) DEFAULT NULL,
-  `created_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `account_id` int(11) NOT NULL DEFAULT 0 COMMENT 'account_id means tracking deduct from which account'
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `account_id` int(11) NOT NULL DEFAULT '0' COMMENT 'account_id means tracking deduct from which account'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -3615,7 +3978,7 @@ CREATE TABLE `tbl_quotationforms` (
   `quotationforms_code` text NOT NULL,
   `quotationforms_status` varchar(20) NOT NULL DEFAULT 'enabled' COMMENT 'enabled/disabled',
   `quotations_created_by_id` int(11) NOT NULL,
-  `quotationforms_date_created` timestamp NOT NULL DEFAULT current_timestamp()
+  `quotationforms_date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -3633,10 +3996,10 @@ CREATE TABLE `tbl_quotations` (
   `email` varchar(100) DEFAULT NULL,
   `mobile` varchar(100) DEFAULT NULL,
   `quotations_amount` decimal(10,2) DEFAULT NULL,
-  `notes` text DEFAULT NULL,
+  `notes` text,
   `reviewer_id` int(11) DEFAULT NULL,
   `reviewed_date` date DEFAULT NULL,
-  `quotations_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `quotations_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `quotations_status` varchar(15) DEFAULT 'pending' COMMENT 'completed/pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -3649,8 +4012,8 @@ CREATE TABLE `tbl_quotations` (
 CREATE TABLE `tbl_quotation_details` (
   `quotation_details_id` int(11) NOT NULL,
   `quotations_id` int(11) NOT NULL,
-  `quotation_form_data` text DEFAULT NULL,
-  `quotation_data` text DEFAULT NULL
+  `quotation_form_data` text,
+  `quotation_data` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -3661,7 +4024,7 @@ CREATE TABLE `tbl_quotation_details` (
 
 CREATE TABLE `tbl_reminders` (
   `reminder_id` int(11) NOT NULL,
-  `description` text DEFAULT NULL,
+  `description` text,
   `date` datetime NOT NULL,
   `notified` enum('Yes','No') NOT NULL DEFAULT 'No',
   `module` varchar(200) NOT NULL,
@@ -3670,6 +4033,40 @@ CREATE TABLE `tbl_reminders` (
   `notify_by_email` enum('Yes','No') NOT NULL DEFAULT 'No',
   `created_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_reports`
+--
+
+CREATE TABLE `tbl_reports` (
+  `rpt_id` int(11) NOT NULL,
+  `user_id` int(10) NOT NULL,
+  `rpt_employment_id` text NOT NULL,
+  `rpt_date` text NOT NULL,
+  `rpt_out_time` varchar(100) NOT NULL,
+  `rpt_meet_goals` text NOT NULL,
+  `rpt_issues` text NOT NULL,
+  `rpt_summary` text NOT NULL,
+  `rpt_task1` text NOT NULL,
+  `rpt_task2` text NOT NULL,
+  `rpt_task3` text NOT NULL,
+  `rpt_tomorrow_goals` text NOT NULL,
+  `rpt_complaints` text NOT NULL,
+  `rpt_images` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_reports`
+--
+
+INSERT INTO `tbl_reports` (`rpt_id`, `user_id`, `rpt_employment_id`, `rpt_date`, `rpt_out_time`, `rpt_meet_goals`, `rpt_issues`, `rpt_summary`, `rpt_task1`, `rpt_task2`, `rpt_task3`, `rpt_tomorrow_goals`, `rpt_complaints`, `rpt_images`) VALUES
+(14, 24, '', '', '15:01', '', '', '', '', '', '', '', '', 'report-2020-02-27-10-19-450.'),
+(15, 24, '', '02/03/2020', '17:27', 'Yes', 'No', 'Testing', 'Testing', 'Testing', 'Testing', 'Nothing', 'no', 'report-2020-03-02-15-50-470.'),
+(16, 8, '', '11/03/2020', '18:00', '', 'testing', 'testing', 'testing', 'testing', 'testing', 'testing', 'testing', 'report-2020-03-11-16-48-320.'),
+(17, 8, '', '11/03/2020', '17:30', '', 'hfdgdfg', 'fdgdfg', 'gfdgd', 'gdfgdf', 'gdfgdfg', 'dfgdfg', 'gdfgdfgdf', 'report-2020-03-11-16-51-560.'),
+(18, 24, '', '18/03/2020', '09:59', 'Yes', 'df', 'ddfg', 'dfg', 'dfg', 'dfg', 'dfg', 'dfg', 'report-15845359080.sql');
 
 -- --------------------------------------------------------
 
@@ -3698,11 +4095,11 @@ CREATE TABLE `tbl_return_stock` (
   `adjustment` decimal(18,2) DEFAULT NULL,
   `discount_total` decimal(18,2) DEFAULT NULL,
   `show_quantity_as` varchar(10) CHARACTER SET utf8 DEFAULT NULL,
-  `permission` text CHARACTER SET utf8 DEFAULT NULL,
+  `permission` text CHARACTER SET utf8,
   `created` timestamp NOT NULL DEFAULT '2019-05-04 16:00:00',
-  `total_tax` text CHARACTER SET utf8 DEFAULT NULL,
+  `total_tax` text CHARACTER SET utf8,
   `tax` decimal(20,2) DEFAULT NULL,
-  `notes` text CHARACTER SET utf8 DEFAULT NULL
+  `notes` text CHARACTER SET utf8
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -3715,19 +4112,19 @@ CREATE TABLE `tbl_return_stock_items` (
   `items_id` int(11) NOT NULL,
   `return_stock_id` int(11) NOT NULL,
   `invoice_items_id` int(11) DEFAULT NULL,
-  `item_tax_rate` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `item_tax_name` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `item_tax_total` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `quantity` decimal(10,2) DEFAULT 0.00,
-  `total_cost` decimal(10,2) DEFAULT 0.00,
+  `item_tax_rate` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `item_tax_name` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `item_tax_total` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `quantity` decimal(10,2) DEFAULT '0.00',
+  `total_cost` decimal(10,2) DEFAULT '0.00',
   `item_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'Item Name',
-  `item_desc` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `unit_cost` decimal(10,2) DEFAULT 0.00,
-  `order` int(11) DEFAULT 0,
+  `item_desc` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `unit_cost` decimal(10,2) DEFAULT '0.00',
+  `order` int(11) DEFAULT '0',
   `date_saved` timestamp NOT NULL DEFAULT '2019-05-04 16:00:00',
   `unit` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `hsn_code` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `saved_items_id` int(11) DEFAULT 0
+  `hsn_code` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `saved_items_id` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -3741,7 +4138,7 @@ CREATE TABLE `tbl_return_stock_payments` (
   `return_stock_id` int(11) DEFAULT NULL,
   `trans_id` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
   `payment_method` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `amount` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `amount` longtext COLLATE utf8_unicode_ci,
   `currency` varchar(64) COLLATE utf8_unicode_ci DEFAULT 'USD',
   `notes` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `payment_date` date DEFAULT NULL,
@@ -3751,7 +4148,7 @@ CREATE TABLE `tbl_return_stock_payments` (
   `paid_to` int(11) DEFAULT NULL,
   `paid_by` int(11) DEFAULT NULL,
   `created_date` timestamp NULL DEFAULT '0000-00-00 00:00:00',
-  `account_id` int(11) NOT NULL DEFAULT 0 COMMENT 'account_id means tracking deduct from which account'
+  `account_id` int(11) NOT NULL DEFAULT '0' COMMENT 'account_id means tracking deduct from which account'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -3772,10 +4169,10 @@ CREATE TABLE `tbl_salary_allowance` (
 --
 
 INSERT INTO `tbl_salary_allowance` (`salary_allowance_id`, `salary_template_id`, `allowance_label`, `allowance_value`) VALUES
-(1, 1, 'House Rent Allowance', '100'),
-(2, 1, 'Medical Allowance', '100'),
-(3, 2, 'House Rent Allowance', '100'),
-(4, 2, 'Medical Allowance', '100');
+(0, 2, 'House Rent Allowance', '100'),
+(0, 2, 'Medical Allowance', '100'),
+(0, 1, 'House Rent Allowance', '89'),
+(0, 1, 'Medical Allowance', '100');
 
 -- --------------------------------------------------------
 
@@ -3795,10 +4192,10 @@ CREATE TABLE `tbl_salary_deduction` (
 --
 
 INSERT INTO `tbl_salary_deduction` (`salary_deduction_id`, `salary_template_id`, `deduction_label`, `deduction_value`) VALUES
-(1, 1, 'Provident Fund', '100'),
-(2, 1, 'Tax Deduction', '100'),
-(3, 2, 'Provident Fund', '100'),
-(4, 2, 'Tax Deduction', '100');
+(0, 2, 'Provident Fund', '100'),
+(0, 2, 'Tax Deduction', '100'),
+(0, 1, 'Provident Fund', '100'),
+(0, 1, 'Tax Deduction', '100');
 
 -- --------------------------------------------------------
 
@@ -3812,9 +4209,9 @@ CREATE TABLE `tbl_salary_payment` (
   `payment_month` varchar(20) NOT NULL,
   `fine_deduction` varchar(200) NOT NULL,
   `payment_type` varchar(20) NOT NULL,
-  `comments` text DEFAULT NULL,
-  `paid_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `deduct_from` int(11) NOT NULL DEFAULT 0 COMMENT 'deduct from means tracking deduct from which account'
+  `comments` text,
+  `paid_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `deduct_from` int(11) NOT NULL DEFAULT '0' COMMENT 'deduct from means tracking deduct from which account'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -3866,7 +4263,7 @@ CREATE TABLE `tbl_salary_payslip` (
   `payslip_id` int(5) NOT NULL,
   `payslip_number` varchar(100) DEFAULT NULL,
   `salary_payment_id` int(5) NOT NULL,
-  `payslip_generate_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `payslip_generate_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -3877,6 +4274,7 @@ CREATE TABLE `tbl_salary_payslip` (
 
 CREATE TABLE `tbl_salary_template` (
   `salary_template_id` int(11) NOT NULL,
+  `company_id` bigint(20) UNSIGNED DEFAULT NULL,
   `salary_grade` varchar(200) NOT NULL,
   `basic_salary` varchar(200) NOT NULL,
   `overtime_salary` varchar(100) NOT NULL
@@ -3886,9 +4284,10 @@ CREATE TABLE `tbl_salary_template` (
 -- Dumping data for table `tbl_salary_template`
 --
 
-INSERT INTO `tbl_salary_template` (`salary_template_id`, `salary_grade`, `basic_salary`, `overtime_salary`) VALUES
-(1, 'grade b', '25000', '200'),
-(2, 'grade a', '25000', '200');
+INSERT INTO `tbl_salary_template` (`salary_template_id`, `company_id`, `salary_grade`, `basic_salary`, `overtime_salary`) VALUES
+(1, NULL, 'grade b', '3000', '100'),
+(2, 2, 'grade a', '2500', '200'),
+(5, 2, '7th pay commission', '15000', '150');
 
 -- --------------------------------------------------------
 
@@ -3899,16 +4298,16 @@ INSERT INTO `tbl_salary_template` (`salary_template_id`, `salary_grade`, `basic_
 CREATE TABLE `tbl_saved_items` (
   `saved_items_id` int(11) NOT NULL,
   `item_name` varchar(200) COLLATE utf8_unicode_ci DEFAULT 'Item Name',
-  `item_desc` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
-  `unit_cost` decimal(18,2) DEFAULT 0.00,
-  `customer_group_id` int(11) NOT NULL DEFAULT 0,
+  `item_desc` longtext COLLATE utf8_unicode_ci,
+  `unit_cost` decimal(18,2) DEFAULT '0.00',
+  `customer_group_id` int(11) NOT NULL DEFAULT '0',
   `unit_type` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tax_rates_id` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `item_tax_rate` decimal(18,2) DEFAULT 0.00,
-  `item_tax_total` decimal(18,2) DEFAULT 0.00,
-  `quantity` decimal(18,2) DEFAULT 0.00,
-  `total_cost` decimal(18,2) DEFAULT 0.00,
-  `hsn_code` text COLLATE utf8_unicode_ci DEFAULT NULL
+  `tax_rates_id` text COLLATE utf8_unicode_ci,
+  `item_tax_rate` decimal(18,2) DEFAULT '0.00',
+  `item_tax_total` decimal(18,2) DEFAULT '0.00',
+  `quantity` decimal(18,2) DEFAULT '0.00',
+  `total_cost` decimal(18,2) DEFAULT '0.00',
+  `hsn_code` text COLLATE utf8_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -3923,9 +4322,9 @@ CREATE TABLE `tbl_sent` (
   `to` varchar(100) NOT NULL,
   `subject` varchar(300) NOT NULL,
   `message_body` text NOT NULL,
-  `attach_file` text DEFAULT NULL,
-  `attach_file_path` text DEFAULT NULL,
-  `attach_filename` text DEFAULT NULL,
+  `attach_file` text,
+  `attach_file_path` text,
+  `attach_filename` text,
   `message_time` datetime NOT NULL,
   `deleted` enum('Yes','No') NOT NULL DEFAULT 'No'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -3939,7 +4338,7 @@ CREATE TABLE `tbl_sent` (
 CREATE TABLE `tbl_sessions` (
   `id` varchar(40) NOT NULL,
   `ip_address` varchar(45) NOT NULL,
-  `timestamp` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `timestamp` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `data` blob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -4043,8 +4442,8 @@ CREATE TABLE `tbl_suppliers` (
   `mobile` varchar(20) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
-  `address` text DEFAULT NULL,
-  `permission` text DEFAULT NULL
+  `address` text,
+  `permission` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -4056,6 +4455,7 @@ CREATE TABLE `tbl_suppliers` (
 CREATE TABLE `tbl_task` (
   `task_id` int(5) NOT NULL,
   `project_id` int(11) DEFAULT NULL,
+  `company_id` bigint(20) UNSIGNED DEFAULT NULL,
   `milestones_id` int(11) DEFAULT NULL,
   `opportunities_id` int(11) DEFAULT NULL,
   `goal_tracking_id` int(11) DEFAULT NULL,
@@ -4064,23 +4464,23 @@ CREATE TABLE `tbl_task` (
   `task_description` text NOT NULL,
   `task_start_date` date NOT NULL,
   `due_date` date NOT NULL,
-  `task_created_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `task_created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `task_status` varchar(30) DEFAULT NULL,
   `task_progress` int(2) NOT NULL,
   `calculate_progress` varchar(200) DEFAULT NULL,
   `task_hour` varchar(10) NOT NULL,
-  `tasks_notes` text DEFAULT NULL,
+  `tasks_notes` text,
   `timer_status` enum('on','off') NOT NULL DEFAULT 'off',
   `timer_started_by` int(11) DEFAULT NULL,
   `start_time` int(11) DEFAULT NULL,
-  `logged_time` int(11) NOT NULL DEFAULT 0,
+  `logged_time` int(11) NOT NULL DEFAULT '0',
   `leads_id` int(11) DEFAULT NULL,
   `bug_id` int(11) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
-  `permission` text DEFAULT NULL,
+  `permission` text,
   `client_visible` varchar(5) DEFAULT NULL,
-  `custom_date` text DEFAULT NULL,
-  `hourly_rate` decimal(18,2) DEFAULT 0.00,
+  `custom_date` text,
+  `hourly_rate` decimal(18,2) DEFAULT '0.00',
   `billable` varchar(20) NOT NULL DEFAULT 'No',
   `index_no` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -4089,23 +4489,24 @@ CREATE TABLE `tbl_task` (
 -- Dumping data for table `tbl_task`
 --
 
-INSERT INTO `tbl_task` (`task_id`, `project_id`, `milestones_id`, `opportunities_id`, `goal_tracking_id`, `sub_task_id`, `task_name`, `task_description`, `task_start_date`, `due_date`, `task_created_date`, `task_status`, `task_progress`, `calculate_progress`, `task_hour`, `tasks_notes`, `timer_status`, `timer_started_by`, `start_time`, `logged_time`, `leads_id`, `bug_id`, `created_by`, `permission`, `client_visible`, `custom_date`, `hourly_rate`, `billable`, `index_no`) VALUES
-(1, 68, 0, NULL, NULL, NULL, 'Hire a consultant to assist me into the scoping of the KIQ - PMR - Com / Prod', '', '2019-07-27', '2019-08-19', '2019-12-30 05:27:39', 'not_started', 0, NULL, '0:00', NULL, 'off', 8, 0, 1577683043, NULL, NULL, 1, '{\"1\":[\"view\"]}', NULL, NULL, '0.00', 'No', 1),
-(2, 68, 0, NULL, NULL, NULL, 'PH1 Finalization', '', '2019-06-01', '2019-09-01', '2019-12-24 06:31:20', 'completed', 100, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, '{\"1\":[\"view\"]}', NULL, NULL, '0.00', 'No', 2),
-(3, 43, 0, NULL, NULL, NULL, 'Build design model for Olivier based on a web template (  )', '', '2019-07-01', '2019-08-05', '2019-08-28 01:11:20', 'completed', 100, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, 'all', NULL, NULL, '0.00', 'No', 3),
-(4, 4, 0, NULL, NULL, NULL, 'Sign Off with Nicola & Aline', '<p class=\"MsoNormal\"><span lang=\"FR\">Je viens de faire\nle sign off avec Nicola :</span></p>\n\n<p class=\"MsoNormal\" xss=removed><b><span lang=\"FR\">Voici les toutes dernières\nremarques ( Aline et Nicola compilées ) : <o></o></span></b></p>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed>“Overall L&D PRG”\n      <span lang=\"EN\">Remove the “%” in the title before “completed vs\n     registered”<o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span lang=\"EN\">Can the Overall L&D  Programs Rolling display the latest 3\n     quarters of the previous year when Q1 ( This graph should be always\n     displaying the actual quarter and the latest 3, if data exist )<o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span lang=\"EN\">Remove the numbers ( displayed by default in the graph ) from the new\n     Overall L&D PRG Rolling. Aline wants to have the data displayed only\n     on hover.<o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span lang=\"EN\">Change \"purchasing\" to \"procurement\" global\n     functions & tables<o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span lang=\"EN\">Global Functions : Headcount Tech ops actual vs budget : budget dark\n     bar to be switched to green.<o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed>Please can you make sure\n     that all labels are displayed on the talent successor readiness as not all\n     are showing. Also we need more space between bars as it looks like one big\n     block.</li></ul>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed>Nicole has asked if you\n     can switch the colors of talent successor readiness to be the blue color\n     and the not ready to be the pink color as she said the pink color is too\n     close to red which implies not ready.<o></o></li>\n</ul>', '2019-08-01', '2019-08-01', '2019-08-01 06:30:52', 'completed', 100, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, '{\"1\":[\"view\"]}', NULL, NULL, '0.00', 'No', 4),
-(5, 4, 0, NULL, NULL, NULL, 'Very Last wave of changes : Please make sure that IS will do everything before mid august', '<p class=\"MsoNormal\"><br></p>\n\n<p class=\"MsoNormal\" xss=removed><b><span lang=\"FR\">Voici les toutes dernières\nremarques ( Aline et Nicola compilées ) : <o></o></span></b></p>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed>“Overall l&d prg.”\n      <span lang=\"EN\">Remove the “%” in the title before “completed vs\n     registered”<o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span lang=\"EN\">Can the Overall L&D  Programs Rolling display the latest 3\n     quarters of the previous year when Q1 ( This graph should be always\n     displaying the actual quarter and the latest 3, if data exist ) <b><span xss=removed>A discuter si besoin.</span></b><o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span lang=\"EN\">Remove the numbers ( displayed by default in the graph ) from the new\n     Overall L&D PRG Rolling. Aline wants to have the data displayed only\n     on hover.<o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span lang=\"EN\">Change \"purchasing\" to \"procurement\" global\n     functions & tables<o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span lang=\"EN\">Global Functions : Headcount Tech ops actual vs budget : budget dark\n     bar to be switched to green.<o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed>Please can you make sure\n     that all labels are displayed on the talent successor readiness as not all\n     are showing. Also we need more space between bars as it looks like one big\n     block.</li></ul>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed>Nicole has asked if you\n     can switch the colors of talent successor readiness to be the blue color\n     and the not ready to be the pink color as she said the pink color is too\n     close to red which implies not ready.<o></o></li>\n</ul>', '2019-08-01', '2019-08-12', '2019-12-24 06:31:28', 'completed', 100, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, 'all', NULL, NULL, '0.00', 'No', 5),
-(6, 4, 0, NULL, NULL, NULL, 'Project Launch Communication', '', '2019-08-12', '2019-09-01', '2019-08-01 06:32:57', 'not_started', 0, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, 'all', NULL, NULL, '0.00', 'No', 6),
-(7, 4, 0, NULL, NULL, NULL, 'Setting Up AD groups', '', '2019-08-12', '2019-08-31', '2019-12-24 06:31:45', 'completed', 100, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, 'all', NULL, NULL, '0.00', 'No', 7),
-(8, 4, 0, NULL, NULL, NULL, 'Setting Up IAM Process', '', '2019-08-12', '2019-08-31', '2019-08-01 06:34:45', 'not_started', 0, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, 'all', NULL, NULL, '0.00', 'No', 8),
-(9, 4, 0, NULL, NULL, NULL, 'Script to interface Ipeople & Ad groups ', '<p>Please Set up a meeting with Najib ( Ipeople it ) & Julien Barreau. </p><p>I already did but julien need a technical reminder on Ipeople capabilities.</p>', '2019-08-12', '2019-08-31', '2019-08-01 06:37:14', 'not_started', 0, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, 'all', NULL, NULL, '0.00', 'No', 9),
-(10, 4, 0, NULL, NULL, NULL, 'Setting up SharePoint Security Groups', '', '2019-08-12', '2019-08-31', '2019-08-01 19:30:24', 'completed', 100, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, 'all', NULL, NULL, '0.00', 'No', 10),
-(11, 68, 0, NULL, NULL, NULL, 'Testing and challenging PH1 first delivery', '', '2019-08-05', '2019-08-19', '2019-08-28 03:18:44', 'completed', 100, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, '{\"1\":[\"view\"]}', NULL, NULL, '0.00', 'No', 11),
-(12, 68, 0, NULL, NULL, NULL, 'Helping the CI department into setting up the CI plateform PH1', '', '2019-08-12', '2019-08-31', '2019-08-01 06:47:50', 'not_started', 0, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, 'all', NULL, NULL, '0.00', 'No', 12),
-(13, 31, 0, NULL, NULL, NULL, 'Ensure that the last bugs are corrected. Sign off with Ineat.', '', '2019-08-05', '2019-08-12', '2019-12-24 06:37:27', 'not_started', 0, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, '{\"1\":[\"view\"],\"3\":[\"view\"],\"5\":[\"view\"]}', NULL, NULL, '0.00', 'No', 13),
-(14, 31, 0, NULL, NULL, NULL, 'Build Landing page for Beatrice Hacher', '<p class=\"MsoNormal\"><span lang=\"FR\" xss=removed>Re-bonjour\nMarco,<o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=removed>Voici\nles 2 sites à relier à la Font page :<o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=removed><a href=\"https://ipsengroup.sharepoint.com/sites/SomatulineAcromegalyChinaRDGPT\">https://ipsengroup.sharepoint.com/sites/SomatulineAcromegalyChinaRDGPT</a><o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=removed><a href=\"https://ipsengroup.sharepoint.com/sites/SomatulineGEP-NETChinaRDGPT2\">https://ipsengroup.sharepoint.com/sites/SomatulineGEP-NETChinaRDGPT2</a><o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=removed>(pourrais-tu\nm’envoyer la lanterne verte pour ce 2<sup>ème</sup> site ?)<o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=removed> </span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=removed>MERCI\npour ton aide.<o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=removed>Amicalement,<o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=removed> </span></p><p class=\"MsoNormal\"><span lang=\"FR\" xss=removed>Site a dupliquer pour repondre au besoin : </span><a href=\"https://ipsengroup.sharepoint.com/sites/Custom/Communication/SitePages/Homepage.aspx\" xss=removed>https://ipsengroup.sharepoint.com/sites/Custom/Communication/SitePages/Homepage.aspx</a></p>', '2019-08-01', '2019-08-31', '2019-08-28 01:11:44', 'completed', 100, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, 'all', NULL, NULL, '0.00', 'No', 14),
-(15, 46, 0, NULL, NULL, NULL, 'US & Canada pages updates', '<p class=\"MsoNormal\"><span lang=\"FR\">Dear Emily,<o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"> </span></p>\n\n<p class=\"MsoNormal\">Melissa will leave the office this evening for the holidays.\nUntil September. <o></o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\">For the next round and from tomorrow I will personally take\nthe proper actions with more or less delay depending on my workload.<o></o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\">I hope this will be completed by the end of the week as I\nwill leave the office as well for 10 days of vacations.<o></o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\">Kind regards,<o></o></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"> </span></p>\n\n<table class=\"MsoNormalTable\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n <tbody><tr xss=removed>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\" xss=removed><span xss=removed> </span><o></o></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><b><span xss=removed>Marco DELPIANO</span><o></o></b></p>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\" xss=removed><span xss=removed> </span><o></o></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>Project Manager ( O365 SharePoint ) / MS Application Expert</span><o></o></p>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed></td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>Support & Application – IT</span><o></o></p>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed></td>\n </tr>\n <tr>\n  <td width=\"420\" valign=\"top\" xss=removed>\n  <div class=\"MsoNormal\"><span xss=removed>\n  <hr size=\"1\" width=\"55\" xss=removed noshade=\"\" align=\"left\">\n  </span></div>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>Office : +33 1 58 33 57 29<o></o></span></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>Mobile : +33 6 (0699607776)</span><o></o></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed></td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed></td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed></td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>Ipsen Boulogne</span><o></o></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>65 Quai Georges Gorse</span><o></o></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>Boulogne</span><o></o></p>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\" xss=removed><span xss=removed> </span><o></o></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed><a href=\"http://www.ipsen.com/\" target=\"_blank\"><span xss=removed>www.ipsen.com</span></a>\n  </span><o></o></p>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed></td>\n </tr>\n <tr>\n  <td width=\"420\" valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>&lt;!--[if gte vml 1]><v id=\"_x0000_t75\" coordsize=\"21600,21600\" o:spt=\"75\" o:preferrelative=\"t\" path=\"m@4@5l@4@11@9@11@9@5xe\" filled=\"f\" stroked=\"f\">\n   <v joinstyle=\"miter\">\n   <v>\n    <v eqn=\"if lineDrawn pixelLineWidth 0\">\n    <v eqn=\"sum @0 1 0\">\n    <v eqn=\"sum 0 0 @1\">\n    <v eqn=\"prod @2 1 2\">\n    <v eqn=\"prod @3 21600 pixelWidth\">\n    <v eqn=\"prod @3 21600 pixelHeight\">\n    <v eqn=\"sum @0 0 1\">\n    <v eqn=\"prod @6 1 2\">\n    <v eqn=\"prod @7 21600 pixelWidth\">\n    <v eqn=\"sum @8 21600 0\">\n    <v eqn=\"prod @7 21600 pixelHeight\">\n    <v eqn=\"sum @10 21600 0\">\n   </v>\n   <v o:extrusionok=\"f\" gradientshapeok=\"t\" o:connecttype=\"rect\">\n   <o v:ext=\"edit\" aspectratio=\"t\">\n  </v><v id=\"Image_x0020_2\" o:spid=\"_x0000_i1026\" type=\"#_x0000_t75\" alt=\"Logo Ipsen\" xss=removed>\n   <v src=\"file:///C:/Users/Master/AppData/Local/Temp/msohtmlclip1/01/clip_image001.png\" o:href=\"cid:image001.png@01D54632.A3909B90\">\n  </v>&lt;![endif]--&gt;&lt;!--[if !vml]--&gt;<img border=\"0\" width=\"154\" height=\"44\" src=\"file:///C:/Users/Master/AppData/Local/Temp/msohtmlclip1/01/clip_image002.gif\" xss=removed alt=\"Logo Ipsen\" shapes=\"Image_x0020_2\">&lt;!--[endif]--&gt;</span><o></o></p>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\" xss=removed><span xss=removed> </span><o></o></p>\n  </td>\n </tr>\n</tbody></table>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\"><b><span lang=\"FR\">De :</span></b><span lang=\"FR\"> Emily CORREIA <br>\n<b>Envoyé :</b> lundi 29 juillet 2019 16:43<br>\n<b>À :</b> MISSAKIAN, Mélissa (C2S) &lt;<a href=\"mailto:mmissakian@c2s.fr\">mmissakian@c2s.fr</a>><br>\n<b>Cc :</b> Paul MURASKO &lt;<a href=\"mailto:paul.murasko@ipsen.com\">paul.murasko@ipsen.com</a>>;\nMarco DELPIANO &lt;<a href=\"mailto:marco.delpiano@ipsen.com\">marco.delpiano@ipsen.com</a>><br>\n<b>Objet :</b> RE: Changes to the landing page for the US & Canada<o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"> </span></p>\n\n<p class=\"MsoNormal\"><span xss=removed>Hi Mélissa, <o></o></span></p>\n\n<p class=\"MsoNormal\"><span xss=removed><o> </o></span></p>\n\n<p class=\"MsoNormal\"><span xss=removed>Thank you\nfor this initial round of edits.<o></o></span></p>\n\n<p class=\"MsoNormal\"><span xss=removed><o> </o></span></p>\n\n<p class=\"MsoNormal\"><span xss=removed>On the\nlanding page, the first section of blocks should read “People” “Patients”\n“Business”, instead of “NA Home” “People” “Key Resources”.<o></o></span></p>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Please\n     move the “NA Home” and “Key Resources” boxes to the bottom set of boxes <o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Please\n     correct the spelling of the word <b>Resources </b>on the box and the\n     corresponding page<o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Replace\n     the pink background on the current “People” box with the photo used in the\n     bottom navigation <o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Remove\n     the duplicate “People” from the bottom menu<o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Move\n     the “Patients” block from the bottom menu to the top section<o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Add\n     in a “Business” page/block like the “People” and “Patients” in the top\n     section <o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Change\n     “US Commercial Regulatory Affairs” to read “Commercial Regulatory Affairs”<o></o></span></li>\n</ul>\n\n<p class=\"MsoNormal\"><span xss=removed><o> </o></span></p>\n\n<p class=\"MsoNormal\"><span xss=removed>Looking\nforward to seeing the next round!<o></o></span></p>\n\n<p class=\"MsoNormal\"><span xss=removed><o> </o></span></p>\n\n<p class=\"MsoNormal\"><b>From:</b> MISSAKIAN, Mélissa\n(C2S) &lt;<a href=\"mailto:mmissakian@c2s.fr\">mmissakian@c2s.fr</a>> <br>\n<b>Sent:</b> Monday, July 29, 2019 10:22 AM<br>\n<b>To:</b> Emily CORREIA &lt;<a href=\"mailto:emily.correia@ipsen.com\">emily.correia@ipsen.com</a>><br>\n<b>Cc:</b> Paul MURASKO &lt;<a href=\"mailto:paul.murasko@ipsen.com\">paul.murasko@ipsen.com</a>>;\nMarco DELPIANO &lt;<a href=\"mailto:marco.delpiano@ipsen.com\">marco.delpiano@ipsen.com</a>><br>\n<b>Subject:</b> RE: Changes to the landing page for the US & Canada<o></o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\">Emily, <o></o></span></p>\n\n<p class=\"MsoNormal\">Changes are available. <o></o></p>\n\n<p class=\"MsoNormal\">Could you check them? <o></o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\">Thank you, <o></o></p>\n\n<p class=\"MsoNormal\">Mélissa.<o></o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\"><b><span lang=\"FR\">De :</span></b><span lang=\"FR\"> Emily CORREIA &lt;<a href=\"mailto:emily.correia@ipsen.com\">emily.correia@ipsen.com</a>> <br>\n<b>Envoyé :</b> lundi 29 juillet 2019 14:25<br>\n<b>À :</b> MISSAKIAN, Mélissa (C2S) &lt;<a href=\"mailto:mmissakian@c2s.fr\">mmissakian@c2s.fr</a>><br>\n<b>Cc :</b> Paul MURASKO &lt;<a href=\"mailto:paul.murasko@ipsen.com\">paul.murasko@ipsen.com</a>>;\n<a href=\"mailto:marco.delpiano@ipsen.com\">marco.delpiano@ipsen.com</a><br>\n<b>Objet :</b> RE: Changes to the landing page for the US & Canada<o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"> </span></p>\n\n<p class=\"MsoNormal\"><span xss=removed>Hi\nMelissa,<o></o></span></p>\n\n<p class=\"MsoNormal\"><span xss=removed><o> </o></span></p>\n\n<p class=\"MsoNormal\"><span xss=removed>Please\nsee my answers below in red.<o></o></span></p>\n\n<p class=\"MsoNormal\"><span xss=removed><o> </o></span></p>\n\n<p class=\"MsoNormal\"><span xss=removed>Please\nlet me know if you have any questions.<o></o></span></p>\n\n<p class=\"MsoNormal\"><span xss=removed><o> </o></span></p>\n\n<p class=\"MsoNormal\"><b>From:</b> MISSAKIAN, Mélissa\n(C2S) &lt;<a href=\"mailto:mmissakian@c2s.fr\">mmissakian@c2s.fr</a>> <br>\n<b>Sent:</b> Monday, July 29, 2019 5:07 AM<br>\n<b>To:</b> Emily CORREIA &lt;<a href=\"mailto:emily.correia@ipsen.com\">emily.correia@ipsen.com</a>><br>\n<b>Cc:</b> Paul MURASKO &lt;<a href=\"mailto:paul.murasko@ipsen.com\">paul.murasko@ipsen.com</a>>;\nMarco DELPIANO &lt;<a href=\"mailto:marco.delpiano@ipsen.com\">marco.delpiano@ipsen.com</a>><br>\n<b>Subject:</b> RE: Changes to the landing page for the US & Canada<o></o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\"><span xss=removed>Hi Emily, <o></o></span></p>\n\n<p class=\"MsoNormal\"><span xss=removed><o> </o></span></p>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Consolidate\n     to three boxes:</span><o></o></li>\n <ul xss=removed type=\"circle\">\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>People\n      (use “People” image attached)</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Patients\n      (use “Patients” image attached)</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Business\n      (use ”Business” image attached)</span><o></o></li>\n </ul>\n</ul>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed>What\n     would be the links for these boxes ? <span xss=removed> </span><span xss=removed>We need to create separate pages for each of\n     these three sections.</span><o></o></li>\n</ul>\n\n<p class=\"MsoNormal\"><span xss=removed> </span></p>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Is\n     it possible to have the calendar automatically feed from an Outlook\n     calendar? (I’ve attached the .ics file here for the initial pull, but\n     please let me know if it is possible to have this done automatically)</span><o></o></li>\n</ul>\n\n<p class=\"MsoNormal\"><span xss=removed> </span></p>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed>We\n     will provide you a documented process to achieve that<span xss=removed> </span><span xss=removed>Thank you</span><o></o></li>\n</ul>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Create\n     two columns on each sub page for US and Canada (for now, the content can\n     remain the same while we work with each function to determine the\n     appropriate resources for each country:</span><o></o></li>\n <ul xss=removed type=\"circle\">\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Ethics\n      & Compliance</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Finance</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>HR</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Medical\n      Affairs</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Patient\n      Safety</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>PRC</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Commercial\n      and Reg Affairs</span><o></o></li>\n </ul>\n</ul>\n\n<p class=\"MsoListParagraph\" xss=removed><o> </o></p>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed>Not\n     sure to understand where do you want to create those column exactly <span xss=removed>On each of the\n     specific pages, instead of having one column with the resources, we would\n     like two identical columns. One that says “U.S. resources” and one that\n     says “Canada Resources.” We’ll provide the updated content for each column\n     once we have a better view of the landing page. </span><o></o></li>\n</ul>\n\n<p class=\"MsoNormal\"><span xss=removed> </span></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\">Kind regards, <o></o></p>\n\n<p class=\"MsoNormal\">Mélissa Missakian. <o></o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\"><b><span lang=\"FR\">De :</span></b><span lang=\"FR\"> Marco DELPIANO &lt;<a href=\"mailto:marco.delpiano@ipsen.com\">marco.delpiano@ipsen.com</a>> <br>\n<b>Envoyé :</b> vendredi 26 juillet 2019 14:56<br>\n<b>À :</b> Emily CORREIA &lt;<a href=\"mailto:emily.correia@ipsen.com\">emily.correia@ipsen.com</a>><br>\n<b>Cc :</b> MISSAKIAN, Mélissa (C2S) &lt;<a href=\"mailto:mmissakian@c2s.fr\">mmissakian@c2s.fr</a>>;\nPaul MURASKO &lt;<a href=\"mailto:paul.murasko@ipsen.com\">paul.murasko@ipsen.com</a>><br>\n<b>Objet :</b> RE: Changes to the landing page for the US & Canada<o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"> </span></p>\n\n<p class=\"MsoNormal\">I will have a call with Melissa at the end of the day and\nwill told you if we can make it.<o></o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\">Kind regards,<o></o></p>\n\n<p class=\"MsoNormal\" xss=removed><a href=\"https://eur01.safelinks.protection.outlook.com/?url=https://htmlsig.com/t/000001BZZNJV&data=02|01|emily.correia@ipsen.com|50b801806a15486db86708d714302f1c|9e776b6aa6cc4fafa054a502153beb01|0|0|637000069532436904&sdata=aj2V/1c0QNKgNVoJWxGfUlJX6M9OHZx8mweudkVF+Xk=&reserved=0\"><span lang=\"EN-GB\" xss=removed><img border=\"0\" width=\"80\" height=\"25\" id=\"_x0000_i1027\" src=\"https://htmlsigs.s3.amazonaws.com/logos/files/000/654/990/landscape/logo-ipsen.gif\" xss=removed alt=\"Ipsen Limited ltd\"></span></a><span lang=\"FR\" xss=removed><o></o></span></p>\n\n<p class=\"MsoNormal\" xss=removed><b><span xss=removed>Marco DELPIANO</span></b><span xss=removed> | Project Manager –\nApplication Expert (O365 – SharePoint)<br>\n<a href=\"mailto:Marco.delpiano@ipsen.com\"><span xss=removed>Marco.delpiano@ipsen.com</span></a>\n/  +33 6 99 60 77 76 </span><span lang=\"FR\" xss=removed><o></o></span></p>\n\n<p class=\"MsoNormal\" xss=removed><b><span lang=\"EN-GB\" xss=removed>Boulogne Billancourt, 92100</span></b><span lang=\"FR\" xss=removed><o></o></span></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\"><b><span lang=\"FR\">De :</span></b><span lang=\"FR\"> Emily CORREIA &lt;<a href=\"mailto:emily.correia@ipsen.com\">emily.correia@ipsen.com</a>> <br>\n<b>Envoyé :</b> Friday, July 26, 2019 1:52 PM<br>\n<b>À :</b> Marco DELPIANO &lt;<a href=\"mailto:marco.delpiano@ipsen.com\">marco.delpiano@ipsen.com</a>><br>\n<b>Cc :</b> MISSAKIAN, Mélissa (C2S) &lt;<a href=\"mailto:mmissakian@c2s.fr\">mmissakian@c2s.fr</a>>;\nPaul MURASKO &lt;<a href=\"mailto:paul.murasko@ipsen.com\">paul.murasko@ipsen.com</a>><br>\n<b>Objet :</b> Re: Changes to the landing page for the US & Canada<o></o></span></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\" xss=removed>Can we aim for the end of your\nbusiness day on Tuesday, or is that timeline too tight? <o></o></p>\n\n<p class=\"MsoNormal\">Sent from my iPhone<o></o></p>\n\n<p class=\"MsoNormal\" xss=removed><br>\nOn Jul 26, 2019, at 5:24 AM, Marco DELPIANO &lt;<a href=\"mailto:marco.delpiano@ipsen.com\">marco.delpiano@ipsen.com</a>> wrote:<o></o></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\">Dear Emily, </span><o></o></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"> </span><o></o></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\">Got you. </span><o></o></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"> </span><o></o></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"><a id=\"OWAAM4C8C0780FB56424F9A490664781089A1\" href=\"mailto:mmissakian@c2s.fr\"><span lang=\"EN-US\" xss=removed>@MISSAKIAN, Mélissa</span></a> </span>is\nhere today to take a look at those changes. <o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\">I will notify you when this will be over.<o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\">I hope this can be done by the middle of next week. This\nwould be ok ? <o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\">Kind regards,<o></o></p>\n\n<p class=\"MsoNormal\" xss=removed><a href=\"https://eur01.safelinks.protection.outlook.com/?url=https://htmlsig.com/t/000001BZZNJV&data=02|01|emily.correia@ipsen.com|50b801806a15486db86708d714302f1c|9e776b6aa6cc4fafa054a502153beb01|0|0|637000069532436904&sdata=aj2V/1c0QNKgNVoJWxGfUlJX6M9OHZx8mweudkVF+Xk=&reserved=0\"><span lang=\"EN-GB\" xss=removed><img border=\"0\" width=\"80\" height=\"25\" id=\"_x0000_i1028\" src=\"https://htmlsigs.s3.amazonaws.com/logos/files/000/654/990/landscape/logo-ipsen.gif\" xss=removed alt=\"Ipsen Limited ltd\"></span></a><o></o></p>\n\n<p class=\"MsoNormal\" xss=removed><b><span xss=removed>Marco DELPIANO</span></b><span xss=removed> | Project Manager –\nApplication Expert (O365 – SharePoint)<br>\n<a href=\"mailto:Marco.delpiano@ipsen.com\"><span xss=removed>Marco.delpiano@ipsen.com</span></a>\n/  +33 6 99 60 77 76 </span><o></o></p>\n\n<p class=\"MsoNormal\" xss=removed><b><span lang=\"EN-GB\" xss=removed>Boulogne Billancourt, 92100</span></b><o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\"><b>De :</b> Emily CORREIA\n&lt;<a href=\"mailto:emily.correia@ipsen.com\">emily.correia@ipsen.com</a>> <br>\n<b>Envoyé :</b> Thursday, July 25, 2019 5:40 PM<br>\n<b>À :</b> Marco DELPIANO &lt;<a href=\"mailto:marco.delpiano@ipsen.com\">marco.delpiano@ipsen.com</a>><br>\n<b>Cc :</b> Paul MURASKO &lt;<a href=\"mailto:paul.murasko@ipsen.com\">paul.murasko@ipsen.com</a>><br>\n<b>Objet :</b> RE: Changes to the landing page for the US & Canada<o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\"><span xss=removed>Hi Marco,</span><o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\"><span xss=removed>One more\nsmall addition, can you please use the attached image as a placeholder for the\n“Patients” box?</span><o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\"><span xss=removed>Thanks</span><o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\"><b>From:</b> Emily CORREIA <br>\n<b>Sent:</b> Thursday, July 25, 2019 9:47 AM<br>\n<b>To:</b> Marco DELPIANO &lt;<a href=\"mailto:marco.delpiano@ipsen.com\">marco.delpiano@ipsen.com</a>><br>\n<b>Cc:</b> Paul MURASKO &lt;<a href=\"mailto:paul.murasko@ipsen.com\">paul.murasko@ipsen.com</a>><br>\n<b>Subject:</b> Changes to the landing page for the US & Canada<o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\"><span xss=removed>Hi Marco,</span><o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\"><span xss=removed>We have a\nfew preliminary requests that we are hoping you’re able to make for us on the\nUS/Canada Ipsen Planet Page.</span><o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\"><span xss=removed>Can you let\nus know how long these changes will take? We are hoping to be able to share the\nspecific pages with each function area to get you the correct links, but will\nneed to see the updated staging pages first.</span><o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\"><span xss=removed>We are happy\nto get on the phone if you need any additional information from us while you’re\nworking on these updates.</span><o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\"><span xss=removed>Thanks!</span><o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\"><span xss=removed>***</span><o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\"><span xss=removed>Landing\nPage:</span><o></o></p>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Change\n     to: “Welcome to North America”</span><o></o></li>\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Consolidate\n     to three boxes:</span><o></o></li>\n <ul xss=removed type=\"circle\">\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>People\n      (use “People” image attached)</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Patients\n      (use “Patients” image attached)</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Business\n      (use ”Business” image attached)</span><o></o></li>\n </ul>\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Calendar</span><o></o></li>\n <ul xss=removed type=\"circle\">\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Is\n      it possible to have the calendar automatically feed from an Outlook\n      calendar? (I’ve attached the .ics file here for the initial pull, but\n      please let me know if it is possible to have this done automatically)</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Change\n      link from “View Calendar” to “View OIC Calendar”</span><o></o></li>\n </ul>\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Keep\n     news feed and the right-hand news panes the same</span><o></o></li>\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Move\n     “Leadership Corner” box down next to the calendar</span><o></o></li>\n</ul>\n\n<p class=\"MsoNormal\"><span xss=removed>Subpages</span><o></o></p>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Create\n     two columns on each sub page for US and Canada (for now, the content can\n     remain the same while we work with each function to determine the\n     appropriate resources for each country:</span><o></o></li>\n <ul xss=removed type=\"circle\">\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Ethics\n      & Compliance</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Finance</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>HR</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Medical\n      Affairs</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Patient\n      Safety</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>PRC</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Commercial\n      and Reg Affairs</span><o></o></li>\n </ul>\n</ul>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\"><span xss=removed>###</span><o></o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p xss=removed><span xss=removed>This\nemail (including any attachment) is intended only for the use by the recipients\nnamed above and contains proprietary information that may be confidential,\ncopyrighted and/or privileged. Unauthorized disclosure, use or copying is\nprohibited. If this email was sent to you in error or if you are not an\nintended recipient, please notify the sender immediately and delete this e-mail\nfrom your systems. Thank you<o></o></span></p>', '2019-07-01', '2019-09-01', '2019-08-28 03:18:17', 'in_progress', 65, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, 'all', NULL, NULL, '0.00', 'No', 15),
-(16, 46, 0, NULL, NULL, NULL, 'Techops Page update', '<p class=\"MsoNormal\"><b><span lang=\"FR\">De :</span></b><span lang=\"FR\"> Agnes LAVALLART &lt;<a href=\"mailto:agnes.lavallart@ipsen.com\">agnes.lavallart@ipsen.com</a>> <br>\n<b>Envoyé :</b> Friday, July 19, 2019 5:47 PM<br>\n<b>À :</b> Marco DELPIANO &lt;<a href=\"mailto:marco.delpiano@ipsen.com\">marco.delpiano@ipsen.com</a>><br>\n<b>Objet :</b> TechOps page <o></o></span></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\">Hello Marco, <o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"> </span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\">La journée a été\ndense, je te fais suivre les infos que j’ai si tu peux commencer à migrer les\npages, je te mets également les éléments que j’ai dans les différentes box\naccessible <a href=\"https://ent.box.com/s/hqz9yb6rt2hiu4qflgfslqsw9ndb6571\">ICI</a>\n<o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\">En slide 13 du\nppt tu as les noms des pages manquantes, ils ne sont pas au clair sur ce qu’il\nfaut mettre dedans mais si tu peux déjà créer les pages et les raccorder à\nTechOps sans les publier ce serait déjà chouette à savoir : <o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"> </span></p>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed><span lang=\"FR\">Welcome TechOps (qui existe déjà) <o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span lang=\"FR\">Therapeutical areas (à créer et où on doit mettre le body patient à\n     cliquer dans BOX <o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span lang=\"FR\">TechOps Strategy – Game Changers (à creer, j’ajouterais les contenus à\n     mon retour) <o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span lang=\"FR\">Technical Leadership teams – TOLT (c’est la page équipe actuelle qui\n     est à renommer si plus facile pour toi à recreer et j’updaterai les\n     contenus à mon retour) <o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span lang=\"FR\">TechOps People section (page à créer, les éléments qui seront dedans\n     sont sur BOX, mais bon ils ont mit un max de photo, faut que je créer un\n     pele mele et que j’ajoute les videos. <o></o></span></li>\n</ul>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"> </span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\">Si tu peux faire\ndéjà le masque vide et j’ajouterais les contenus à mon retour, si besoin Nicola\nGeorge que tu connais peut t’aider sur les contenus des pages <o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"> </span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\">Merci encore je\nrentre le 19 aout au matin. <o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"> </span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\">Bien\ncordialement. <o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\">Agnes <o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"> </span></p>\n\n<table class=\"MsoNormalTable\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n <tbody><tr xss=removed>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\" xss=removed><span xss=removed> </span><o></o></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><b><span xss=removed>Agnès LAVALLART</span></b><b><o></o></b></p>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\" xss=removed><span xss=removed> </span><o></o></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>Responsable communication Technical\n  Operations<br>\n  Communication Manager Technical Operations</span><o></o></p>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed></td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>Global Communications</span><o></o></p>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed></td>\n </tr>\n <tr>\n  <td width=\"420\" valign=\"top\" xss=removed>\n  <div class=\"MsoNormal\"><span xss=removed>\n  <hr size=\"1\" width=\"55\" xss=removed noshade=\"\" align=\"left\">\n  </span></div>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed></td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>+33 6 (74 08 89 72)</span><o></o></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>+33 1 (58 33 59 45)</span><o></o></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed><a href=\"mailto:agnes.lavallart@ipsen.com\">agnes.lavallart@ipsen.com</a> </span><o></o></p>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed></td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>Ipsen </span><o></o></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>65 Quai Georges Gorse</span><o></o></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>92650 Boulogne-Billancourt Cedex,\n  France</span><o></o></p>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\" xss=removed><span xss=removed> </span><o></o></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed><a href=\"http://www.ipsen.com/\" target=\"_blank\"><span xss=removed>www.ipsen.com</span></a> </span><o></o></p>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed></td>\n </tr>\n <tr>\n  <td width=\"420\" valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>&lt;!--[if gte vml 1]><v id=\"_x0000_t75\" coordsize=\"21600,21600\" o:spt=\"75\" o:preferrelative=\"t\" path=\"m@4@5l@4@11@9@11@9@5xe\" filled=\"f\" stroked=\"f\">\n   <v joinstyle=\"miter\">\n   <v>\n    <v eqn=\"if lineDrawn pixelLineWidth 0\">\n    <v eqn=\"sum @0 1 0\">\n    <v eqn=\"sum 0 0 @1\">\n    <v eqn=\"prod @2 1 2\">\n    <v eqn=\"prod @3 21600 pixelWidth\">\n    <v eqn=\"prod @3 21600 pixelHeight\">\n    <v eqn=\"sum @0 0 1\">\n    <v eqn=\"prod @6 1 2\">\n    <v eqn=\"prod @7 21600 pixelWidth\">\n    <v eqn=\"sum @8 21600 0\">\n    <v eqn=\"prod @7 21600 pixelHeight\">\n    <v eqn=\"sum @10 21600 0\">\n   </v>\n   <v o:extrusionok=\"f\" gradientshapeok=\"t\" o:connecttype=\"rect\">\n   <o v:ext=\"edit\" aspectratio=\"t\">\n  </v><v id=\"Image_x0020_2\" o:spid=\"_x0000_i1026\" type=\"#_x0000_t75\" alt=\"Logo Ipsen\" xss=removed>\n   <v src=\"file:///C:/Users/Master/AppData/Local/Temp/msohtmlclip1/01/clip_image001.png\" o:href=\"cid:image001.png@01D53E51.7A18DAE0\">\n  </v>&lt;![endif]--&gt;&lt;!--[if !vml]--&gt;<img border=\"0\" width=\"154\" height=\"44\" src=\"file:///C:/Users/Master/AppData/Local/Temp/msohtmlclip1/01/clip_image002.gif\" xss=removed alt=\"Logo Ipsen\" shapes=\"Image_x0020_2\">&lt;!--[endif]--&gt;</span><o></o></p>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\" xss=removed><span xss=removed> </span><o></o></p>\n  </td>\n </tr>\n</tbody></table>', '2019-07-01', '2019-09-30', '2019-08-01 09:02:37', 'not_started', 0, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, '{\"1\":[\"view\"]}', NULL, NULL, '0.00', 'No', 16);
+INSERT INTO `tbl_task` (`task_id`, `project_id`, `company_id`, `milestones_id`, `opportunities_id`, `goal_tracking_id`, `sub_task_id`, `task_name`, `task_description`, `task_start_date`, `due_date`, `task_created_date`, `task_status`, `task_progress`, `calculate_progress`, `task_hour`, `tasks_notes`, `timer_status`, `timer_started_by`, `start_time`, `logged_time`, `leads_id`, `bug_id`, `created_by`, `permission`, `client_visible`, `custom_date`, `hourly_rate`, `billable`, `index_no`) VALUES
+(1, 68, NULL, 0, NULL, NULL, NULL, 'Hire a consultant to assist me into the scoping of the KIQ - PMR - Com / Prod', '', '2019-07-27', '2019-08-19', '2020-02-24 09:42:42', 'not_started', 0, NULL, '0:00', NULL, 'off', 8, 0, 1577683043, NULL, NULL, 1, '{\"24\":[\"view\"]}', NULL, NULL, '0.00', 'No', 1),
+(2, 68, NULL, 0, NULL, NULL, NULL, 'PH1 Finalization', '', '2019-06-01', '2019-09-01', '2020-03-11 06:12:44', 'in_progress', 100, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, '{\"24\":[\"view\"]}', NULL, NULL, '0.00', 'No', 2),
+(3, 43, NULL, 0, NULL, NULL, NULL, 'Build design model for Olivier based on a web template (  )', '', '2019-07-01', '2019-08-05', '2019-08-28 01:11:20', 'completed', 100, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, 'all', NULL, NULL, '0.00', 'No', 3),
+(4, 4, NULL, 0, NULL, NULL, NULL, 'Sign Off with Nicola & Aline', '<p class=\"MsoNormal\"><span lang=\"FR\">Je viens de faire\nle sign off avec Nicola :</span></p>\n\n<p class=\"MsoNormal\" xss=removed><b><span lang=\"FR\">Voici les toutes dernières\nremarques ( Aline et Nicola compilées ) : <o></o></span></b></p>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed>“Overall L&D PRG”\n      <span lang=\"EN\">Remove the “%” in the title before “completed vs\n     registered”<o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span lang=\"EN\">Can the Overall L&D  Programs Rolling display the latest 3\n     quarters of the previous year when Q1 ( This graph should be always\n     displaying the actual quarter and the latest 3, if data exist )<o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span lang=\"EN\">Remove the numbers ( displayed by default in the graph ) from the new\n     Overall L&D PRG Rolling. Aline wants to have the data displayed only\n     on hover.<o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span lang=\"EN\">Change \"purchasing\" to \"procurement\" global\n     functions & tables<o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span lang=\"EN\">Global Functions : Headcount Tech ops actual vs budget : budget dark\n     bar to be switched to green.<o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed>Please can you make sure\n     that all labels are displayed on the talent successor readiness as not all\n     are showing. Also we need more space between bars as it looks like one big\n     block.</li></ul>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed>Nicole has asked if you\n     can switch the colors of talent successor readiness to be the blue color\n     and the not ready to be the pink color as she said the pink color is too\n     close to red which implies not ready.<o></o></li>\n</ul>', '2019-08-01', '2019-08-01', '2020-02-24 12:53:24', 'completed', 100, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, 'all', NULL, NULL, '0.00', 'No', 4),
+(5, 4, NULL, 0, NULL, NULL, NULL, 'Very Last wave of changes : Please make sure that IS will do everything before mid august', '<p class=\"MsoNormal\"><br></p>\n\n<p class=\"MsoNormal\" xss=removed><b><span lang=\"FR\">Voici les toutes dernières\nremarques ( Aline et Nicola compilées ) : <o></o></span></b></p>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed>“Overall l&d prg.”\n      <span lang=\"EN\">Remove the “%” in the title before “completed vs\n     registered”<o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span lang=\"EN\">Can the Overall L&D  Programs Rolling display the latest 3\n     quarters of the previous year when Q1 ( This graph should be always\n     displaying the actual quarter and the latest 3, if data exist ) <b><span xss=removed>A discuter si besoin.</span></b><o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span lang=\"EN\">Remove the numbers ( displayed by default in the graph ) from the new\n     Overall L&D PRG Rolling. Aline wants to have the data displayed only\n     on hover.<o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span lang=\"EN\">Change \"purchasing\" to \"procurement\" global\n     functions & tables<o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span lang=\"EN\">Global Functions : Headcount Tech ops actual vs budget : budget dark\n     bar to be switched to green.<o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed>Please can you make sure\n     that all labels are displayed on the talent successor readiness as not all\n     are showing. Also we need more space between bars as it looks like one big\n     block.</li></ul>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed>Nicole has asked if you\n     can switch the colors of talent successor readiness to be the blue color\n     and the not ready to be the pink color as she said the pink color is too\n     close to red which implies not ready.<o></o></li>\n</ul>', '2019-08-01', '2019-08-12', '2019-12-24 06:31:28', 'completed', 100, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, 'all', NULL, NULL, '0.00', 'No', 5),
+(6, 4, NULL, 0, NULL, NULL, NULL, 'Project Launch Communication', '', '2019-08-12', '2019-09-01', '2019-08-01 06:32:57', 'not_started', 0, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, 'all', NULL, NULL, '0.00', 'No', 6),
+(7, 4, NULL, 0, NULL, NULL, NULL, 'Setting Up AD groups', '', '2019-08-12', '2019-08-31', '2019-12-24 06:31:45', 'completed', 100, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, 'all', NULL, NULL, '0.00', 'No', 7),
+(8, 4, NULL, 0, NULL, NULL, NULL, 'Setting Up IAM Process', '', '2019-08-12', '2019-08-31', '2019-08-01 06:34:45', 'not_started', 0, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, 'all', NULL, NULL, '0.00', 'No', 8),
+(9, 4, NULL, 0, NULL, NULL, NULL, 'Script to interface Ipeople & Ad groups ', '<p>Please Set up a meeting with Najib ( Ipeople it ) & Julien Barreau. </p><p>I already did but julien need a technical reminder on Ipeople capabilities.</p>', '2019-08-12', '2019-08-31', '2019-08-01 06:37:14', 'not_started', 0, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, 'all', NULL, NULL, '0.00', 'No', 9),
+(10, 4, NULL, 0, NULL, NULL, NULL, 'Setting up SharePoint Security Groups', '', '2019-08-12', '2019-08-31', '2019-08-01 19:30:24', 'completed', 100, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, 'all', NULL, NULL, '0.00', 'No', 10),
+(11, 68, NULL, 0, NULL, NULL, NULL, 'Testing and challenging PH1 first delivery', '', '2019-08-05', '2019-08-19', '2020-02-24 12:53:12', 'completed', 100, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, 'all', NULL, NULL, '0.00', 'No', 11),
+(12, 68, NULL, 0, NULL, NULL, NULL, 'Helping the CI department into setting up the CI plateform PH1', '', '2019-08-12', '2019-08-31', '2019-08-01 06:47:50', 'not_started', 0, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, 'all', NULL, NULL, '0.00', 'No', 12),
+(13, 31, NULL, 0, NULL, NULL, NULL, 'Ensure that the last bugs are corrected. Sign off with Ineat.', '', '2019-08-05', '2019-08-12', '2020-02-24 12:53:02', 'not_started', 0, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, 'all', NULL, NULL, '0.00', 'No', 13),
+(14, 31, NULL, 0, NULL, NULL, NULL, 'Build Landing page for Beatrice Hacher', '<p class=\"MsoNormal\"><span lang=\"FR\" xss=removed>Re-bonjour\nMarco,<o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=removed>Voici\nles 2 sites à relier à la Font page :<o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=removed><a href=\"https://ipsengroup.sharepoint.com/sites/SomatulineAcromegalyChinaRDGPT\">https://ipsengroup.sharepoint.com/sites/SomatulineAcromegalyChinaRDGPT</a><o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=removed><a href=\"https://ipsengroup.sharepoint.com/sites/SomatulineGEP-NETChinaRDGPT2\">https://ipsengroup.sharepoint.com/sites/SomatulineGEP-NETChinaRDGPT2</a><o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=removed>(pourrais-tu\nm’envoyer la lanterne verte pour ce 2<sup>ème</sup> site ?)<o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=removed> </span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=removed>MERCI\npour ton aide.<o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=removed>Amicalement,<o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\" xss=removed> </span></p><p class=\"MsoNormal\"><span lang=\"FR\" xss=removed>Site a dupliquer pour repondre au besoin : </span><a href=\"https://ipsengroup.sharepoint.com/sites/Custom/Communication/SitePages/Homepage.aspx\" xss=removed>https://ipsengroup.sharepoint.com/sites/Custom/Communication/SitePages/Homepage.aspx</a></p>', '2019-08-01', '2019-08-31', '2020-02-15 12:33:30', 'not_started', 100, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, 'all', NULL, NULL, '0.00', 'No', 14),
+(15, 46, NULL, 0, NULL, NULL, NULL, 'US & Canada pages updates', '<p class=\"MsoNormal\"><span lang=\"FR\">Dear Emily,<o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"> </span></p>\n\n<p class=\"MsoNormal\">Melissa will leave the office this evening for the holidays.\nUntil September. <o></o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\">For the next round and from tomorrow I will personally take\nthe proper actions with more or less delay depending on my workload.<o></o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\">I hope this will be completed by the end of the week as I\nwill leave the office as well for 10 days of vacations.<o></o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\">Kind regards,<o></o></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"> </span></p>\n\n<table class=\"MsoNormalTable\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n <tbody><tr xss=removed>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\" xss=removed><span xss=removed> </span><o></o></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><b><span xss=removed>Marco DELPIANO</span><o></o></b></p>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\" xss=removed><span xss=removed> </span><o></o></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>Project Manager ( O365 SharePoint ) / MS Application Expert</span><o></o></p>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed></td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>Support & Application – IT</span><o></o></p>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed></td>\n </tr>\n <tr>\n  <td width=\"420\" valign=\"top\" xss=removed>\n  <div class=\"MsoNormal\"><span xss=removed>\n  <hr size=\"1\" width=\"55\" xss=removed noshade=\"\" align=\"left\">\n  </span></div>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>Office : +33 1 58 33 57 29<o></o></span></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>Mobile : +33 6 (0699607776)</span><o></o></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed></td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed></td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed></td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>Ipsen Boulogne</span><o></o></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>65 Quai Georges Gorse</span><o></o></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>Boulogne</span><o></o></p>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\" xss=removed><span xss=removed> </span><o></o></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed><a href=\"http://www.ipsen.com/\" target=\"_blank\"><span xss=removed>www.ipsen.com</span></a>\n  </span><o></o></p>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed></td>\n </tr>\n <tr>\n  <td width=\"420\" valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>&lt;!--[if gte vml 1]><v id=\"_x0000_t75\" coordsize=\"21600,21600\" o:spt=\"75\" o:preferrelative=\"t\" path=\"m@4@5l@4@11@9@11@9@5xe\" filled=\"f\" stroked=\"f\">\n   <v joinstyle=\"miter\">\n   <v>\n    <v eqn=\"if lineDrawn pixelLineWidth 0\">\n    <v eqn=\"sum @0 1 0\">\n    <v eqn=\"sum 0 0 @1\">\n    <v eqn=\"prod @2 1 2\">\n    <v eqn=\"prod @3 21600 pixelWidth\">\n    <v eqn=\"prod @3 21600 pixelHeight\">\n    <v eqn=\"sum @0 0 1\">\n    <v eqn=\"prod @6 1 2\">\n    <v eqn=\"prod @7 21600 pixelWidth\">\n    <v eqn=\"sum @8 21600 0\">\n    <v eqn=\"prod @7 21600 pixelHeight\">\n    <v eqn=\"sum @10 21600 0\">\n   </v>\n   <v o:extrusionok=\"f\" gradientshapeok=\"t\" o:connecttype=\"rect\">\n   <o v:ext=\"edit\" aspectratio=\"t\">\n  </v><v id=\"Image_x0020_2\" o:spid=\"_x0000_i1026\" type=\"#_x0000_t75\" alt=\"Logo Ipsen\" xss=removed>\n   <v src=\"file:///C:/Users/Master/AppData/Local/Temp/msohtmlclip1/01/clip_image001.png\" o:href=\"cid:image001.png@01D54632.A3909B90\">\n  </v>&lt;![endif]--&gt;&lt;!--[if !vml]--&gt;<img border=\"0\" width=\"154\" height=\"44\" src=\"file:///C:/Users/Master/AppData/Local/Temp/msohtmlclip1/01/clip_image002.gif\" xss=removed alt=\"Logo Ipsen\" shapes=\"Image_x0020_2\">&lt;!--[endif]--&gt;</span><o></o></p>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\" xss=removed><span xss=removed> </span><o></o></p>\n  </td>\n </tr>\n</tbody></table>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\"><b><span lang=\"FR\">De :</span></b><span lang=\"FR\"> Emily CORREIA <br>\n<b>Envoyé :</b> lundi 29 juillet 2019 16:43<br>\n<b>À :</b> MISSAKIAN, Mélissa (C2S) &lt;<a href=\"mailto:mmissakian@c2s.fr\">mmissakian@c2s.fr</a>><br>\n<b>Cc :</b> Paul MURASKO &lt;<a href=\"mailto:paul.murasko@ipsen.com\">paul.murasko@ipsen.com</a>>;\nMarco DELPIANO &lt;<a href=\"mailto:marco.delpiano@ipsen.com\">marco.delpiano@ipsen.com</a>><br>\n<b>Objet :</b> RE: Changes to the landing page for the US & Canada<o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"> </span></p>\n\n<p class=\"MsoNormal\"><span xss=removed>Hi Mélissa, <o></o></span></p>\n\n<p class=\"MsoNormal\"><span xss=removed><o> </o></span></p>\n\n<p class=\"MsoNormal\"><span xss=removed>Thank you\nfor this initial round of edits.<o></o></span></p>\n\n<p class=\"MsoNormal\"><span xss=removed><o> </o></span></p>\n\n<p class=\"MsoNormal\"><span xss=removed>On the\nlanding page, the first section of blocks should read “People” “Patients”\n“Business”, instead of “NA Home” “People” “Key Resources”.<o></o></span></p>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Please\n     move the “NA Home” and “Key Resources” boxes to the bottom set of boxes <o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Please\n     correct the spelling of the word <b>Resources </b>on the box and the\n     corresponding page<o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Replace\n     the pink background on the current “People” box with the photo used in the\n     bottom navigation <o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Remove\n     the duplicate “People” from the bottom menu<o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Move\n     the “Patients” block from the bottom menu to the top section<o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Add\n     in a “Business” page/block like the “People” and “Patients” in the top\n     section <o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Change\n     “US Commercial Regulatory Affairs” to read “Commercial Regulatory Affairs”<o></o></span></li>\n</ul>\n\n<p class=\"MsoNormal\"><span xss=removed><o> </o></span></p>\n\n<p class=\"MsoNormal\"><span xss=removed>Looking\nforward to seeing the next round!<o></o></span></p>\n\n<p class=\"MsoNormal\"><span xss=removed><o> </o></span></p>\n\n<p class=\"MsoNormal\"><b>From:</b> MISSAKIAN, Mélissa\n(C2S) &lt;<a href=\"mailto:mmissakian@c2s.fr\">mmissakian@c2s.fr</a>> <br>\n<b>Sent:</b> Monday, July 29, 2019 10:22 AM<br>\n<b>To:</b> Emily CORREIA &lt;<a href=\"mailto:emily.correia@ipsen.com\">emily.correia@ipsen.com</a>><br>\n<b>Cc:</b> Paul MURASKO &lt;<a href=\"mailto:paul.murasko@ipsen.com\">paul.murasko@ipsen.com</a>>;\nMarco DELPIANO &lt;<a href=\"mailto:marco.delpiano@ipsen.com\">marco.delpiano@ipsen.com</a>><br>\n<b>Subject:</b> RE: Changes to the landing page for the US & Canada<o></o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\">Emily, <o></o></span></p>\n\n<p class=\"MsoNormal\">Changes are available. <o></o></p>\n\n<p class=\"MsoNormal\">Could you check them? <o></o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\">Thank you, <o></o></p>\n\n<p class=\"MsoNormal\">Mélissa.<o></o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\"><b><span lang=\"FR\">De :</span></b><span lang=\"FR\"> Emily CORREIA &lt;<a href=\"mailto:emily.correia@ipsen.com\">emily.correia@ipsen.com</a>> <br>\n<b>Envoyé :</b> lundi 29 juillet 2019 14:25<br>\n<b>À :</b> MISSAKIAN, Mélissa (C2S) &lt;<a href=\"mailto:mmissakian@c2s.fr\">mmissakian@c2s.fr</a>><br>\n<b>Cc :</b> Paul MURASKO &lt;<a href=\"mailto:paul.murasko@ipsen.com\">paul.murasko@ipsen.com</a>>;\n<a href=\"mailto:marco.delpiano@ipsen.com\">marco.delpiano@ipsen.com</a><br>\n<b>Objet :</b> RE: Changes to the landing page for the US & Canada<o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"> </span></p>\n\n<p class=\"MsoNormal\"><span xss=removed>Hi\nMelissa,<o></o></span></p>\n\n<p class=\"MsoNormal\"><span xss=removed><o> </o></span></p>\n\n<p class=\"MsoNormal\"><span xss=removed>Please\nsee my answers below in red.<o></o></span></p>\n\n<p class=\"MsoNormal\"><span xss=removed><o> </o></span></p>\n\n<p class=\"MsoNormal\"><span xss=removed>Please\nlet me know if you have any questions.<o></o></span></p>\n\n<p class=\"MsoNormal\"><span xss=removed><o> </o></span></p>\n\n<p class=\"MsoNormal\"><b>From:</b> MISSAKIAN, Mélissa\n(C2S) &lt;<a href=\"mailto:mmissakian@c2s.fr\">mmissakian@c2s.fr</a>> <br>\n<b>Sent:</b> Monday, July 29, 2019 5:07 AM<br>\n<b>To:</b> Emily CORREIA &lt;<a href=\"mailto:emily.correia@ipsen.com\">emily.correia@ipsen.com</a>><br>\n<b>Cc:</b> Paul MURASKO &lt;<a href=\"mailto:paul.murasko@ipsen.com\">paul.murasko@ipsen.com</a>>;\nMarco DELPIANO &lt;<a href=\"mailto:marco.delpiano@ipsen.com\">marco.delpiano@ipsen.com</a>><br>\n<b>Subject:</b> RE: Changes to the landing page for the US & Canada<o></o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\"><span xss=removed>Hi Emily, <o></o></span></p>\n\n<p class=\"MsoNormal\"><span xss=removed><o> </o></span></p>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Consolidate\n     to three boxes:</span><o></o></li>\n <ul xss=removed type=\"circle\">\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>People\n      (use “People” image attached)</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Patients\n      (use “Patients” image attached)</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Business\n      (use ”Business” image attached)</span><o></o></li>\n </ul>\n</ul>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed>What\n     would be the links for these boxes ? <span xss=removed> </span><span xss=removed>We need to create separate pages for each of\n     these three sections.</span><o></o></li>\n</ul>\n\n<p class=\"MsoNormal\"><span xss=removed> </span></p>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Is\n     it possible to have the calendar automatically feed from an Outlook\n     calendar? (I’ve attached the .ics file here for the initial pull, but\n     please let me know if it is possible to have this done automatically)</span><o></o></li>\n</ul>\n\n<p class=\"MsoNormal\"><span xss=removed> </span></p>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed>We\n     will provide you a documented process to achieve that<span xss=removed> </span><span xss=removed>Thank you</span><o></o></li>\n</ul>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Create\n     two columns on each sub page for US and Canada (for now, the content can\n     remain the same while we work with each function to determine the\n     appropriate resources for each country:</span><o></o></li>\n <ul xss=removed type=\"circle\">\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Ethics\n      & Compliance</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Finance</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>HR</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Medical\n      Affairs</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Patient\n      Safety</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>PRC</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Commercial\n      and Reg Affairs</span><o></o></li>\n </ul>\n</ul>\n\n<p class=\"MsoListParagraph\" xss=removed><o> </o></p>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed>Not\n     sure to understand where do you want to create those column exactly <span xss=removed>On each of the\n     specific pages, instead of having one column with the resources, we would\n     like two identical columns. One that says “U.S. resources” and one that\n     says “Canada Resources.” We’ll provide the updated content for each column\n     once we have a better view of the landing page. </span><o></o></li>\n</ul>\n\n<p class=\"MsoNormal\"><span xss=removed> </span></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\">Kind regards, <o></o></p>\n\n<p class=\"MsoNormal\">Mélissa Missakian. <o></o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\"><b><span lang=\"FR\">De :</span></b><span lang=\"FR\"> Marco DELPIANO &lt;<a href=\"mailto:marco.delpiano@ipsen.com\">marco.delpiano@ipsen.com</a>> <br>\n<b>Envoyé :</b> vendredi 26 juillet 2019 14:56<br>\n<b>À :</b> Emily CORREIA &lt;<a href=\"mailto:emily.correia@ipsen.com\">emily.correia@ipsen.com</a>><br>\n<b>Cc :</b> MISSAKIAN, Mélissa (C2S) &lt;<a href=\"mailto:mmissakian@c2s.fr\">mmissakian@c2s.fr</a>>;\nPaul MURASKO &lt;<a href=\"mailto:paul.murasko@ipsen.com\">paul.murasko@ipsen.com</a>><br>\n<b>Objet :</b> RE: Changes to the landing page for the US & Canada<o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"> </span></p>\n\n<p class=\"MsoNormal\">I will have a call with Melissa at the end of the day and\nwill told you if we can make it.<o></o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\">Kind regards,<o></o></p>\n\n<p class=\"MsoNormal\" xss=removed><a href=\"https://eur01.safelinks.protection.outlook.com/?url=https://htmlsig.com/t/000001BZZNJV&data=02|01|emily.correia@ipsen.com|50b801806a15486db86708d714302f1c|9e776b6aa6cc4fafa054a502153beb01|0|0|637000069532436904&sdata=aj2V/1c0QNKgNVoJWxGfUlJX6M9OHZx8mweudkVF+Xk=&reserved=0\"><span lang=\"EN-GB\" xss=removed><img border=\"0\" width=\"80\" height=\"25\" id=\"_x0000_i1027\" src=\"https://htmlsigs.s3.amazonaws.com/logos/files/000/654/990/landscape/logo-ipsen.gif\" xss=removed alt=\"Ipsen Limited ltd\"></span></a><span lang=\"FR\" xss=removed><o></o></span></p>\n\n<p class=\"MsoNormal\" xss=removed><b><span xss=removed>Marco DELPIANO</span></b><span xss=removed> | Project Manager –\nApplication Expert (O365 – SharePoint)<br>\n<a href=\"mailto:Marco.delpiano@ipsen.com\"><span xss=removed>Marco.delpiano@ipsen.com</span></a>\n/  +33 6 99 60 77 76 </span><span lang=\"FR\" xss=removed><o></o></span></p>\n\n<p class=\"MsoNormal\" xss=removed><b><span lang=\"EN-GB\" xss=removed>Boulogne Billancourt, 92100</span></b><span lang=\"FR\" xss=removed><o></o></span></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\"><b><span lang=\"FR\">De :</span></b><span lang=\"FR\"> Emily CORREIA &lt;<a href=\"mailto:emily.correia@ipsen.com\">emily.correia@ipsen.com</a>> <br>\n<b>Envoyé :</b> Friday, July 26, 2019 1:52 PM<br>\n<b>À :</b> Marco DELPIANO &lt;<a href=\"mailto:marco.delpiano@ipsen.com\">marco.delpiano@ipsen.com</a>><br>\n<b>Cc :</b> MISSAKIAN, Mélissa (C2S) &lt;<a href=\"mailto:mmissakian@c2s.fr\">mmissakian@c2s.fr</a>>;\nPaul MURASKO &lt;<a href=\"mailto:paul.murasko@ipsen.com\">paul.murasko@ipsen.com</a>><br>\n<b>Objet :</b> Re: Changes to the landing page for the US & Canada<o></o></span></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\" xss=removed>Can we aim for the end of your\nbusiness day on Tuesday, or is that timeline too tight? <o></o></p>\n\n<p class=\"MsoNormal\">Sent from my iPhone<o></o></p>\n\n<p class=\"MsoNormal\" xss=removed><br>\nOn Jul 26, 2019, at 5:24 AM, Marco DELPIANO &lt;<a href=\"mailto:marco.delpiano@ipsen.com\">marco.delpiano@ipsen.com</a>> wrote:<o></o></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\">Dear Emily, </span><o></o></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"> </span><o></o></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\">Got you. </span><o></o></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"> </span><o></o></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"><a id=\"OWAAM4C8C0780FB56424F9A490664781089A1\" href=\"mailto:mmissakian@c2s.fr\"><span lang=\"EN-US\" xss=removed>@MISSAKIAN, Mélissa</span></a> </span>is\nhere today to take a look at those changes. <o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\">I will notify you when this will be over.<o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\">I hope this can be done by the middle of next week. This\nwould be ok ? <o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\">Kind regards,<o></o></p>\n\n<p class=\"MsoNormal\" xss=removed><a href=\"https://eur01.safelinks.protection.outlook.com/?url=https://htmlsig.com/t/000001BZZNJV&data=02|01|emily.correia@ipsen.com|50b801806a15486db86708d714302f1c|9e776b6aa6cc4fafa054a502153beb01|0|0|637000069532436904&sdata=aj2V/1c0QNKgNVoJWxGfUlJX6M9OHZx8mweudkVF+Xk=&reserved=0\"><span lang=\"EN-GB\" xss=removed><img border=\"0\" width=\"80\" height=\"25\" id=\"_x0000_i1028\" src=\"https://htmlsigs.s3.amazonaws.com/logos/files/000/654/990/landscape/logo-ipsen.gif\" xss=removed alt=\"Ipsen Limited ltd\"></span></a><o></o></p>\n\n<p class=\"MsoNormal\" xss=removed><b><span xss=removed>Marco DELPIANO</span></b><span xss=removed> | Project Manager –\nApplication Expert (O365 – SharePoint)<br>\n<a href=\"mailto:Marco.delpiano@ipsen.com\"><span xss=removed>Marco.delpiano@ipsen.com</span></a>\n/  +33 6 99 60 77 76 </span><o></o></p>\n\n<p class=\"MsoNormal\" xss=removed><b><span lang=\"EN-GB\" xss=removed>Boulogne Billancourt, 92100</span></b><o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\"><b>De :</b> Emily CORREIA\n&lt;<a href=\"mailto:emily.correia@ipsen.com\">emily.correia@ipsen.com</a>> <br>\n<b>Envoyé :</b> Thursday, July 25, 2019 5:40 PM<br>\n<b>À :</b> Marco DELPIANO &lt;<a href=\"mailto:marco.delpiano@ipsen.com\">marco.delpiano@ipsen.com</a>><br>\n<b>Cc :</b> Paul MURASKO &lt;<a href=\"mailto:paul.murasko@ipsen.com\">paul.murasko@ipsen.com</a>><br>\n<b>Objet :</b> RE: Changes to the landing page for the US & Canada<o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\"><span xss=removed>Hi Marco,</span><o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\"><span xss=removed>One more\nsmall addition, can you please use the attached image as a placeholder for the\n“Patients” box?</span><o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\"><span xss=removed>Thanks</span><o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\"><b>From:</b> Emily CORREIA <br>\n<b>Sent:</b> Thursday, July 25, 2019 9:47 AM<br>\n<b>To:</b> Marco DELPIANO &lt;<a href=\"mailto:marco.delpiano@ipsen.com\">marco.delpiano@ipsen.com</a>><br>\n<b>Cc:</b> Paul MURASKO &lt;<a href=\"mailto:paul.murasko@ipsen.com\">paul.murasko@ipsen.com</a>><br>\n<b>Subject:</b> Changes to the landing page for the US & Canada<o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\"><span xss=removed>Hi Marco,</span><o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\"><span xss=removed>We have a\nfew preliminary requests that we are hoping you’re able to make for us on the\nUS/Canada Ipsen Planet Page.</span><o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\"><span xss=removed>Can you let\nus know how long these changes will take? We are hoping to be able to share the\nspecific pages with each function area to get you the correct links, but will\nneed to see the updated staging pages first.</span><o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\"><span xss=removed>We are happy\nto get on the phone if you need any additional information from us while you’re\nworking on these updates.</span><o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\"><span xss=removed>Thanks!</span><o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\"><span xss=removed>***</span><o></o></p>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\"><span xss=removed>Landing\nPage:</span><o></o></p>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Change\n     to: “Welcome to North America”</span><o></o></li>\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Consolidate\n     to three boxes:</span><o></o></li>\n <ul xss=removed type=\"circle\">\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>People\n      (use “People” image attached)</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Patients\n      (use “Patients” image attached)</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Business\n      (use ”Business” image attached)</span><o></o></li>\n </ul>\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Calendar</span><o></o></li>\n <ul xss=removed type=\"circle\">\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Is\n      it possible to have the calendar automatically feed from an Outlook\n      calendar? (I’ve attached the .ics file here for the initial pull, but\n      please let me know if it is possible to have this done automatically)</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Change\n      link from “View Calendar” to “View OIC Calendar”</span><o></o></li>\n </ul>\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Keep\n     news feed and the right-hand news panes the same</span><o></o></li>\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Move\n     “Leadership Corner” box down next to the calendar</span><o></o></li>\n</ul>\n\n<p class=\"MsoNormal\"><span xss=removed>Subpages</span><o></o></p>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Create\n     two columns on each sub page for US and Canada (for now, the content can\n     remain the same while we work with each function to determine the\n     appropriate resources for each country:</span><o></o></li>\n <ul xss=removed type=\"circle\">\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Ethics\n      & Compliance</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Finance</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>HR</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Medical\n      Affairs</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Patient\n      Safety</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>PRC</span><o></o></li>\n  <li class=\"MsoListParagraph\" xss=removed><span xss=removed>Commercial\n      and Reg Affairs</span><o></o></li>\n </ul>\n</ul>\n\n<p class=\"MsoNormal\"> <o></o></p>\n\n<p class=\"MsoNormal\"><span xss=removed>###</span><o></o></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p xss=removed><span xss=removed>This\nemail (including any attachment) is intended only for the use by the recipients\nnamed above and contains proprietary information that may be confidential,\ncopyrighted and/or privileged. Unauthorized disclosure, use or copying is\nprohibited. If this email was sent to you in error or if you are not an\nintended recipient, please notify the sender immediately and delete this e-mail\nfrom your systems. Thank you<o></o></span></p>', '2019-07-01', '2019-09-01', '2020-02-28 05:34:09', 'deferred', 65, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, 'all', NULL, NULL, '0.00', 'No', 15),
+(16, 46, NULL, 0, NULL, NULL, NULL, 'Techops Page update', '<p class=\"MsoNormal\"><b><span lang=\"FR\">De :</span></b><span lang=\"FR\"> Agnes LAVALLART &lt;<a href=\"mailto:agnes.lavallart@ipsen.com\">agnes.lavallart@ipsen.com</a>> <br>\n<b>Envoyé :</b> Friday, July 19, 2019 5:47 PM<br>\n<b>À :</b> Marco DELPIANO &lt;<a href=\"mailto:marco.delpiano@ipsen.com\">marco.delpiano@ipsen.com</a>><br>\n<b>Objet :</b> TechOps page <o></o></span></p>\n\n<p class=\"MsoNormal\"><o> </o></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\">Hello Marco, <o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"> </span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\">La journée a été\ndense, je te fais suivre les infos que j’ai si tu peux commencer à migrer les\npages, je te mets également les éléments que j’ai dans les différentes box\naccessible <a href=\"https://ent.box.com/s/hqz9yb6rt2hiu4qflgfslqsw9ndb6571\">ICI</a>\n<o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\">En slide 13 du\nppt tu as les noms des pages manquantes, ils ne sont pas au clair sur ce qu’il\nfaut mettre dedans mais si tu peux déjà créer les pages et les raccorder à\nTechOps sans les publier ce serait déjà chouette à savoir : <o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"> </span></p>\n\n<ul xss=removed type=\"disc\">\n <li class=\"MsoListParagraph\" xss=removed><span lang=\"FR\">Welcome TechOps (qui existe déjà) <o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span lang=\"FR\">Therapeutical areas (à créer et où on doit mettre le body patient à\n     cliquer dans BOX <o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span lang=\"FR\">TechOps Strategy – Game Changers (à creer, j’ajouterais les contenus à\n     mon retour) <o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span lang=\"FR\">Technical Leadership teams – TOLT (c’est la page équipe actuelle qui\n     est à renommer si plus facile pour toi à recreer et j’updaterai les\n     contenus à mon retour) <o></o></span></li>\n <li class=\"MsoListParagraph\" xss=removed><span lang=\"FR\">TechOps People section (page à créer, les éléments qui seront dedans\n     sont sur BOX, mais bon ils ont mit un max de photo, faut que je créer un\n     pele mele et que j’ajoute les videos. <o></o></span></li>\n</ul>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"> </span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\">Si tu peux faire\ndéjà le masque vide et j’ajouterais les contenus à mon retour, si besoin Nicola\nGeorge que tu connais peut t’aider sur les contenus des pages <o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"> </span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\">Merci encore je\nrentre le 19 aout au matin. <o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"> </span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\">Bien\ncordialement. <o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\">Agnes <o></o></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"FR\"> </span></p>\n\n<table class=\"MsoNormalTable\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n <tbody><tr xss=removed>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\" xss=removed><span xss=removed> </span><o></o></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><b><span xss=removed>Agnès LAVALLART</span></b><b><o></o></b></p>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\" xss=removed><span xss=removed> </span><o></o></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>Responsable communication Technical\n  Operations<br>\n  Communication Manager Technical Operations</span><o></o></p>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed></td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>Global Communications</span><o></o></p>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed></td>\n </tr>\n <tr>\n  <td width=\"420\" valign=\"top\" xss=removed>\n  <div class=\"MsoNormal\"><span xss=removed>\n  <hr size=\"1\" width=\"55\" xss=removed noshade=\"\" align=\"left\">\n  </span></div>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed></td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>+33 6 (74 08 89 72)</span><o></o></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>+33 1 (58 33 59 45)</span><o></o></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed><a href=\"mailto:agnes.lavallart@ipsen.com\">agnes.lavallart@ipsen.com</a> </span><o></o></p>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed></td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>Ipsen </span><o></o></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>65 Quai Georges Gorse</span><o></o></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>92650 Boulogne-Billancourt Cedex,\n  France</span><o></o></p>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\" xss=removed><span xss=removed> </span><o></o></p>\n  </td>\n </tr>\n <tr>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed><a href=\"http://www.ipsen.com/\" target=\"_blank\"><span xss=removed>www.ipsen.com</span></a> </span><o></o></p>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed></td>\n </tr>\n <tr>\n  <td width=\"420\" valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\"><span xss=removed>&lt;!--[if gte vml 1]><v id=\"_x0000_t75\" coordsize=\"21600,21600\" o:spt=\"75\" o:preferrelative=\"t\" path=\"m@4@5l@4@11@9@11@9@5xe\" filled=\"f\" stroked=\"f\">\n   <v joinstyle=\"miter\">\n   <v>\n    <v eqn=\"if lineDrawn pixelLineWidth 0\">\n    <v eqn=\"sum @0 1 0\">\n    <v eqn=\"sum 0 0 @1\">\n    <v eqn=\"prod @2 1 2\">\n    <v eqn=\"prod @3 21600 pixelWidth\">\n    <v eqn=\"prod @3 21600 pixelHeight\">\n    <v eqn=\"sum @0 0 1\">\n    <v eqn=\"prod @6 1 2\">\n    <v eqn=\"prod @7 21600 pixelWidth\">\n    <v eqn=\"sum @8 21600 0\">\n    <v eqn=\"prod @7 21600 pixelHeight\">\n    <v eqn=\"sum @10 21600 0\">\n   </v>\n   <v o:extrusionok=\"f\" gradientshapeok=\"t\" o:connecttype=\"rect\">\n   <o v:ext=\"edit\" aspectratio=\"t\">\n  </v><v id=\"Image_x0020_2\" o:spid=\"_x0000_i1026\" type=\"#_x0000_t75\" alt=\"Logo Ipsen\" xss=removed>\n   <v src=\"file:///C:/Users/Master/AppData/Local/Temp/msohtmlclip1/01/clip_image001.png\" o:href=\"cid:image001.png@01D53E51.7A18DAE0\">\n  </v>&lt;![endif]--&gt;&lt;!--[if !vml]--&gt;<img border=\"0\" width=\"154\" height=\"44\" src=\"file:///C:/Users/Master/AppData/Local/Temp/msohtmlclip1/01/clip_image002.gif\" xss=removed alt=\"Logo Ipsen\" shapes=\"Image_x0020_2\">&lt;!--[endif]--&gt;</span><o></o></p>\n  </td>\n </tr>\n <tr xss=removed>\n  <td valign=\"top\" xss=removed>\n  <p class=\"MsoNormal\" xss=removed><span xss=removed> </span><o></o></p>\n  </td>\n </tr>\n</tbody></table>', '2019-07-01', '2019-09-30', '2020-03-12 04:55:59', 'completed', 0, NULL, '0:00', NULL, 'off', NULL, NULL, 0, NULL, NULL, 1, 'all', NULL, NULL, '0.00', 'No', 16),
+(17, 49, 2, NULL, NULL, NULL, NULL, 'deepaktask', '<p>fsdfsdfsdf</p>\n', '0000-00-00', '0000-00-00', '2020-03-30 08:43:05', 'in_progress', 0, NULL, '0.08', NULL, 'off', NULL, NULL, 0, NULL, NULL, NULL, 'all', NULL, NULL, '0.16', 'on', 0);
 
 -- --------------------------------------------------------
 
@@ -4120,8 +4521,8 @@ CREATE TABLE `tbl_tasks_timer` (
   `timer_status` enum('on','off') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'off',
   `start_time` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
   `end_time` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `date_timed` timestamp NOT NULL DEFAULT current_timestamp(),
-  `reason` text CHARACTER SET utf8 DEFAULT NULL,
+  `date_timed` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `reason` text CHARACTER SET utf8,
   `edited_by` int(11) DEFAULT NULL,
   `project_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -4153,7 +4554,7 @@ CREATE TABLE `tbl_task_attachment` (
   `user_id` int(11) DEFAULT NULL,
   `title` varchar(200) NOT NULL,
   `description` text NOT NULL,
-  `upload_time` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `upload_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `leads_id` int(11) DEFAULT NULL,
   `opportunities_id` int(11) DEFAULT NULL,
   `project_id` int(11) DEFAULT NULL,
@@ -4183,16 +4584,16 @@ CREATE TABLE `tbl_task_comment` (
   `task_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `comment` text NOT NULL,
-  `comments_attachment` text DEFAULT NULL,
-  `comment_datetime` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `comments_attachment` text,
+  `comment_datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `leads_id` int(11) DEFAULT NULL,
   `opportunities_id` int(11) DEFAULT NULL,
   `project_id` int(11) DEFAULT NULL,
   `bug_id` int(11) DEFAULT NULL,
   `goal_tracking_id` int(11) DEFAULT NULL,
-  `task_attachment_id` int(11) DEFAULT 0,
-  `uploaded_files_id` int(11) DEFAULT 0,
-  `comments_reply_id` int(11) NOT NULL DEFAULT 0
+  `task_attachment_id` int(11) DEFAULT '0',
+  `uploaded_files_id` int(11) DEFAULT '0',
+  `comments_reply_id` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -4252,8 +4653,8 @@ INSERT INTO `tbl_task_uploaded_files` (`uploaded_files_id`, `task_attachment_id`
 CREATE TABLE `tbl_tax_rates` (
   `tax_rates_id` int(11) NOT NULL,
   `tax_rate_name` varchar(25) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
-  `tax_rate_percent` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `permission` text COLLATE utf8_unicode_ci DEFAULT NULL
+  `tax_rate_percent` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `permission` text COLLATE utf8_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -4264,19 +4665,19 @@ CREATE TABLE `tbl_tax_rates` (
 
 CREATE TABLE `tbl_tickets` (
   `tickets_id` int(10) NOT NULL,
-  `project_id` int(11) DEFAULT 0,
+  `project_id` int(11) DEFAULT '0',
   `ticket_code` varchar(32) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `subject` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `body` text DEFAULT NULL,
+  `body` text,
   `status` varchar(200) DEFAULT NULL,
   `departments_id` int(11) DEFAULT NULL,
-  `reporter` int(10) DEFAULT 0,
+  `reporter` int(10) DEFAULT '0',
   `priority` varchar(50) DEFAULT NULL,
-  `upload_file` text DEFAULT NULL,
-  `comment` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created` timestamp NOT NULL DEFAULT current_timestamp(),
-  `permission` text DEFAULT NULL,
+  `upload_file` text,
+  `comment` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `permission` text,
   `last_reply` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -4289,12 +4690,12 @@ CREATE TABLE `tbl_tickets` (
 CREATE TABLE `tbl_tickets_replies` (
   `tickets_replies_id` int(10) NOT NULL,
   `tickets_id` bigint(10) DEFAULT NULL,
-  `ticket_reply_id` int(11) DEFAULT 0,
-  `body` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ticket_reply_id` int(11) DEFAULT '0',
+  `body` text COLLATE utf8_unicode_ci,
   `replier` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `replierid` int(10) DEFAULT NULL,
-  `attachment` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `attachment` text COLLATE utf8_unicode_ci,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -4305,12 +4706,13 @@ CREATE TABLE `tbl_tickets_replies` (
 
 CREATE TABLE `tbl_todo` (
   `todo_id` int(11) NOT NULL,
+  `company_id` bigint(20) UNSIGNED DEFAULT NULL,
   `title` longtext COLLATE utf8_unicode_ci NOT NULL,
   `user_id` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `due_date` date NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 0 COMMENT '1= in_progress 2= on hold 3= done',
-  `assigned` int(11) NOT NULL DEFAULT 0,
+  `status` int(11) NOT NULL DEFAULT '0' COMMENT '1= in_progress 2= on hold 3= done',
+  `assigned` int(11) NOT NULL DEFAULT '0',
   `order` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -4318,13 +4720,8 @@ CREATE TABLE `tbl_todo` (
 -- Dumping data for table `tbl_todo`
 --
 
-INSERT INTO `tbl_todo` (`todo_id`, `title`, `user_id`, `created_date`, `due_date`, `status`, `assigned`, `order`) VALUES
-(1, 'Finish Oliviers Site & Create a modern site', '1', '2019-08-23 01:58:30', '2019-08-23', 3, 0, 1),
-(2, 'Prepare HR KPI Launch', '1', '2019-08-23 01:59:04', '2019-08-26', 0, 0, 1),
-(3, 'Review Assist Tickets', '1', '2019-08-23 01:59:22', '2019-08-23', 0, 0, 1),
-(4, 'Review BI&A Deliverables', '1', '2019-08-23 02:07:42', '2019-08-23', 3, 0, 1),
-(5, 'Ask Ipeople feedback to \n\nFlorence Marteau / Marion Feuilly\nChristina Chan / Brigitte Deschamps\nNicole Launay / Nicolas George\n', '1', '2019-08-27 23:15:02', '2019-08-31', 0, 0, 1),
-(6, 'dssdf sf s', '8', '2019-12-19 11:42:23', '2019-12-27', 0, 0, 1);
+INSERT INTO `tbl_todo` (`todo_id`, `company_id`, `title`, `user_id`, `created_date`, `due_date`, `status`, `assigned`, `order`) VALUES
+(2, 2, 'fsdsfsdfsdf', '8', '2020-03-30 07:48:25', '2020-03-31', 1, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -4341,11 +4738,11 @@ CREATE TABLE `tbl_training` (
   `start_date` date NOT NULL,
   `finish_date` date NOT NULL,
   `training_cost` varchar(300) DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 = pending, 1 = started, 2 = completed, 3 = terminated',
-  `performance` tinyint(1) DEFAULT 0 COMMENT '0 = not concluded, 1 = satisfactory, 2 = average, 3 = poor, 4 = excellent',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 = pending, 1 = started, 2 = completed, 3 = terminated',
+  `performance` tinyint(1) DEFAULT '0' COMMENT '0 = not concluded, 1 = satisfactory, 2 = average, 3 = poor, 4 = excellent',
   `remarks` text NOT NULL,
-  `upload_file` text DEFAULT NULL,
-  `permission` text DEFAULT NULL
+  `upload_file` text,
+  `permission` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -4358,32 +4755,32 @@ CREATE TABLE `tbl_transactions` (
   `transactions_id` int(11) NOT NULL,
   `project_id` int(11) DEFAULT NULL,
   `account_id` int(11) NOT NULL,
-  `invoices_id` int(11) NOT NULL DEFAULT 0,
+  `invoices_id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(200) DEFAULT NULL,
   `type` enum('Income','Expense','Transfer') NOT NULL,
   `category_id` int(11) NOT NULL,
   `amount` decimal(18,2) NOT NULL,
-  `paid_by` int(11) NOT NULL DEFAULT 0,
+  `paid_by` int(11) NOT NULL DEFAULT '0',
   `payment_methods_id` int(11) NOT NULL,
   `reference` varchar(200) NOT NULL,
   `status` enum('non_approved','paid','unpaid') DEFAULT 'non_approved',
   `notes` text NOT NULL,
   `tags` text NOT NULL,
-  `tax` decimal(18,2) NOT NULL DEFAULT 0.00,
+  `tax` decimal(18,2) NOT NULL DEFAULT '0.00',
   `date` date NOT NULL,
-  `debit` decimal(18,2) NOT NULL DEFAULT 0.00,
-  `credit` decimal(18,2) NOT NULL DEFAULT 0.00,
-  `total_balance` decimal(18,2) NOT NULL DEFAULT 0.00,
-  `transfer_id` int(11) NOT NULL DEFAULT 0,
-  `permission` text DEFAULT NULL,
-  `attachement` text DEFAULT NULL,
+  `debit` decimal(18,2) NOT NULL DEFAULT '0.00',
+  `credit` decimal(18,2) NOT NULL DEFAULT '0.00',
+  `total_balance` decimal(18,2) NOT NULL DEFAULT '0.00',
+  `transfer_id` int(11) NOT NULL DEFAULT '0',
+  `permission` text,
+  `attachement` text,
   `client_visible` enum('Yes','No') NOT NULL DEFAULT 'No',
-  `added_by` int(11) NOT NULL DEFAULT 0,
-  `paid` int(11) NOT NULL DEFAULT 0,
+  `added_by` int(11) NOT NULL DEFAULT '0',
+  `paid` int(11) NOT NULL DEFAULT '0',
   `billable` enum('Yes','No') NOT NULL DEFAULT 'No',
-  `deposit` text DEFAULT NULL,
-  `deposit_2` text DEFAULT NULL,
-  `under_55` text DEFAULT NULL
+  `deposit` text,
+  `deposit_2` text,
+  `under_55` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -4403,9 +4800,17 @@ CREATE TABLE `tbl_transfer` (
   `notes` text NOT NULL,
   `date` date NOT NULL,
   `type` varchar(20) NOT NULL DEFAULT 'Transfer',
-  `permission` mediumtext DEFAULT NULL,
-  `attachement` mediumtext DEFAULT NULL
+  `permission` mediumtext,
+  `attachement` mediumtext
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_transfer`
+--
+
+INSERT INTO `tbl_transfer` (`transfer_id`, `to_account_id`, `from_account_id`, `amount`, `payment_methods_id`, `reference`, `status`, `notes`, `date`, `type`, `permission`, `attachement`) VALUES
+(0, 0, 0, '4523534.00', 14, '322321', 'Cleared', 'fgdgdfg', '2020-03-25', 'Transfer', NULL, 'transfer-image2020-03-12-11-36-080.jpeg'),
+(0, 0, 0, '4353.00', 14, 'rtretert', 'Cleared', '45354', '2020-03-25', 'Transfer', 'all', 'transfer-image2020-03-12-11-36-460.jpeg');
 
 -- --------------------------------------------------------
 
@@ -4434,12 +4839,14 @@ CREATE TABLE `tbl_uploaded_files` (
 
 CREATE TABLE `tbl_users` (
   `user_id` int(11) NOT NULL,
+  `company_id` bigint(20) UNSIGNED DEFAULT NULL,
   `username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `full_name` varchar(150) COLLATE utf8_unicode_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `role_id` int(11) NOT NULL DEFAULT 2,
-  `activated` tinyint(1) NOT NULL DEFAULT 0,
-  `banned` tinyint(4) NOT NULL DEFAULT 0,
+  `role_id` int(11) NOT NULL DEFAULT '2',
+  `activated` tinyint(1) NOT NULL DEFAULT '0',
+  `banned` tinyint(4) NOT NULL DEFAULT '0',
   `ban_reason` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `new_password_key` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `new_password_requested` datetime DEFAULT NULL,
@@ -4448,9 +4855,9 @@ CREATE TABLE `tbl_users` (
   `last_ip` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
   `last_login` datetime DEFAULT NULL,
   `created` datetime DEFAULT NULL,
-  `modified` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `online_time` int(32) NOT NULL DEFAULT 0 COMMENT '1 = online 0 = offline ',
-  `permission` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `online_time` int(32) NOT NULL DEFAULT '0' COMMENT '1 = online 0 = offline ',
+  `permission` text COLLATE utf8_unicode_ci,
   `active_email` varchar(5) COLLATE utf8_unicode_ci DEFAULT NULL,
   `smtp_email_type` varchar(5) COLLATE utf8_unicode_ci DEFAULT NULL,
   `smtp_encription` varchar(5) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -4461,18 +4868,27 @@ CREATE TABLE `tbl_users` (
   `smtp_port` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   `smtp_additional_flag` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `last_postmaster_run` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `media_path_slug` text COLLATE utf8_unicode_ci DEFAULT NULL
+  `media_path_slug` text COLLATE utf8_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tbl_users`
 --
 
-INSERT INTO `tbl_users` (`user_id`, `username`, `password`, `email`, `role_id`, `activated`, `banned`, `ban_reason`, `new_password_key`, `new_password_requested`, `new_email`, `new_email_key`, `last_ip`, `last_login`, `created`, `modified`, `online_time`, `permission`, `active_email`, `smtp_email_type`, `smtp_encription`, `smtp_action`, `smtp_host_name`, `smtp_username`, `smtp_password`, `smtp_port`, `smtp_additional_flag`, `last_postmaster_run`, `media_path_slug`) VALUES
-(1, 'admin', '17ada7ce7a6a9f01f0aabbb431321d365b01a3e3474f107562e738afbfe0c13abf9ea7ee61e22c990912fd2bc5ef0e4c657b4c82f132bf8e79f6dacb14d3c466', 'admin@admin.com', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, '2019-11-07 03:04:57', '2019-07-24 00:32:53', '2019-12-24 10:25:37', 1577183137, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(8, 'adminko', '17ada7ce7a6a9f01f0aabbb431321d365b01a3e3474f107562e738afbfe0c13abf9ea7ee61e22c990912fd2bc5ef0e4c657b4c82f132bf8e79f6dacb14d3c466', 'admin@admin.com', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-29 18:17:14', '2019-10-04 09:41:35', '2020-01-02 11:33:57', 1577964837, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(10, 'admine', '6455e7ed17b2ec9bda3a00c647737d4b3deac2ed0888052b85789c4102a19b7de0445d0d8d249edba3713f5772fe6c1e3823f1b054f93652ee07656a39e8f954', 'op.net2net@gmail.com', 2, 1, 0, NULL, NULL, NULL, NULL, NULL, '0', NULL, '2019-12-19 20:56:55', '2019-12-20 18:02:25', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'admine'),
-(11, 'green', '675e79a03a664e0da05f2efbfd47e173e50c0b098204d19c48a3bf2d3e7665080bbfa21566fef02ac860b78f14c171bd5ce72ad3e0368bbd8ab578fa677847df', 'pandeygreen5@gmail.com', 2, 0, 0, NULL, NULL, NULL, NULL, 'c852717ae1325bd334226857e1a2c215', '0', NULL, '2019-12-29 18:18:06', '2019-12-30 05:18:06', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `tbl_users` (`user_id`, `company_id`, `username`, `full_name`, `password`, `email`, `role_id`, `activated`, `banned`, `ban_reason`, `new_password_key`, `new_password_requested`, `new_email`, `new_email_key`, `last_ip`, `last_login`, `created`, `modified`, `online_time`, `permission`, `active_email`, `smtp_email_type`, `smtp_encription`, `smtp_action`, `smtp_host_name`, `smtp_username`, `smtp_password`, `smtp_port`, `smtp_additional_flag`, `last_postmaster_run`, `media_path_slug`) VALUES
+(8, 2, 'adminko', 'Lohn', '123456', 'admin@admin.com', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, '::1', '2020-05-15 12:41:11', '2019-10-04 09:41:35', '2020-05-15 07:11:11', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(13, NULL, 'ravishbeg', NULL, 'dca29b5f9649b6547b51bd5814f7390e55e724cea2367dbe67a89f96b6407e080baba48524485595cda0eb09db4c2103ce3f0ccd194471e9099a9dec75633b37', 'ravish3474@gmail.com', 3, 1, 0, NULL, NULL, NULL, NULL, NULL, '103.99.15.182', NULL, NULL, '2020-02-18 09:39:50', 0, 'all', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(15, 1, 'shubham', '7777', 'abc6548ebd8967e04dfcc817aeed72f2dd8c851e14eb2e3efb74bc5fcff0d3c6e64569e5ce702ca7619cf2c4289bfa749472c4ca71c30b0ca4923f1443b2d8fd', 'ty@gmail.com', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, '103.99.15.182', NULL, NULL, '2020-04-06 07:09:35', 0, 'all', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(18, NULL, 'piyush@123', 'Piyush Mohan', 'piyush@123', 'piyushmohan@gmail.com', 3, 1, 0, NULL, NULL, NULL, NULL, NULL, '103.99.15.6', '2020-03-02 18:11:33', NULL, '2020-03-02 12:41:33', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(19, NULL, 'kaif@123', 'Md. Kaif', 'kaif@123', 'kaif@amdin.com', 3, 1, 0, NULL, NULL, NULL, NULL, NULL, '139.167.109.38', '2020-03-23 10:36:25', NULL, '2020-03-23 05:06:25', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(20, NULL, 'shubham@123', 'Shubham Bhatt', 'shubh@123', 'shub@add.com', 3, 1, 0, NULL, NULL, NULL, NULL, NULL, '139.167.159.116', '2020-03-23 10:04:46', NULL, '2020-03-23 04:34:46', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(21, NULL, 'ravish@123', 'Ravish', 'ravish@123', 'ravish@ad.com', 3, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-18 09:39:50', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(22, NULL, 'rahul@123', 'Rahul Kumar', 'rahul@123', 'rahsd@asd.com', 3, 1, 0, NULL, NULL, NULL, NULL, NULL, '103.99.15.182', '2020-03-21 15:20:55', NULL, '2020-03-21 09:50:55', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(23, 1, 'shivam@123', 'Shivam Saini', 'shivam@123', 'shivam@ad.com', 3, 1, 0, NULL, NULL, NULL, NULL, NULL, '103.99.15.182', '2020-03-21 10:15:50', NULL, '2020-04-06 07:10:04', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(24, NULL, 'deepak@123', 'Deepak Nouliya', 'deepak@123', 'ded@sd.com', 3, 1, 0, NULL, NULL, NULL, NULL, NULL, '::1', '2020-04-06 12:46:03', NULL, '2020-04-06 07:16:03', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(25, 1, 'sonali@123', 'Sonali', 'sonali@123', 'sonali@asd.com', 3, 1, 0, NULL, NULL, NULL, NULL, NULL, '::1', '2020-04-06 12:47:07', NULL, '2020-04-06 07:17:07', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(26, NULL, 'vaishali@123', 'Vaishali Sharma', 'valishali@123', 'asdf@sd.v', 3, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-18 09:39:50', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(39, 2, 'demo@123', 'Parveen Dahiya', 'demo@123', 'gnagendran@gmail.com', 3, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-06 07:09:54', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -4484,10 +4900,10 @@ CREATE TABLE `tbl_user_role` (
   `user_role_id` int(11) NOT NULL,
   `designations_id` int(11) DEFAULT NULL,
   `menu_id` int(11) NOT NULL,
-  `view` int(11) DEFAULT 0,
-  `created` int(11) DEFAULT 0,
-  `edited` int(11) DEFAULT 0,
-  `deleted` int(11) DEFAULT 0
+  `view` int(11) DEFAULT '0',
+  `created` int(11) DEFAULT '0',
+  `edited` int(11) DEFAULT '0',
+  `deleted` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -5555,6 +5971,12 @@ ALTER TABLE `tbl_clock_history`
   ADD PRIMARY KEY (`clock_history_id`);
 
 --
+-- Indexes for table `tbl_companies`
+--
+ALTER TABLE `tbl_companies`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tbl_config`
 --
 ALTER TABLE `tbl_config`
@@ -5601,6 +6023,12 @@ ALTER TABLE `tbl_dashboard`
 --
 ALTER TABLE `tbl_days`
   ADD PRIMARY KEY (`day_id`);
+
+--
+-- Indexes for table `tbl_db_backup`
+--
+ALTER TABLE `tbl_db_backup`
+  ADD PRIMARY KEY (`backup_id`);
 
 --
 -- Indexes for table `tbl_departments`
@@ -5731,6 +6159,12 @@ ALTER TABLE `tbl_invoices`
   ADD UNIQUE KEY `reference_no` (`reference_no`);
 
 --
+-- Indexes for table `tbl_ip_restriction`
+--
+ALTER TABLE `tbl_ip_restriction`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tbl_items`
 --
 ALTER TABLE `tbl_items`
@@ -5801,6 +6235,18 @@ ALTER TABLE `tbl_leave_application`
 --
 ALTER TABLE `tbl_leave_category`
   ADD PRIMARY KEY (`leave_category_id`);
+
+--
+-- Indexes for table `tbl_leave_policy`
+--
+ALTER TABLE `tbl_leave_policy`
+  ADD PRIMARY KEY (`leave_policy_id`);
+
+--
+-- Indexes for table `tbl_leave_yearly`
+--
+ALTER TABLE `tbl_leave_yearly`
+  ADD PRIMARY KEY (`year_leaveid`);
 
 --
 -- Indexes for table `tbl_locales`
@@ -6004,6 +6450,12 @@ ALTER TABLE `tbl_reminders`
   ADD KEY `rel_type` (`user_id`);
 
 --
+-- Indexes for table `tbl_reports`
+--
+ALTER TABLE `tbl_reports`
+  ADD PRIMARY KEY (`rpt_id`);
+
+--
 -- Indexes for table `tbl_return_stock`
 --
 ALTER TABLE `tbl_return_stock`
@@ -6016,14 +6468,201 @@ ALTER TABLE `tbl_return_stock_items`
   ADD PRIMARY KEY (`items_id`);
 
 --
+-- Indexes for table `tbl_salary_template`
+--
+ALTER TABLE `tbl_salary_template`
+  ADD PRIMARY KEY (`salary_template_id`);
+
+--
+-- Indexes for table `tbl_task`
+--
+ALTER TABLE `tbl_task`
+  ADD PRIMARY KEY (`task_id`);
+
+--
+-- Indexes for table `tbl_todo`
+--
+ALTER TABLE `tbl_todo`
+  ADD PRIMARY KEY (`todo_id`);
+
+--
+-- Indexes for table `tbl_users`
+--
+ALTER TABLE `tbl_users`
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `installer`
+--
+ALTER TABLE `installer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `tbl_account_details`
+--
+ALTER TABLE `tbl_account_details`
+  MODIFY `account_details_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+
+--
+-- AUTO_INCREMENT for table `tbl_allowed_ip`
+--
+ALTER TABLE `tbl_allowed_ip`
+  MODIFY `allowed_ip_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `tbl_announcements`
+--
+ALTER TABLE `tbl_announcements`
+  MODIFY `announcements_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `tbl_attendance`
+--
+ALTER TABLE `tbl_attendance`
+  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `tbl_bug`
+--
+ALTER TABLE `tbl_bug`
+  MODIFY `bug_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tbl_client`
 --
 ALTER TABLE `tbl_client`
   MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `tbl_clock`
+--
+ALTER TABLE `tbl_clock`
+  MODIFY `clock_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT for table `tbl_companies`
+--
+ALTER TABLE `tbl_companies`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_db_backup`
+--
+ALTER TABLE `tbl_db_backup`
+  MODIFY `backup_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `tbl_departments`
+--
+ALTER TABLE `tbl_departments`
+  MODIFY `departments_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `tbl_designations`
+--
+ALTER TABLE `tbl_designations`
+  MODIFY `designations_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=349;
+
+--
+-- AUTO_INCREMENT for table `tbl_holiday`
+--
+ALTER TABLE `tbl_holiday`
+  MODIFY `holiday_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `tbl_hourly_rate`
+--
+ALTER TABLE `tbl_hourly_rate`
+  MODIFY `hourly_rate_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tbl_invoices`
+--
+ALTER TABLE `tbl_invoices`
+  MODIFY `invoices_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `tbl_ip_restriction`
+--
+ALTER TABLE `tbl_ip_restriction`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_leave_application`
+--
+ALTER TABLE `tbl_leave_application`
+  MODIFY `leave_application_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `tbl_leave_category`
+--
+ALTER TABLE `tbl_leave_category`
+  MODIFY `leave_category_id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `tbl_leave_policy`
+--
+ALTER TABLE `tbl_leave_policy`
+  MODIFY `leave_policy_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `tbl_leave_yearly`
+--
+ALTER TABLE `tbl_leave_yearly`
+  MODIFY `year_leaveid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `tbl_notifications`
+--
+ALTER TABLE `tbl_notifications`
+  MODIFY `notifications_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=315;
+
+--
+-- AUTO_INCREMENT for table `tbl_performance_indicator`
+--
+ALTER TABLE `tbl_performance_indicator`
+  MODIFY `performance_indicator_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `tbl_project`
+--
+ALTER TABLE `tbl_project`
+  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+
+--
+-- AUTO_INCREMENT for table `tbl_reports`
+--
+ALTER TABLE `tbl_reports`
+  MODIFY `rpt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `tbl_salary_template`
+--
+ALTER TABLE `tbl_salary_template`
+  MODIFY `salary_template_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `tbl_task`
+--
+ALTER TABLE `tbl_task`
+  MODIFY `task_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `tbl_todo`
+--
+ALTER TABLE `tbl_todo`
+  MODIFY `todo_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tbl_users`
+--
+ALTER TABLE `tbl_users`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
